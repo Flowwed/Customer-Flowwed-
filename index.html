@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Day</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;   /* ВОТ ЭТО КЛЮЧ */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.08),
+      rgba(255,255,255,0.14)
+    ),
+    url("images/bg1.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background: url("https://grainy-gradients.vercel.app/noise.svg");
+  background-size:240px 240px;
+  opacity:.04;
+  pointer-events:none;
+ 
+  will-change: transform;
+
+}
+
+
+.typebox{
+  grid-area: type;
+
+  border:1px solid rgba(255,255,255,.12);
+  padding:28px;
+  height: 340px;        /* фиксированная высота */
+  overflow-y: auto;     /* скролл внутри */
+
+  background:rgba(255,255,255,.75);
+  font-family:'Courier Prime', monospace;
+  font-size:20px;
+  line-height:1.6;
+}
+
+.photos{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.photos img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:6px;
+  filter:grayscale(.1) contrast(1.05);
+  opacity:0;
+  transform:translateY(40px);
+  transition: opacity 2.2s ease, transform 2.2s ease;
+
+}
+
+.photos img.show{
+  opacity:1;
+  transform:none;
+}
+
+
+.video.show{
+  opacity:1;
+  transform: translateY(0);
+}
+
+.video iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
+@media(max-width:800px){
+  .wrap{
+    grid-template-columns:1fr;
+    padding:40px 16px;
+  }
+  .typebox{font-size:16px;}
+  .photos img{height:180px;}
+}
+
+.hero-header{
+  position: relative;
+  height: 20vh;        /* выше баннер */
+  min-height: 150px;   /* чтобы не схлопывался на мобиле */
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.25);
+  display:flex;
+  flex-direction:column;
+  justify-content: flex-start;
+  align-items:center;
+  color:#fff;
+  text-align:center;
+  padding: 16px 12px 10px;               /* внутренние отступы */
+}
+
+@font-face {
+  font-family: "Benzin";
+  src: url("fonts/Benzin-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.hero-names{
+  font-family: "Benzin", sans-serif;
+  font-size:30px;
+  letter-spacing:.06em;
+
+  min-height: 40px;     /* ← ВАЖНО: резервируем место */
+  line-height: 1.2;
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1.6s ease, transform 1.6s ease;
+
+  margin-bottom: 2px;
+}
+
+.hero-names.show{
+  opacity: 1;
+  transform: none;
+}
+
+.hero-date{
+  margin-top: 2px;
+
+  font-family: "Benzin", sans-serif; /* тот же шрифт */
+  font-size: 17px;                  /* меньше имени */
+  letter-spacing: 0.04em;           /* похоже на имя */
+
+  opacity: 0.8;                     /* мягче */
+}
+
+.hero-date{
+  min-height: 20px;
+}
+
+.hero-place{
+  margin-top:6px;
+  font-size:14px;
+  opacity:.85;
+}
+
+.site-footer{
+  margin-top:80px;
+  padding:36px 24px 36px 12px;
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items:center;
+  background:#fff5f5;
+  color:#a52126;
+  border-top:1px solid #ecdede;
+font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+.footer-left{
+  justify-self:start;
+  margin-left:100px;
+}
+
+.footer-left a{
+  color:#6b7f9e;
+  text-decoration:none;
+}
+
+.footer-left a:hover{
+  text-decoration:underline;
+}
+
+.footer-center{
+  text-align:center;
+  font-weight:600;
+  font-size:15px;
+}
+
+.footer-social{
+  justify-self:end;
+  display:flex;
+  gap:14px;
+}
+
+.footer-social img{
+  width:32px;
+  height:32px;
+  transition:.25s ease;
+}
+
+.footer-social a:hover img{
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.1);
+}
+
+@media (max-width: 768px){
+  .site-footer{
+    grid-template-columns:1fr;
+    gap:18px;
+    text-align:center;
+    padding:28px 16px;
+  }
+
+  .footer-left{
+    margin:0;
+    justify-self:center;
+  }
+
+  .footer-social{
+    justify-self:center;
+  }
+}
+
+
+.hero-steps{
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.hero-steps span{
+  flex: 1;
+  text-align: center;
+  padding: 6px 10px;
+  font-family: "Benzin", sans-serif;   /* ← ВОТ ЭТО */
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  white-space: nowrap;
+
+  color: #fff;
+
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 6px 14px rgba(0,0,0,0.25);
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+
+.hero-steps.show span{
+  opacity: 1;
+  transform: none;
+}
+
+
+.hero-steps span{
+  cursor: pointer;   /* ← рука */
+}
+
+
+.wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:80px 24px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  grid-template-areas:
+    "type video"
+    "photos video";
+  gap:60px;
+  align-items:start;
+}
+
+
+.typebox{
+  grid-area:type;
+}
+
+.video{
+  grid-area: video;
+  position: relative;
+
+  /* ДВИГАЙ ТЕЛЕФОН ТУТ */
+  left: 80px;   /* ←→ влево / вправо */
+  top: 40px;   /* ↑↓ вверх / вниз */
+
+  width: min(26vw, 320px);
+  aspect-ratio: 9 / 16;
+
+  background: transparent;
+  border-radius: 24px;
+  overflow: hidden;
+
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.18),
+    0 8px 18px rgba(0,0,0,0.12);
+
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+
+  will-change: transform, opacity;
+}
+
+.video.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.photos{
+  grid-area:photos;
+  position: relative;   /* якорь для абсолютных фото */
+  height: 520px;        /* рабочая сцена */
+}
+
+/* все картинки — независимые */
+.photos img{
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius:6px;
+
+  filter:grayscale(.1) contrast(1.05);
+  opacity:0;
+  transform:translateY(40px);
+  transition: opacity 2.2s ease, transform 2.2s ease;
+}
+
+/* расставляешь как хочешь */
+.photos img:nth-child(1){
+  left: 0;
+  top: -30px;
+}
+
+.photos img:nth-child(2){
+  left: 240px;
+  top: -30px;
+}
+
+.photos img:nth-child(3){
+  left: 480px;   /* под телефон */
+  top: -30px;
+}
+
+.photos img:nth-child(4){
+  left: 860px;   /* под телефон */
+  top: 260px;
+}
+
+.photos img:nth-child(1){
+  display: none;
+}
+
+.photos img:nth-child(2){
+  display: none;
+}
+
+.photos img:nth-child(3){
+  display: none;
+}
+
+
+.photos img:nth-child(4){
+  display: none;
+}
+
+@media (max-width: 768px){
+
+  .wrap{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "type"
+      "video"
+      "photos";
+    gap: 32px;
+    padding: 40px 16px;
+  }
+
+.typebox{
+    height: 290px;        /* ФИКСИРОВАННАЯ высота */
+    overflow-y: auto;     /* скролл ВНУТРИ поля */
+    font-size: 16px;
+    padding: 20px;
+  }
+  .video{
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    transform: none;
+  }
+
+.photos{
+    position: static;
+    height: auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* ← 3 фото в ряд */
+    gap: 8px;                              /* компактнее */
+  }
+
+  .photos img{
+    position: static;
+
+    width: 100%;
+    aspect-ratio: 1 / 1;   /* квадрат */
+    height: auto;
+
+    transform: none;
+    opacity: 1;            /* чтобы не зависели от анимации */
+  }
+}
+.burger{
+  display: none;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 26px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.menu-close{
+  display: none;
+}
+
+
+@media (max-width: 768px){
+  .burger{
+    display: block;
+  }
+
+
+
+  /* =========================
+     MOBILE MENU — GLASS DROPDOWN
+     ========================= */
+
+  .hero-steps{
+    position: fixed;
+    top: 64px;
+    right: 18px;
+
+    width: 220px;
+    max-width: calc(100vw - 36px);
+
+    padding: 14px 18px 22px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(255,255,255,.92),
+        rgba(255,245,248,.88)
+      );
+
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+
+    border-radius: 18px 18px 28px 28px;
+
+    box-shadow:
+      0 32px 90px rgba(120,30,50,.35),
+      inset 0 1px 0 rgba(255,255,255,.65);
+
+    /* hidden state */
+    opacity: 0;
+    transform: translateY(-14px) scale(.97);
+    pointer-events: none;
+
+    transition:
+      opacity .32s ease,
+      transform .38s cubic-bezier(.22,1,.36,1);
+
+    z-index: 1200;
+  }
+
+  .hero-steps.show{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  /* menu items — iOS style */
+  .hero-steps span{
+    background: none;
+    box-shadow: none;
+
+    color: #732323;
+    font-size: 15px;
+    font-weight: 500;
+
+    padding: 6px 0;
+    text-align: left;
+  }
+
+  /* close button (✕) */
+  .menu-close{
+    display: block;
+    position: absolute;
+    top: 12px;
+    right: 14px;
+
+    font-size: 20px;
+    color: #732323;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 768px){
+  .menu-close{
+    position: absolute;
+    top: 10px;
+    right: 12px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 500;
+
+    color: #732323;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.92);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+
+    box-shadow:
+      0 6px 14px rgba(0,0,0,.18),
+      inset 0 1px 0 rgba(255,255,255,.85);
+
+    z-index: 1300;
+
+    cursor: pointer;
+
+    transition:
+      transform .15s ease,
+      background .15s ease,
+      box-shadow .15s ease;
+  }
+
+  .menu-close:active{
+    transform: scale(.92);
+    background: rgba(255,255,255,1);
+    box-shadow:
+      0 4px 10px rgba(0,0,0,.22),
+      inset 0 1px 0 rgba(255,255,255,.9);
+  }
+}
+
+
+
+@media (max-width: 768px){
+  .hero-header{
+    height: 9vh;        /* было 20vh → стало в ~2 раза меньше */
+    min-height: 80px;   /* было 150px */
+  }
+
+  .hero-overlay{
+    padding: 16px 12px 10px;
+  }
+
+  .hero-names{
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+}
+
+/* DESKTOP — меню всегда видно */
+@media (min-width: 769px){
+  .hero-steps span{
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 768px){
+  .video{
+    grid-area: video;
+
+    width: 100%;
+    max-width: 320px;
+
+    margin: 24px auto 0;
+
+    transform: none !important;
+    position: static;
+
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px){
+
+  .hero-names{
+    margin-top: 10px;   /* ← сдвиг вниз */
+  }
+
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="hero-header">
+  <div class="hero-overlay">
+    <div id="coupleName" class="hero-names"></div>
+    <div id="eventDate" class="hero-date"></div>
+    <div id="eventPlace" class="hero-place"></div>
+
+
+<div class="burger" id="burger">☰</div>
+
+
+   <div class="hero-steps">
+
+<div class="menu-close" id="menuClose">✕</div>
+
+      <span data-path="/photo_gallery">PHOTO GALLERY</span>
+      <span data-path="/our_story">OUR STORY</span>
+      <span data-path="/wedding_party">WEDDING PARTY</span>
+      <span data-path="/venue_map.html">TRAVEL & EVENT</span>
+
+
+      <!-- <span data-path="/travel_info">TRAVEL INFO</span> -->
+
+      <span data-path="/updates">UPDATES</span>
+      <span data-path="/gift_registry">GIFT REGISTRY</span>
+      <span data-path="/just_married">POST-WEDDING</span>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="wrap">
+  <div id="typebox" class="typebox"></div>
+
+<div class="photos" id="photos">
+  <img data-slot="jm_img195">
+  <img data-slot="jm_img196">
+  <img data-slot="jm_img197">
+  <img data-slot="jm_img198">
+</div>
+
+<div class="video" id="video">
+  <iframe></iframe>
+</div>
+</div>
+
+<script>
+
+// 🔐 Универсальный парсер токена
+function getToken() {
+  const p = new URLSearchParams(location.search);
+
+  return (
+    p.get('t') ||
+    p.get('token') ||
+    p.get('edit_token') ||
+    p.get('rsvptoken') ||
+    null
+  );
+}
+
+const box = document.getElementById("typebox");
+const photos = [...document.querySelectorAll(".photos img")];
+const video = document.getElementById("video");
+
+const burger = document.getElementById("burger");
+const steps = document.querySelector(".hero-steps");
+const menuClose = document.getElementById("menuClose");
+
+burger.addEventListener("click", () => {
+  steps.classList.add("show");
+});
+
+menuClose.addEventListener("click", () => {
+  steps.classList.remove("show");
+});
+
+const TEASER = "Dear friends....";
+
+const TYPE = 22;
+const DEL = 18;
+const CUR = 420;
+
+let text="", show=true;
+
+function render(){
+  const safe = text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/\n\n/g, "<br><span style='display:block;height:0.6em'></span>")
+    .replace(/\n/g, "<br>");
+
+  box.innerHTML = safe + (show ? "|" : "");
+}
+
+const blinkTimer = setInterval(() => {
+  show = !show;
+  render();
+}, CUR);
+
+
+const wait = ms=>new Promise(r=>setTimeout(r,ms));
+
+
+async function type(s, isFull = false){
+
+  let wordCount = 0;
+  let inWord = false;
+  let videoShown = false;
+
+  for (let i = 0; i < s.length; i++) {
+
+    const c = s[i];
+    text += c;
+    render();
+
+    if (isFull) {
+
+      if (/\w/.test(c)) {
+
+        if (!inWord) {
+          inWord = true;
+          wordCount++;
+
+          if (wordCount >= 20 && !videoShown) {
+
+            videoShown = true;
+
+            video.classList.add("show");
+
+            if (window.innerWidth > 768) {
+              slowScrollTo(photosBox, 1400);
+            }
+
+          }
+
+        }
+
+      } else {
+        inWord = false;
+      }
+
+    }
+
+    await wait(TYPE);
+
+  }
+}
+async function back(n){
+  for (let i = 0; i < n; i++) {
+    text = text.slice(0, -1);
+    render();
+    await wait(DEL);
+  }
+}
+
+async function loadSiteData() {
+  try {
+    const tk = getToken();
+    if (!tk) return null;
+
+    const SUPABASE_URL = "https://octwwpatppbenqwkcqaw.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdHd3cGF0cHBiZW5xd2tjcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NjYxMjYsImV4cCI6MjA3NDU0MjEyNn0.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI";
+
+    // 1️⃣ ищем в sites
+    const siteRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date,video_url&edit_token=eq.${encodeURIComponent(tk)}`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+        }
+      }
+    );
+
+    const siteData = await siteRes.json();
+    if (siteData.length) return siteData[0];
+
+    // 2️⃣ если не нашли — ищем в reserves
+    const reserveRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/reserves?select=couple_name,video_url&rsvptoken=eq.${encodeURIComponent(tk)}`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+        }
+      }
+    );
+
+    const reserveData = await reserveRes.json();
+    if (reserveData.length) return reserveData[0];
+
+    return null;
+
+  } catch (e) {
+    console.error("loadSiteData failed:", e);
+    return null;
+  }
+
+}(async()=>{
+const couplePromise = loadSiteData();
+ await wait(1500);
+
+ await type(TEASER, false);
+
+  await wait(700);
+  await back(TEASER.length);
+  await wait(400);
+
+const siteData = await couplePromise; // дождались результата
+
+let coupleName = null;
+
+if (siteData) {
+  if (siteData.couple_name) {
+    coupleName = siteData.couple_name;
+
+    const nameEl = document.getElementById("coupleName");
+    nameEl.textContent = siteData.couple_name;
+
+    setTimeout(() => {
+      nameEl.classList.add("show");
+      // const steps = document.querySelector(".hero-steps");
+      // if (steps) steps.classList.add("show");
+    }, 200);
+  }
+
+  if (siteData.wedding_date) {
+    const d = new Date(siteData.wedding_date);
+
+    const formatted = d.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+
+    const dateEl = document.getElementById("eventDate");
+    if (dateEl) {
+      dateEl.textContent = formatted;
+    }
+  }
+
+  if (siteData.video_url) {
+  const iframe = document.querySelector(".video iframe");
+
+  iframe.src = siteData.video_url;
+
+  const player = new Vimeo.Player(iframe);
+
+  player.ready().then(() => {
+    player.setVolume(0.7);
+  });
+}
+}
+
+  const FULL = [
+    "Dear friends,",
+    "",
+    "Welcome to our small corner of the world.",
+    "",
+    "This place is made for those who mean the most to us, and we are so happy that you are here.",
+    "",
+    "Join us as we take our first steps into forever after.",
+    "",
+    "With love,",
+    coupleName || "Your Names"
+  ].join("\n");
+
+
+await type(FULL, true);
+
+clearInterval(blinkTimer);
+show = false;
+render();
+
+if (window.innerWidth <= 768) {
+  smoothMobileScrollTo(video);
+}
+
+
+setTimeout(() => {
+  video.classList.add("show");
+   // slowScrollTo(video, 1800);
+}, 1400);
+
+
+})();
+
+// ВОТ ЗДЕСЬ, В ТОМ ЖЕ <script>
+function slowScrollTo(el, duration = 1500) {
+  const start = window.scrollY;
+
+  // определяем mobile / desktop
+  const isMobile = window.innerWidth <= 768;
+
+  // разный offset для mobile и desktop
+  const offset = isMobile
+    ? window.innerHeight * 0.20   // 📱 МЕНЬШЕ скролл в mobile
+    : window.innerHeight * 0.67;  // 🖥 как было в desktop
+
+  const target =
+    el.getBoundingClientRect().top +
+    window.scrollY -
+    offset;
+
+  const distance = target - start;
+  const startTime = performance.now();
+
+  function step(now) {
+    const t = Math.min(1, (now - startTime) / duration);
+    const ease = t * t * (3 - 2 * t);
+    window.scrollTo(0, start + distance * ease);
+    if (t < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+const tk = getToken();
+const photosBox = document.getElementById("photos");
+
+
+loadLandingPhotos(tk);
+
+
+async function loadLandingPhotos(token) {
+  if (!token) return;
+
+  const SUPABASE_URL = "https://octwwpatppbenqwkcqaw.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdHd3cGF0cHBiZW5xd2tjcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NjYxMjYsImV4cCI6MjA3NDU0MjEyNn0.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI";
+
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/gallery_images?edit_token=eq.${token}&slot=like.jm_img19%25&select=slot,path`,
+    {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: "Bearer " + SUPABASE_KEY
+      }
+    }
+  );
+
+  const rows = await res.json();
+
+if (!Array.isArray(rows)) {
+  console.error("Not array:", rows);
+  return;
+}
+  const map = {};
+  rows.forEach(r => {
+    if (r.path) map[r.slot] = r.path;
+  });
+
+  document.querySelectorAll(".photos img").forEach(img => {
+    const slot = img.dataset.slot;
+    if (map[slot]) {
+      img.src =
+        `https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/galleries/${map[slot]}`;
+    }
+  });
+}
+
+
+document.querySelectorAll('.hero-steps span').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (!tk) return;
+
+    const path = btn.dataset.path;
+    if (!path) return;
+
+    const url = `${path}?t=${encodeURIComponent(tk)}`;
+    location.href = url;
+  });
+});
+
+
+</script>
+
+<footer class="site-footer">
+  <div class="footer-left">
+    <a href="mailto:contact@flowweds.com">contact@flowweds.com</a>
+  </div>
+
+  <div class="footer-center">© FloWWeds</div>
+
+  <div class="footer-social">
+    <a href="sms:?&body=Check%20this%20out%20https://flowweds.netlify.app" title="Send by text">
+      <img src="images/icon-sms.svg" alt="SMS">
+    </a>
+
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://flowweds.netlify.app" target="_blank">
+      <img src="images/icon-facebook.svg" alt="Facebook">
+    </a>
+
+    <a href="https://www.instagram.com/" target="_blank">
+      <img src="images/icon-instagram.svg" alt="Instagram">
+    </a>
+
+    <a href="https://pinterest.com/pin/create/button/?url=https://flowweds.netlify.app" target="_blank">
+      <img src="images/icon-pinterest.svg" alt="Pinterest">
+    </a>
+
+    <a href="https://www.tiktok.com/" target="_blank">
+      <img src="images/icon-tiktok.svg" alt="TikTok">
+    </a>
+
+    <a href="https://twitter.com/intent/tweet?url=https://flowweds.netlify.app" target="_blank">
+      <img src="images/icon-x.svg" alt="X">
+    </a>
+
+    <a href="https://wa.me/?text=Check%20this%20out%20https://flowweds.netlify.app" target="_blank">
+      <img src="images/icon-whatsapp.svg" alt="WhatsApp">
+    </a>
+  </div>
+
+</footer>
+
+<script>
+
+function smoothMobileScrollTo(el, duration = 900) {
+  const start = window.scrollY;
+  const rect = el.getBoundingClientRect();
+
+  const target =
+    start +
+    rect.top -
+    (window.innerHeight - rect.height) / 2;
+
+  const distance = target - start;
+  const startTime = performance.now();
+
+  function step(now) {
+    const t = Math.min(1, (now - startTime) / duration);
+    const ease = t * t * (3 - 2 * t);
+    window.scrollTo(0, start + distance * ease);
+    if (t < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+</script>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<script>
+window.addEventListener("pageshow", (e) => {
+  // страница вернулась из bfcache
+  if (e.persisted) {
+    document.querySelector(".hero-steps")?.classList.remove("show");
+  }
+});
+</script>
+
+
+</body>
+</html>

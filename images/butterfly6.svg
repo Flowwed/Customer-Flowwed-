@@ -1,0 +1,54 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wingTopL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff0f6"/>
+      <stop offset="100%" stop-color="#ffd1e5"/>
+    </linearGradient>
+    <linearGradient id="wingTopR" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe6f2"/>
+      <stop offset="100%" stop-color="#ffbcd9"/>
+    </linearGradient>
+    <linearGradient id="wingBotL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff7fb"/>
+      <stop offset="100%" stop-color="#ffdbe9"/>
+    </linearGradient>
+    <linearGradient id="wingBotR" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff0f6"/>
+      <stop offset="100%" stop-color="#ffc9df"/>
+    </linearGradient>
+  </defs>
+
+  <!-- верхнее левое крыло -->
+  <path d="M60 55
+           C25 10, 5 25, 10 45
+           C18 75, 42 75, 60 55 Z"
+        fill="url(#wingTopL)"/>
+
+  <!-- верхнее правое крыло -->
+  <path d="M60 55
+           C95 10, 115 25, 110 45
+           C102 75, 78 75, 60 55 Z"
+        fill="url(#wingTopR)"/>
+
+  <!-- нижнее левое крыло -->
+  <path d="M60 62
+           C30 80, 28 105, 48 108
+           C62 110, 62 90, 60 62 Z"
+        fill="url(#wingBotL)"/>
+
+  <!-- нижнее правое крыло -->
+  <path d="M60 62
+           C90 80, 92 105, 72 108
+           C58 110, 58 90, 60 62 Z"
+        fill="url(#wingBotR)"/>
+
+  <!-- тело -->
+  <rect x="57" y="50" width="6" height="30" rx="3" fill="#8a1f24"/>
+
+  <!-- голова -->
+  <circle cx="60" cy="48" r="4" fill="#8a1f24"/>
+
+  <!-- усики -->
+  <path d="M58 44 C48 30, 40 26, 34 24" stroke="#8a1f24" stroke-width="1.5" fill="none"/>
+  <path d="M62 44 C72 30, 80 26, 86 24" stroke="#8a1f24" stroke-width="1.5" fill="none"/>
+</svg>

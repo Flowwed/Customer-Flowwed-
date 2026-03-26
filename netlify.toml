@@ -1,0 +1,4 @@
+[build]
+  publish = "."
+  functions = "functions"
+  node_version = "18"

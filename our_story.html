@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Our Story</title>
+<link rel="stylesheet" href="/footer.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #fdeff1;
+      color:#732323;
+      line-height: 1.6;
+    }
+
+    header{
+      text-align:center;
+      padding:50px 10px;
+      background:linear-gradient(to bottom, #fff, #f8dede);
+      border-bottom:1px solid rgba(255,255,255,0.7);
+    }
+
+    h1,h2,h3{
+      color:#a52126;
+      margin-top:0;
+    }
+
+    section{
+      max-width:1000px;
+      margin:auto;
+      padding:40px 20px;
+      background:#ffffff;
+      border-radius:22px;
+      box-shadow:0 6px 16px rgba(0,0,0,0.13);
+      margin-top:45px;
+    }
+
+    .photo{
+      width:100%;
+      max-height:420px;
+      border-radius:20px;
+      object-fit:cover;
+      margin-bottom:25px;
+    }
+
+
+/* ====== STORY CARDS ====== */
+
+section {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 60px 60px;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fff7f8 100%
+  );
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.18),
+    0 12px 24px rgba(0, 0, 0, 0.10);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* hover — “парит” */
+section:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 45px 90px rgba(0, 0, 0, 0.22),
+    0 18px 36px rgba(0, 0, 0, 0.14);
+}
+
+/* заголовки внутри карточек */
+section h2 {
+  font-size: 32px;
+  margin-bottom: 18px;
+  color: #a52126;
+}
+
+/* текст */
+section p {
+  font-size: 18px;
+  line-height: 1.75;
+  color: #6f2a2a;
+  margin-bottom: 40px;
+}
+
+/* последнее описание — без лишнего отступа */
+section p:last-child {
+  margin-bottom: 0;
+}
+
+section {
+  animation: fadeUp 0.9s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+/* контейнер */
+section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  
+}
+
+/* ====== ОТДЕЛЬНАЯ КАРТОЧКА ====== */
+.story-card {
+  margin-top: 50px;
+  padding: 50px 60px;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fff6f7 100%
+  );
+
+  border-radius: 30px;
+
+  box-shadow:
+    0 28px 60px rgba(0, 0, 0, 0.18),
+    0 12px 24px rgba(0, 0, 0, 0.10);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* эффект парения */
+.story-card:hover {
+  transform: none;
+  box-shadow:
+    0 45px 90px rgba(0, 0, 0, 0.22),
+    0 18px 36px rgba(0, 0, 0, 0.14);
+}
+
+/* заголовок */
+.story-card h2 {
+  font-size: 32px;
+  margin-bottom: 18px;
+  color: #a52126;
+}
+
+/* текст */
+.story-card p {
+  font-size: 18px;
+  line-height: 1.75;
+  color: #6f2a2a;
+}
+
+
+/* HERO */
+.story-hero {
+  max-width: 1100px;
+  margin: 40px auto 60px;
+  overflow: hidden;
+}
+
+/* VIEWPORT */
+.story-marquee {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ДВИЖУЩАЯСЯ ЛЕНТА */
+.story-track {
+  display: flex;
+  gap: 22px;
+  width: max-content;
+
+  animation: marquee 45s linear infinite;
+  will-change: transform;
+}
+
+/* PAUSE ON HOVER */
+.story-marquee:hover .story-track {
+  animation-play-state: paused;
+}
+
+/* КАРТИНКИ */
+.story-track img {
+  width: 320px;
+  height: 240px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 26px;
+
+  box-shadow:
+    0 18px 30px rgba(0,0,0,0.18),
+    0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* APPLE MARQUEE */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* =========================
+   🍏 APPLE EDGE FADE
+   ========================= */
+
+.story-hero {
+  position: relative;
+}
+
+/* ЛЕВАЯ и ПРАВАЯ маски */
+.story-hero::before,
+.story-hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ЛЕВЫЙ FADE */
+.story-hero::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(253,239,241,1) 0%,
+    rgba(253,239,241,0) 100%
+  );
+}
+
+/* ПРАВЫЙ FADE */
+.story-hero::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(253,239,241,1) 0%,
+    rgba(253,239,241,0) 100%
+  );
+}
+
+/* ===== TEXTAREA-LIKE MODE FOR STORY ===== */
+.story-card p {
+  margin: 0;               /* ❗ убираем ВСЕ отступы */
+  padding: 0;
+  line-height: 1.35;       /* как textarea */
+}
+
+/* Quill иногда вставляет пустые <p><br></p> */
+.story-card p:empty {
+  display: none;
+}
+
+/* если внутри Quill есть <br> */
+.story-card br {
+  display: block;
+  content: "";
+  margin-top: 0;
+}
+
+[data-visible] {
+  visibility: visible;
+}
+
+/* ===== WEDDING NAVBAR ===== */
+
+.wedding-nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+
+  padding: 14px 28px;
+
+  background: rgba(255, 245, 246, 0.82);
+  backdrop-filter: blur(14px);
+
+  border-bottom: 1px solid rgba(165, 33, 38, 0.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.nav-left {
+  position: relative;
+  z-index: 2;
+  margin-left: 40px; /* 👈 ВОТ ОНО */
+}
+
+/* BACK BUTTON — без изменений */
+.back-btn {
+  background: linear-gradient(135deg, #a52126, #7b1f22);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  transition: all .25s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.28);
+}
+
+/* 🔥 ЦЕНТР СТРАНИЦЫ */
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: 18px;
+  white-space: nowrap;
+}
+.nav-center a {
+  font-size: 15px;
+  font-weight: 500;
+  color: #732323;
+  text-decoration: none;
+  cursor: pointer;
+
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nav-center a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: #a52126;
+  transition: width .3s ease;
+}
+
+.nav-center a:hover::after {
+  width: 100%;
+}
+
+.nav-center a.active {
+  color: #a52126;
+}
+
+.nav-center a.active::after {
+  width: 100%;
+}
+
+
+
+/* === STORY HERO AUTO SCROLL STRIP === */
+
+/* фиксируем нормальную высоту блока */
+.story-hero {
+  overflow: visible;   /* ✅ не режем */
+  padding: 40px 0;
+}
+
+.story-slider {
+  padding: 0 40px;     /* можно меньше */
+}
+
+/* сама лента */
+.story-slider {
+  height: 300px;
+  display: flex;
+  gap: 22px;
+
+  overflow-x: auto;        /* ✅ разрешаем скролл */
+  overflow-y: hidden;
+
+  justify-content: flex-start; /* ✅ не центр */
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;      /* Firefox */
+}
+
+.story-slider::-webkit-scrollbar {
+  display: none;               /* Chrome / Safari */
+}
+
+/* картинки */
+.story-slider img {
+  width: 320px;          /* 🔥 фото крупнее */
+  height: 240px;
+
+  object-fit: cover;
+  flex-shrink: 0;
+
+  border-radius: 26px;   /* 🔥 скругление */
+  
+  /* 🔥 подсветка + объём */
+  box-shadow:
+    0 18px 30px rgba(0,0,0,0.18),
+    0 6px 14px rgba(0,0,0,0.12);
+
+  background: #f3eaea;
+}
+
+.story-slider img {
+  opacity: 1 !important;
+  position: relative !important;
+}
+
+
+.story-hero {
+  border-radius: 32px;
+  overflow: visible;
+}
+
+/* =========================
+   🍏 IMAGE LIGHTBOX
+   ========================= */
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+
+.image-lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.image-lightbox img {
+  max-width: 80vw;
+  max-height: 80vh;
+
+  border-radius: 28px;
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.35);
+
+  transform: scale(0.25);
+  transition: transform .45s cubic-bezier(.2,.8,.2,1);
+}
+
+.image-lightbox.active img {
+  transform: scale(1);
+}
+
+.story-hero img {
+  cursor: zoom-in;
+}
+
+.image-lightbox img {
+  cursor: zoom-out;
+}
+
+/* =========================
+   📱 ORGANIC MOBILE STORY
+   ========================= */
+@media (max-width: 768px) {
+
+  /* общий воздух */
+  body {
+    line-height: 1.45;
+  }
+
+  header {
+    padding: 28px 14px;
+  }
+
+  header h1 {
+    font-size: 26px;
+  }
+
+  #storySubtitle {
+    font-size: 15px !important;
+  }
+
+  /* карточки становятся легче */
+  section {
+    margin: 24px 12px;
+    padding: 22px 18px;
+    border-radius: 22px;
+    box-shadow:
+      0 12px 28px rgba(0,0,0,0.12),
+      0 6px 14px rgba(0,0,0,0.08);
+  }
+
+  .story-card {
+    padding: 24px 18px;
+    margin-top: 26px;
+    border-radius: 22px;
+  }
+
+  .story-card h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .story-card p {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  /* HERO картинки — не бегущая строка, а нативный свайп */
+
+  .story-hero {
+    overflow: visible !important;
+    margin: 10px 0 20px;
+  }
+
+  .story-marquee {
+    overflow: visible !important;
+  }
+
+.story-track {
+  display: flex !important;
+  gap: 12px;
+
+  width: max-content;
+
+  overflow: visible;
+
+  animation: marquee 38s linear infinite;  /* как desktop */
+}
+
+  .story-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .story-track img {
+    flex: 0 0 42vw;
+    height: 28vw;
+
+    object-fit: cover;
+    border-radius: 14px;
+
+    scroll-snap-align: start;
+
+    box-shadow:
+      0 10px 18px rgba(0,0,0,0.15),
+      0 4px 8px rgba(0,0,0,0.08);
+  }
+
+  .story-hero::before,
+  .story-hero::after {
+    display: none !important;
+  }
+}
+
+/* 📱 MOBILE — DESKTOP STYLE MARQUEE ВНУТРИ КАРТОЧКИ */
+@media (max-width: 768px) {
+
+  .story-hero {
+    overflow: hidden !important;     /* режем по белой карточке */
+    margin: 10px 0 20px;
+  }
+
+  .story-marquee {
+    overflow: hidden !important;
+  }
+
+  .story-track {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+
+    animation: marquee 38s linear infinite;  /* как на desktop */
+  }
+
+  .story-track img {
+    width: 46%;      /* ← видно РОВНО 2 фото */
+    height: 26vw;
+    object-fit: cover;
+    border-radius: 16px;
+
+    flex-shrink: 0;
+
+    box-shadow:
+      0 10px 18px rgba(0,0,0,0.15),
+      0 4px 8px rgba(0,0,0,0.08);
+  }
+
+  .story-hero::before,
+  .story-hero::after {
+    display: none !important;
+  }
+}
+
+/* =========================
+   📱 MOBILE HAMBURGER MENU — 1:1
+   ========================= */
+
+@media (max-width: 900px) {
+
+  .wedding-nav > .nav-center,
+  .wedding-nav > .nav-left {
+    display: none !important;
+  }
+
+  .vertical-menu-btn {
+    position: fixed;
+    top: 22px;
+    right: 26px;
+
+    width: 30px;
+    height: 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    cursor: pointer;
+    z-index: 1200;
+  }
+
+  .vertical-menu-btn span {
+    height: 3px;
+    border-radius: 3px;
+    background: #732323;
+    box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  }
+
+  .vertical-menu-dropdown {
+    position: fixed;
+    top: 64px;
+    right: 26px;
+
+    width: 240px;
+    max-width: calc(100vw - 52px);
+
+    padding: 14px 18px 22px;
+
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,.92),
+      rgba(255,245,248,.88)
+    );
+
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+
+    border-radius: 18px 18px 30px 30px;
+
+    box-shadow:
+      0 32px 90px rgba(120,30,50,.35),
+      inset 0 1px 0 rgba(255,255,255,.65);
+
+    opacity: 0;
+    transform: translateY(-14px) scale(.97);
+    pointer-events: none;
+
+    transition:
+      opacity .32s ease,
+      transform .38s cubic-bezier(.22,1,.36,1);
+
+    z-index: 1200;
+
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+  }
+
+  .vertical-menu-dropdown.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .vertical-menu-dropdown .mobile-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 0 14px;
+    margin-bottom: 14px;
+
+    font-size: 16px;
+    font-weight: 500;
+    color: #732323;
+
+    cursor: pointer;
+    position: relative;
+  }
+
+  .vertical-menu-dropdown .mobile-back::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 0;
+    height: 1px;
+    background: rgba(165,33,38,.12);
+  }
+
+  .vertical-menu-dropdown .nav-center {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    position: static;
+    transform: none;
+  }
+
+  .vertical-menu-dropdown .nav-center a {
+    font-size: 16px;
+    font-weight: 500;
+    color: #6f1f1f;
+    text-decoration: none;
+    padding: 6px 0;
+  }
+
+  .vertical-menu-dropdown .nav-center a::after {
+    display: none;
+  }
+
+  .vertical-menu-dropdown .nav-center a.active {
+    color: #a52126;
+    font-weight: 560;
+  }
+}
+
+.vertical-menu-dropdown .nav-center a {
+  position: relative;
+}
+
+.vertical-menu-dropdown .nav-center a.active::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  right: -12px;
+  top: -6px;
+  bottom: -6px;
+
+  background: rgba(165,33,38,.08);
+  border-radius: 12px;
+  z-index: -1;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+<nav class="wedding-nav">
+  <div class="nav-left">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+  </div>
+
+  <div class="nav-center">
+    <a data-page="home">Home</a>
+    <a data-page="photo_gallery.html">Photo Gallery</a>
+    <a data-page="our_story.html">Our Story</a>
+    <a data-page="web-updates.html">Updates</a>
+    <a data-page="venue_map.html">Travel & Event</a>
+    <a data-page="wed_party.html">Wedding Party</a>
+    <!-- <a data-page="travel_info.html">Travel Info</a> -->
+
+    <a data-page="gift_registry.html">Gift Registry</a>
+    <a data-page="just_married.html">Just Married</a>
+  </div>
+</nav>
+
+
+
+<div class="page-shell">
+
+  <!-- HEADER -->
+  <header>
+    <h1 id="coupleName" data-hidden></h1>
+
+    <p id="storySubtitle" data-hidden style="font-size:18px;">
+  Once upon a time, there was us ❤️
+</p>
+
+  
+</header>
+
+  <!-- CONTENT -->
+  <section>
+
+<div class="story-hero">
+  <div class="story-marquee">
+    <div class="story-track" id="storyHeroImages"></div>
+  </div>
+</div>
+
+  <div class="story-card">
+    <h2>How We Met</h2>
+    <p id="how_we_met"></p>
+  </div>
+
+  <div class="story-card">
+    <h2>Growing Together</h2>
+    <p id="growing_together"></p>
+  </div>
+
+  <div class="story-card">
+    <h2>The Proposal</h2>
+    <p id="proposal"></p>
+  </div>
+
+  <div class="story-card">
+    <h2>A New Chapter Begins</h2>
+    <p id="new_chapter"></p>
+  </div>
+
+  <div class="story-card">
+    <h2>Your Own Version</h2>
+    <p id="custom"></p>
+  </div>
+
+</section>
+
+
+ </div> 
+
+  <!-- SCRIPT -->
+  <script>
+    const SUPABASE_URL = "https://octwwpatppbenqwkcqaw.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdHd3cGF0cHBiZW5xd2tjcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NjYxMjYsImV4cCI6MjA3NDU0MjEyNn0.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI";
+
+const SUPABASE_BUCKET = "galleries";
+
+function buildPublicUrl(bucket, path) {
+  if (!path) return "";
+  const trimmed = path.replace(/^\/+/, "");
+  const parts = trimmed.split("/");
+
+  if (parts.length === 1) {
+    return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${encodeURIComponent(trimmed)}`;
+  }
+
+  const folder = parts.slice(0, -1).join("/");
+  const filename = encodeURIComponent(parts.at(-1));
+  return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${folder}/${filename}`;
+}
+
+
+
+    function cap(s){
+      return s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
+    }
+
+async function loadCoupleName() {
+  const params = new URLSearchParams(location.search);
+  const token =
+    params.get("t") ||
+    params.get("token") ||
+    params.get("edit_token") ||
+    sessionStorage.getItem("rsvpToken") ||
+    "";
+
+  if (!token) return;
+
+  sessionStorage.setItem("rsvpToken", token);
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/sites?select=couple_name&edit_token=eq.${encodeURIComponent(token)}`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+        }
+      }
+    );
+
+    const arr = await res.json();
+    if (!arr || !arr.length || !arr[0].couple_name) return;
+
+    const fullName = arr[0].couple_name;
+
+    const nameEl = document.getElementById("coupleName");
+    nameEl.textContent = fullName;
+    nameEl.removeAttribute("data-hidden");
+
+    const subtitleEl = document.getElementById("storySubtitle");
+    if (subtitleEl) subtitleEl.removeAttribute("data-hidden");
+
+    document.title = `Our Story — ${fullName}`;
+
+  } catch (e) {
+    console.log("loadCoupleName error", e);
+  }
+}
+
+loadCoupleName();
+</script>
+
+<script>
+async function loadStoryImageSlider() {
+  const params = new URLSearchParams(location.search);
+  const token =
+    params.get("t") ||
+    params.get("token") ||
+    sessionStorage.getItem("rsvpToken") ||
+    "";
+
+  if (!token) return;
+
+  sessionStorage.setItem("rsvpToken", token);
+
+  const storySlots = [
+    "img2","img3","img4","img5",
+    "img13","img14","img15","img16",
+    "img50"
+  ];
+
+let rows = [];
+
+try {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/guests_photo_captions?edit_token=eq.${token}&page_key=eq.story`,
+    {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`
+      }
+    }
+  );
+
+  rows = await res.json();
+} catch {
+  return;
+}
+  if (!Array.isArray(rows)) return;
+
+  const map = Object.fromEntries(rows.map(r => [r.slot, r]));
+  const container = document.getElementById("storyHeroImages");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  let first = true;
+
+  storySlots.forEach(slot => {
+    const r = map[slot];
+    if (!r || !r.path) return;
+
+    const img = document.createElement("img");
+    img.src =
+      buildPublicUrl(SUPABASE_BUCKET, r.path) +
+      `?v=${Date.now()}`;
+
+    if (first) {
+      img.classList.add("active");
+      first = false;
+    }
+
+// внутри loadStoryImageSlider
+container.appendChild(img);
+});
+
+}
+
+function enableAutoScroll(row, speed = 0.25) {
+  let stopped = false;
+
+  function step() {
+    if (!stopped) {
+      row.scrollLeft += speed;
+      if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 1) {
+        stopped = true;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function stop() {
+    stopped = true;
+  }
+
+  row.addEventListener("mouseenter", stop);
+  row.addEventListener("wheel", stop, { passive: true });
+  row.addEventListener("touchstart", stop, { passive: true });
+  row.addEventListener("mousedown", stop);
+
+  requestAnimationFrame(step);
+}
+
+
+/* =========================
+   🍏 IMAGE CLICK ZOOM
+   ========================= */
+
+const lightbox = document.createElement("div");
+lightbox.className = "image-lightbox";
+lightbox.innerHTML = `<img />`;
+document.body.appendChild(lightbox);
+
+const lightboxImg = lightbox.querySelector("img");
+
+// клик по фото в hero
+document.addEventListener("click", (e) => {
+  const img = e.target.closest(".story-hero img");
+  if (!img) return;
+
+  lightboxImg.src = img.src;
+  lightbox.classList.add("active");
+});
+
+// закрытие по клику
+lightbox.addEventListener("click", () => {
+  lightbox.classList.remove("active");
+});
+
+// закрытие по ESC
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    lightbox.classList.remove("active");
+  }
+});
+
+
+/* =========================================
+   🍎 APPLE STYLE MARQUEE — JS DRIVEN
+   ========================================= */
+
+loadStoryImageSlider().then(() => {
+  const track = document.getElementById("storyHeroImages");
+  if (!track) return;
+// 📱 MOBILE — НИЧЕГО НЕ ДЕЛАЕМ, только grid из CSS
+if (window.innerWidth <= 768) {
+  return;
+}
+
+
+
+  if (track.children.length < 4) return;
+
+  // duplicate content (infinite)
+  track.innerHTML += track.innerHTML;
+
+  const marquee = track.closest(".story-hero");
+  if (!marquee) return;
+
+  let x = 0;
+  let velocity = 0.08; // auto-scroll speed
+  let isDragging = false;
+  let lastX = 0;
+  let rafId = null;
+
+  const render = () => {
+    x -= velocity;
+
+    // бесконечный loop
+    if (Math.abs(x) >= track.scrollWidth / 2) {
+      x = 0;
+    }
+
+    track.style.transform = `translateX(${x}px)`;
+    rafId = requestAnimationFrame(render);
+  };
+
+  const stop = () => cancelAnimationFrame(rafId);
+  const start = () => render();
+
+  /* ---------- DRAG ---------- */
+
+  const startDrag = (clientX) => {
+    isDragging = true;
+    lastX = clientX;
+    velocity = 0;
+  };
+
+  const moveDrag = (clientX) => {
+    if (!isDragging) return;
+    const dx = clientX - lastX;
+    lastX = clientX;
+    x += dx;
+    velocity = dx * 0.15;
+  };
+
+  const endDrag = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    startInertia();
+  };
+
+  /* ---------- INERTIA ---------- */
+
+  const startInertia = () => {
+    const friction = 0.95;
+
+    const step = () => {
+      velocity *= friction;
+
+      if (Math.abs(velocity) < 0.01) {
+        velocity = 0.15;
+        return;
+      }
+
+      x += velocity;
+      requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  /* ---------- EVENTS ---------- */
+
+  marquee.addEventListener("mouseenter", stop);
+  marquee.addEventListener("mouseleave", start);
+
+  marquee.addEventListener("mousedown", e => startDrag(e.clientX));
+  window.addEventListener("mousemove", e => moveDrag(e.clientX));
+  window.addEventListener("mouseup", endDrag);
+
+  marquee.addEventListener("touchstart", e => startDrag(e.touches[0].clientX), { passive: true });
+  marquee.addEventListener("touchmove", e => moveDrag(e.touches[0].clientX), { passive: true });
+  marquee.addEventListener("touchend", endDrag);
+
+  // старт
+  start();
+});
+</script>
+
+<script>
+async function loadStoryContent() {
+  const params = new URLSearchParams(location.search);
+  const token =
+    params.get("t") ||
+    params.get("token") ||
+    sessionStorage.getItem("rsvpToken") ||
+    "";
+
+  if (!token) return;
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/our_story_page?select=how_we_met,growing_together,proposal,new_chapter,custom&edit_token=eq.${token}`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+    const data = await res.json();
+    if (!data || !data.length) return;
+
+    const row = data[0];
+
+    const fields = [
+      "how_we_met",
+      "growing_together",
+      "proposal",
+      "new_chapter",
+      "custom"
+    ];
+
+    fields.forEach(key => {
+      const el = document.getElementById(key);
+      if (el && row[key]) {
+        el.innerHTML = row[key]; // 🔥 HTML из Quill
+      }
+    });
+
+  } catch (e) {
+    console.error("loadStoryContent error", e);
+  }
+}
+
+loadStoryContent();
+</script>
+
+<script>
+function getToken() {
+  const params = new URLSearchParams(location.search);
+  const token =
+    params.get("t") ||
+    params.get("token") ||
+    sessionStorage.getItem("rsvpToken") ||
+    "";
+
+  if (token) sessionStorage.setItem("rsvpToken", token);
+  return token;
+}
+
+function buildLink(path) {
+  const token = getToken();
+
+  if (path === "home") {
+    return `https://flowwed.netlify.app/index.html?t=${token}`;
+  }
+
+  if (!token) return path;
+  return `${path}?t=${token}`;
+}
+
+document.querySelectorAll("[data-page]").forEach(link => {
+  const page = link.dataset.page;
+  link.href = buildLink(page);
+});
+
+function goBack() {
+  history.length > 1 ? history.back() : window.location.href = buildLink("home");
+}
+</script>
+
+<script>
+
+(function setActiveNav() {
+  let current = location.pathname.split("/").pop();
+
+  // Netlify: /photo_gallery → photo_gallery
+  // Local: photo_gallery.html → photo_gallery
+  current = current.replace(".html", "");
+
+  document.querySelectorAll(".nav-center a").forEach(link => {
+    let page = link.dataset.page || "";
+
+    // приводим data-page к такому же виду
+    page = page.replace(".html", "");
+
+    if (page === current) {
+      link.classList.add("active");
+    }
+  });
+})();
+
+</script>
+
+
+<!-- MOBILE MENU BUTTON -->
+<div class="vertical-menu-btn" id="verticalMenuBtn">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<!-- MOBILE MENU DROPDOWN -->
+<div class="vertical-menu-dropdown" id="verticalMenuDropdown"></div>
+
+<script>
+const vBtn = document.getElementById("verticalMenuBtn");
+const vMenu = document.getElementById("verticalMenuDropdown");
+const navCenter = document.querySelector(".nav-center");
+
+let vOpen = false;
+
+if (window.innerWidth <= 900 && navCenter && vMenu.childElementCount === 0) {
+
+  const back = document.createElement("div");
+  back.className = "mobile-back";
+  back.textContent = "← Back";
+  back.onclick = goBack;
+
+  vMenu.appendChild(back);
+  vMenu.appendChild(navCenter.cloneNode(true));
+}
+
+vBtn?.addEventListener("click", e => {
+  e.stopPropagation();
+  vOpen = !vOpen;
+  vMenu.classList.toggle("open", vOpen);
+});
+
+vMenu.addEventListener("click", e => {
+  if (!e.target.closest("a")) return;
+  vOpen = false;
+  vMenu.classList.remove("open");
+});
+
+document.addEventListener("click", () => {
+  if (!vOpen) return;
+  vOpen = false;
+  vMenu.classList.remove("open");
+});
+</script>
+
+
+<div id="footer-mount"></div>
+
+<script>
+fetch("/footer.html")
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById("footer-mount").innerHTML = html;
+  });
+</script>
+
+
+</body>
+</html>
