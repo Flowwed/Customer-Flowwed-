@@ -306,6 +306,14 @@
         gap:6px;
       }
     }
+
+
+.highlight-live {
+  outline: 3px solid #ff4d6d;
+  transition: all 0.3s ease;
+}
+
+
   </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -583,6 +591,7 @@ sessionStorage.setItem("rsvpToken", token);
 
   // 👇 SCHEDULE
   const timeline = document.querySelector(".timeline");
+highlight(timeline);
   timeline.innerHTML = "";
 
   [
@@ -668,6 +677,19 @@ fetch("/footer.html")
     document.getElementById("footer-mount").innerHTML = html;
   });
 
+
+// 👉 функция подсветки (ВНЕ listener)
+function highlight(el){
+  if (!el) return;
+
+  el.classList.add("highlight-live");
+
+  setTimeout(() => {
+    el.classList.remove("highlight-live");
+  }, 800);
+}
+
+
 window.addEventListener("message", (event) => {
   if (!event.data || event.data.type !== "LIVE_UPDATE") return;
 
@@ -709,6 +731,7 @@ window.addEventListener("message", (event) => {
 
   // 👇 FLIGHTS
   const flights = document.querySelector(".card:nth-of-type(2) p");
+highlight(flights.closest(".card"));
   if (flights) {
     flights.innerHTML = `
       ${data.flightsText || ""}
@@ -721,6 +744,7 @@ window.addEventListener("message", (event) => {
 
   // 👇 HOTELS
   const hotels = document.querySelector(".card:nth-of-type(3) ul");
+highlight(hotels.closest(".card"));
   if (hotels) {
     hotels.innerHTML = `
       <li>${data.hotel1 || ""}</li>
@@ -731,6 +755,7 @@ window.addEventListener("message", (event) => {
 
   // 👇 VENUE
   const venue = document.querySelector(".venue-box");
+highlight(venue.closest(".card"));
   if (venue) {
     venue.innerHTML = `
       <b>${data.venueName || ""}</b><br>
@@ -743,12 +768,14 @@ window.addEventListener("message", (event) => {
 
   // 👇 DRESS CODE
   const dress = document.querySelector(".card:nth-of-type(5) p");
+highlight(dress.closest(".card"));
   if (dress) {
     dress.innerHTML = data.dressCode || "";
   }
 
   // 👇 FAQ
   const faq = document.querySelector(".faq-list");
+highlight(faq.closest(".card"));
   if (faq) {
     faq.innerHTML = "";
 
