@@ -667,6 +667,111 @@ fetch("/footer.html")
   .then(html => {
     document.getElementById("footer-mount").innerHTML = html;
   });
+
+window.addEventListener("message", (event) => {
+  if (!event.data || event.data.type !== "LIVE_UPDATE") return;
+
+  const data = event.data.data;
+
+  // 👇 COUPLE NAME
+  if (data.coupleName) {
+    document.getElementById("coupleName").textContent = data.coupleName;
+  }
+
+  // 👇 SUBTITLE
+  if (data.heroSubtitle) {
+    const el = document.querySelector(".hero-subtitle");
+    if (el) el.textContent = data.heroSubtitle;
+  }
+
+  // 👇 SCHEDULE
+  const timeline = document.querySelector(".timeline");
+  if (timeline) {
+    timeline.innerHTML = "";
+
+    [
+      [data.scheduleTime1, data.scheduleText1],
+      [data.scheduleTime2, data.scheduleText2],
+      [data.scheduleTime3, data.scheduleText3],
+      [data.scheduleTime4, data.scheduleText4]
+    ]
+    .filter(([t, txt]) => t || txt)
+    .forEach(([t, txt]) => {
+      const el = document.createElement("div");
+      el.className = "timeline-item";
+      el.innerHTML = `
+        <div class="timeline-time">${t || ""}</div>
+        <div class="timeline-text">${txt || ""}</div>
+      `;
+      timeline.appendChild(el);
+    });
+  }
+
+  // 👇 FLIGHTS
+  const flights = document.querySelector(".card:nth-of-type(2) p");
+  if (flights) {
+    flights.innerHTML = `
+      ${data.flightsText || ""}
+      <br><br>
+      <b>Airport:</b> ${data.airport || ""}
+      <br>
+      <b>Transfer:</b> ${data.transferTime || ""}
+    `;
+  }
+
+  // 👇 HOTELS
+  const hotels = document.querySelector(".card:nth-of-type(3) ul");
+  if (hotels) {
+    hotels.innerHTML = `
+      <li>${data.hotel1 || ""}</li>
+      <li>${data.hotel2 || ""}</li>
+      <li>${data.hotel3 || ""}</li>
+    `;
+  }
+
+  // 👇 VENUE
+  const venue = document.querySelector(".venue-box");
+  if (venue) {
+    venue.innerHTML = `
+      <b>${data.venueName || ""}</b><br>
+      ${data.venueAddress || ""}<br>
+      <a class="map-link" href="${data.mapLink || "#"}" target="_blank">
+        Open in Google Maps
+      </a>
+    `;
+  }
+
+  // 👇 DRESS CODE
+  const dress = document.querySelector(".card:nth-of-type(5) p");
+  if (dress) {
+    dress.innerHTML = data.dressCode || "";
+  }
+
+  // 👇 FAQ
+  const faq = document.querySelector(".faq-list");
+  if (faq) {
+    faq.innerHTML = "";
+
+    [
+      [data.faqQ1, data.faqA1],
+      [data.faqQ2, data.faqA2],
+      [data.faqQ3, data.faqA3],
+      [data.faqQ4, data.faqA4]
+    ]
+    .filter(([q, a]) => q || a)
+    .forEach(([q, a]) => {
+      const el = document.createElement("div");
+      el.className = "faq-item";
+      el.innerHTML = `
+        <div class="faq-q">${q || ""}</div>
+        <div class="faq-a">${a || ""}</div>
+      `;
+      faq.appendChild(el);
+    });
+  }
+});
+
+
 </script>
 
 <script src="/header-data.js"></script>
