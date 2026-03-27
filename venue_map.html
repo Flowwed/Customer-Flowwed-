@@ -794,11 +794,12 @@ console.log("SCROLL FIELD:", changedField);
     target = document.querySelector(".timeline");
   }
 
-  else if (
-    changedField === "airport" ||
-    changedField === "transferTime" ||
-    changedField === "flightsText"
-  ) {
+ else if (
+  changedField === "airport" ||
+  changedField === "transferTime" ||
+  changedField === "flightsText" ||
+  changedField === "gettingAround"
+) {
     target = document.querySelector(".card:nth-of-type(2)");
   }
 
@@ -827,6 +828,8 @@ console.log("SCROLL FIELD:", changedField);
   ) {
     target = document.querySelector(".faq-list");
   }
+
+console.log("TARGET:", target);
 
   if (target) {
     target.scrollIntoView({
