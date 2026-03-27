@@ -678,16 +678,17 @@ if (weddingDate) {
   if (!dateEl) {
     dateEl = document.createElement("div");
     dateEl.id = "eventDate";
+
     dateEl.style.marginTop = "8px";
-    dateEl.style.fontSize = "16px";
+    dateEl.style.fontSize = "18px";
     dateEl.style.opacity = "0.9";
+    dateEl.style.fontWeight = "500";
 
     document.getElementById("coupleName").after(dateEl);
   }
 
   dateEl.textContent = formatted;
 }
-
   const coupleNameEl = document.getElementById("coupleName");
   const subtitleEl = document.getElementById("subtitle");
 
