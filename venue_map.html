@@ -669,25 +669,11 @@ fetch("/footer.html")
   });
 
 
-function scrollToBlock(el){
-  if (!el) return;
-
-  const rect = el.getBoundingClientRect();
-  const absoluteTop = rect.top + window.scrollY;
-
-  // 👇 отступ сверху (чтобы не прилипало к самому верху)
-  const offset = 120;
-
-  window.scrollTo({
-    top: absoluteTop - offset,
-    behavior: "smooth"
-  });
-}
-
 window.addEventListener("message", (event) => {
   if (!event.data || event.data.type !== "LIVE_UPDATE") return;
 
   const data = event.data.data;
+ const changedField = event.data.field; // 👈 ДОБАВИЛИ
 
   // 👇 COUPLE NAME
   if (data.coupleName) {
@@ -702,7 +688,6 @@ window.addEventListener("message", (event) => {
 
   // 👇 SCHEDULE
   const timeline = document.querySelector(".timeline");
-scrollToBlock(timeline);
   if (timeline) {
     timeline.innerHTML = "";
 
@@ -726,7 +711,6 @@ scrollToBlock(timeline);
 
   // 👇 FLIGHTS
   const flights = document.querySelector(".card:nth-of-type(2) p");
-scrollToBlock(flights.closest(".card"));
   if (flights) {
     flights.innerHTML = `
       ${data.flightsText || ""}
@@ -739,7 +723,6 @@ scrollToBlock(flights.closest(".card"));
 
   // 👇 HOTELS
   const hotels = document.querySelector(".card:nth-of-type(3) ul");
-scrollToBlock(hotels.closest(".card"));
   if (hotels) {
     hotels.innerHTML = `
       <li>${data.hotel1 || ""}</li>
@@ -750,7 +733,6 @@ scrollToBlock(hotels.closest(".card"));
 
   // 👇 VENUE
   const venue = document.querySelector(".venue-box");
-scrollToBlock(hotels.closest(".card"));
   if (venue) {
     venue.innerHTML = `
       <b>${data.venueName || ""}</b><br>
@@ -763,14 +745,13 @@ scrollToBlock(hotels.closest(".card"));
 
   // 👇 DRESS CODE
   const dress = document.querySelector(".card:nth-of-type(5) p");
-scrollToBlock(dress.closest(".card"));
   if (dress) {
     dress.innerHTML = data.dressCode || "";
   }
 
   // 👇 FAQ
   const faq = document.querySelector(".faq-list");
-scrollToBlock(faq.closest(".card"));
+
   if (faq) {
     faq.innerHTML = "";
 
@@ -791,8 +772,68 @@ scrollToBlock(faq.closest(".card"));
       faq.appendChild(el);
     });
   }
-});
 
+  // =========================
+  // 👇 ЕДИНСТВЕННЫЙ SCROLL (добавляем здесь)
+  // =========================
+
+  let target = null;
+
+  if (
+    changedField === "scheduleTime1" ||
+    changedField === "scheduleText1" ||
+    changedField === "scheduleTime2" ||
+    changedField === "scheduleText2" ||
+    changedField === "scheduleTime3" ||
+    changedField === "scheduleText3" ||
+    changedField === "scheduleTime4" ||
+    changedField === "scheduleText4"
+  ) {
+    target = document.querySelector(".timeline");
+  }
+
+  else if (
+    changedField === "airport" ||
+    changedField === "transferTime" ||
+    changedField === "flightsText"
+  ) {
+    target = document.querySelector(".card:nth-of-type(2)");
+  }
+
+  else if (
+    changedField === "hotel1" ||
+    changedField === "hotel2" ||
+    changedField === "hotel3"
+  ) {
+    target = document.querySelector(".card:nth-of-type(3)");
+  }
+
+  else if (
+    changedField === "venueName" ||
+    changedField === "mapLink" ||
+    changedField === "venueAddress" ||
+    changedField === "venueNote"
+  ) {
+    target = document.querySelector(".venue-box");
+  }
+
+  else if (
+    changedField === "faqQ1" || changedField === "faqA1" ||
+    changedField === "faqQ2" || changedField === "faqA2" ||
+    changedField === "faqQ3" || changedField === "faqA3" ||
+    changedField === "faqQ4" || changedField === "faqA4"
+  ) {
+    target = document.querySelector(".faq-list");
+  }
+
+  if (target) {
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+});
 
 </script>
 
