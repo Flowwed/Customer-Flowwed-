@@ -672,12 +672,17 @@ fetch("/footer.html")
 function scrollToBlock(el){
   if (!el) return;
 
-  el.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
+  const rect = el.getBoundingClientRect();
+  const absoluteTop = rect.top + window.scrollY;
+
+  // 👇 отступ сверху (чтобы не прилипало к самому верху)
+  const offset = 120;
+
+  window.scrollTo({
+    top: absoluteTop - offset,
+    behavior: "smooth"
   });
 }
-
 
 window.addEventListener("message", (event) => {
   if (!event.data || event.data.type !== "LIVE_UPDATE") return;
