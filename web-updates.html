@@ -569,7 +569,7 @@ section {
   <!-- HEADER -->
   <header>
     <h1 id="coupleName" data-hidden></h1>
-
+<div id="eventDate" style="margin-top:8px; font-size:18px; opacity:0.9; font-weight:500;" data-hidden></div>
     <p id="storySubtitle" data-hidden style="font-size:18px;">
   What’s new, what’s next 🔔
 </p>
@@ -629,7 +629,7 @@ async function loadCoupleName(token){
 
   try{
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/sites?select=couple_name&edit_token=eq.${encodeURIComponent(token)}`,
+      `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date&edit_token=eq.${encodeURIComponent(token)}`,
       {
         headers:{
           apikey: SUPABASE_KEY,
@@ -643,6 +643,25 @@ console.log("RESULT:", arr);
     if(!arr || !arr.length) return;
 
     const fullName = arr[0].couple_name;
+
+const weddingDate = arr[0].wedding_date;
+
+if (weddingDate) {
+  const d = new Date(weddingDate);
+
+  const formatted = d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+
+  const dateEl = document.getElementById("eventDate");
+  if (dateEl) {
+    dateEl.textContent = formatted;
+    dateEl.removeAttribute("data-hidden");
+  }
+}
+
     if(!fullName) return;
 
     const nameEl = document.getElementById("coupleName");
