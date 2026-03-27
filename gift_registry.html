@@ -661,6 +661,33 @@ async function loadCoupleName() {
 
   const name = data.couple_name;
 
+
+const weddingDate = data.wedding_date;
+
+if (weddingDate) {
+  const d = new Date(weddingDate);
+
+  const formatted = d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+
+  let dateEl = document.getElementById("eventDate");
+
+  if (!dateEl) {
+    dateEl = document.createElement("div");
+    dateEl.id = "eventDate";
+    dateEl.style.marginTop = "8px";
+    dateEl.style.fontSize = "16px";
+    dateEl.style.opacity = "0.9";
+
+    document.getElementById("coupleName").after(dateEl);
+  }
+
+  dateEl.textContent = formatted;
+}
+
   const coupleNameEl = document.getElementById("coupleName");
   const subtitleEl = document.getElementById("subtitle");
 
