@@ -668,6 +668,17 @@ fetch("/footer.html")
     document.getElementById("footer-mount").innerHTML = html;
   });
 
+
+function scrollToBlock(el){
+  if (!el) return;
+
+  el.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+
 window.addEventListener("message", (event) => {
   if (!event.data || event.data.type !== "LIVE_UPDATE") return;
 
@@ -686,6 +697,7 @@ window.addEventListener("message", (event) => {
 
   // 👇 SCHEDULE
   const timeline = document.querySelector(".timeline");
+scrollToBlock(timeline);
   if (timeline) {
     timeline.innerHTML = "";
 
@@ -709,6 +721,7 @@ window.addEventListener("message", (event) => {
 
   // 👇 FLIGHTS
   const flights = document.querySelector(".card:nth-of-type(2) p");
+scrollToBlock(flights.closest(".card"));
   if (flights) {
     flights.innerHTML = `
       ${data.flightsText || ""}
@@ -721,6 +734,7 @@ window.addEventListener("message", (event) => {
 
   // 👇 HOTELS
   const hotels = document.querySelector(".card:nth-of-type(3) ul");
+scrollToBlock(hotels.closest(".card"));
   if (hotels) {
     hotels.innerHTML = `
       <li>${data.hotel1 || ""}</li>
@@ -731,6 +745,7 @@ window.addEventListener("message", (event) => {
 
   // 👇 VENUE
   const venue = document.querySelector(".venue-box");
+scrollToBlock(hotels.closest(".card"));
   if (venue) {
     venue.innerHTML = `
       <b>${data.venueName || ""}</b><br>
@@ -743,12 +758,14 @@ window.addEventListener("message", (event) => {
 
   // 👇 DRESS CODE
   const dress = document.querySelector(".card:nth-of-type(5) p");
+scrollToBlock(dress.closest(".card"));
   if (dress) {
     dress.innerHTML = data.dressCode || "";
   }
 
   // 👇 FAQ
   const faq = document.querySelector(".faq-list");
+scrollToBlock(faq.closest(".card"));
   if (faq) {
     faq.innerHTML = "";
 
