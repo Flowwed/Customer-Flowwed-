@@ -653,7 +653,7 @@ async function loadCoupleName() {
 
   const { data, error } = await supabase
     .from("sites")
-    .select("couple_name")
+    .select("couple_name,wedding_date")
     .eq("edit_token", token)
     .single();
 
