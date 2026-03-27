@@ -675,6 +675,8 @@ window.addEventListener("message", (event) => {
   const data = event.data.data;
  const changedField = event.data.field; // 👈 ДОБАВИЛИ
 
+console.log("SCROLL FIELD:", changedField);
+
   // 👇 COUPLE NAME
   if (data.coupleName) {
     document.getElementById("coupleName").textContent = data.coupleName;
