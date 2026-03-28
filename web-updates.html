@@ -500,6 +500,11 @@ section {
   color:#a52126;
 }
 
+#how_we_met {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
 
   </style>
 </head>
@@ -546,7 +551,7 @@ section {
 <section>
   <div class="story-card">
     <h2>Updates</h2>
-    <p id="how_we_met"></p>
+    <div id="how_we_met"></div>
   </div>
 </section>
 
@@ -689,11 +694,14 @@ if (el && Array.isArray(row.wed_updates)) {
       day: "numeric"
     });
 
-    html += `
-      <p><strong>${date}</strong></p>
-      ${u.content}
-    `;
-  });
+html += `
+  <div style="margin-bottom:20px;">
+    <p><strong>${date}</strong></p>
+    ${u.content}
+  </div>
+`;  
+
+});
 
   el.innerHTML = html;
 }
