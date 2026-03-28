@@ -832,40 +832,45 @@ function goBack() {
 </script>
 
 <script>
-const vBtn = document.getElementById("hamburgerBtn");
-const vMenu = document.getElementById("mobileMenu");
-const navCenter = document.querySelector(".nav-center");
+document.addEventListener("DOMContentLoaded", () => {
 
-let vOpen = false;
+  const vBtn = document.getElementById("hamburgerBtn");
+  const vMenu = document.getElementById("mobileMenu");
+  const navCenter = document.querySelector(".nav-center");
 
-if (window.innerWidth <= 900 && navCenter && vMenu.childElementCount === 0) {
+  let vOpen = false;
 
-  const back = document.createElement("div");
-  back.className = "mobile-back";
-  back.textContent = "← Back";
-  back.onclick = goBack;
+  if (window.innerWidth <= 900 && navCenter && vMenu && vMenu.childElementCount === 0) {
 
-  vMenu.appendChild(back);
-  vMenu.appendChild(navCenter.cloneNode(true));
-}
+    const back = document.createElement("div");
+    back.className = "mobile-back";
+    back.textContent = "← Back";
+    back.onclick = goBack;
 
-vBtn?.addEventListener("click", e => {
-  e.stopPropagation();
-  vOpen = !vOpen;
-  vMenu.classList.toggle("open", vOpen);
+    vMenu.appendChild(back);
+    vMenu.appendChild(navCenter.cloneNode(true));
+  }
+
+  vBtn?.addEventListener("click", e => {
+    e.stopPropagation();
+    vOpen = !vOpen;
+    vMenu.classList.toggle("open", vOpen);
+  });
+
+  vMenu?.addEventListener("click", e => {
+    if (!e.target.closest("a")) return;
+    vOpen = false;
+    vMenu.classList.remove("open");
+  });
+
+  document.addEventListener("click", () => {
+    if (!vOpen) return;
+    vOpen = false;
+    vMenu.classList.remove("open");
+  });
+
 });
 
-vMenu.addEventListener("click", e => {
-  if (!e.target.closest("a")) return;
-  vOpen = false;
-  vMenu.classList.remove("open");
-});
-
-document.addEventListener("click", () => {
-  if (!vOpen) return;
-  vOpen = false;
-  vMenu.classList.remove("open");
-});
 </script>
 
 
