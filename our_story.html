@@ -1213,9 +1213,22 @@ fields.forEach(key => {
 
   if (cleaned) {
     el.innerHTML = cleaned;
-    if (card) card.style.display = "block";  // 🔥 защита
+
+    if (card) {
+      card.style.display = "block";
+
+      // 🔥 плавное появление БЕЗ вспышки
+      card.style.opacity = "0";
+
+      requestAnimationFrame(() => {
+        card.style.transition = "all 0.4s ease";
+        card.style.opacity = "1";
+        card.style.transform = "translateY(0)";
+      });
+    }
+
   } else {
-    if (card) card.style.display = "none";   // 🔥 защита
+    if (card) card.style.display = "none";
   }
 });
 
