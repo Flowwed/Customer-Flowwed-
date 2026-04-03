@@ -182,10 +182,6 @@ section {
   margin-top: 6px;
 }
 
-/* убираем мусор от Quill */
-.story-card p:empty {
-  display: none;
-}
 
 /* иногда Quill вставляет <p><br></p> */
 .story-card p:has(br:only-child) {
@@ -294,11 +290,6 @@ section {
 }
 
 /* ===== TEXTAREA-LIKE MODE FOR STORY ===== */
-.story-card p {
-  margin: 0;               /* ❗ убираем ВСЕ отступы */
-  padding: 0;
-  line-height: 1.35;       /* как textarea */
-}
 
 /* Quill иногда вставляет пустые <p><br></p> */
 .story-card p:empty {
