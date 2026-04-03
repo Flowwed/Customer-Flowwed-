@@ -124,6 +124,7 @@ section {
   
 }
 
+
 /* ====== ОТДЕЛЬНАЯ КАРТОЧКА ====== */
 .story-card {
   margin-top: 50px;
@@ -148,28 +149,41 @@ section {
 
 /* эффект парения */
 .story-card:hover {
-  transform: none;
+  transform: translateY(-6px);
   box-shadow:
     0 45px 90px rgba(0, 0, 0, 0.22),
     0 18px 36px rgba(0, 0, 0, 0.14);
 }
 
-/* заголовок */
+/* заголовок (из Quill) */
 .story-card h2 {
-  font-size: 32px;
-  margin-bottom: 18px;
+  font-size: 28px;
+  margin-bottom: 12px;
   color: #a52126;
 }
 
-/* текст */
+/* текст (из Quill <p>) */
 .story-card p {
-  font-size: 18px;
-  line-height: 1.75;
+  font-size: 16px;
+  line-height: 1.35;
   color: #6f2a2a;
+
+  margin: 0;
+  padding: 0;
 }
 
+/* убираем пустые параграфы от Quill */
+.story-card p:empty {
+  display: none;
+}
 
-/* HERO */
+/* переносы строк */
+.story-card br {
+  display: block;
+  margin-top: 0;
+}
+
+/* ====== HERO ====== */
 .story-hero {
   max-width: 1100px;
   margin: 40px auto 60px;
@@ -209,7 +223,6 @@ section {
     0 18px 30px rgba(0,0,0,0.18),
     0 6px 14px rgba(0,0,0,0.12);
 }
-
 /* APPLE MARQUEE */
 @keyframes marquee {
   from {
@@ -815,31 +828,25 @@ section {
   </div>
 </div>
 
-  <div class="story-card">
-    <h2>How We Met</h2>
-    <p id="how_we_met"></p>
-  </div>
+<div class="story-card">
+  <div id="how_we_met"></div>
+</div>
 
-  <div class="story-card">
-    <h2>Growing Together</h2>
-    <p id="growing_together"></p>
-  </div>
+<div class="story-card">
+  <div id="growing_together"></div>
+</div>
 
-  <div class="story-card">
-    <h2>The Proposal</h2>
-    <p id="proposal"></p>
-  </div>
+<div class="story-card">
+  <div id="proposal"></div>
+</div>
 
-  <div class="story-card">
-    <h2>A New Chapter Begins</h2>
-    <p id="new_chapter"></p>
-  </div>
+<div class="story-card">
+  <div id="new_chapter"></div>
+</div>
 
-  <div class="story-card">
-    <h2>Your Own Version</h2>
-    <p id="custom"></p>
-  </div>
-
+<div class="story-card">
+  <div id="custom"></div>
+</div>
 </section>
 
 
