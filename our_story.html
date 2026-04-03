@@ -1200,12 +1200,22 @@ async function loadStoryContent() {
       "custom"
     ];
 
-    fields.forEach(key => {
-      const el = document.getElementById(key);
-      if (el && row[key]) {
-        el.innerHTML = row[key]; // 🔥 HTML из Quill
-      }
-    });
+fields.forEach(key => {
+  const el = document.getElementById(key);
+  if (!el) return;
+
+  const card = el.closest(".story-card");
+
+  // 🔥 чистим HTML от пустоты (Quill даёт <p><br></p>)
+  const content = (row[key] || "").replace(/<p><br><\/p>/g, "").trim();
+
+  if (content) {
+    el.innerHTML = content;
+    card.style.display = "block";   // ✅ показываем
+  } else {
+    card.style.display = "none";    // ❌ скрываем полностью
+  }
+});
 
   } catch (e) {
     console.error("loadStoryContent error", e);
