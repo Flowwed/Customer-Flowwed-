@@ -162,27 +162,47 @@ section {
   color: #a52126;
 }
 
-/* текст (из Quill <p>) */
+/* ===== TEXT (PREMIUM TYPOGRAPHY) ===== */
 .story-card p {
-  font-size: 17px;
-  line-height: 1.35;
+  font-size: 18px;
+  line-height: 1.7;
   color: #6f2a2a;
 
-  margin: 0;
+  margin: 0 0 18px 0;   /* 🔥 расстояние между абзацами */
   padding: 0;
 }
 
-/* убираем пустые параграфы от Quill */
+/* последний абзац без лишнего отступа */
+.story-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* заголовок + текст spacing */
+.story-card h2 + p {
+  margin-top: 6px;
+}
+
+/* убираем мусор от Quill */
 .story-card p:empty {
   display: none;
 }
 
-/* переносы строк */
-.story-card br {
-  display: block;
-  margin-top: 0;
+/* иногда Quill вставляет <p><br></p> */
+.story-card p:has(br:only-child) {
+  display: none;
 }
 
+/* перенос строки как мягкий break */
+.story-card br {
+  display: block;
+  content: "";
+  margin-top: 6px;
+}
+
+/* чуть улучшает читаемость длинных текстов */
+.story-card {
+  letter-spacing: 0.2px;
+}
 /* ====== HERO ====== */
 .story-hero {
   max-width: 1100px;
@@ -1213,14 +1233,16 @@ fields.forEach(key => {
 
   const card = el.closest(".story-card");
 
-  // 🔥 чистим HTML от пустоты (Quill даёт <p><br></p>)
-  const content = (row[key] || "").replace(/<p><br><\/p>/g, "").trim();
+  const cleaned = (row[key] || "")
+    .replace(/<p><br><\/p>/g, "")
+    .replace(/<p>\s*<\/p>/g, "")
+    .trim();
 
-  if (content) {
-    el.innerHTML = content;
-    card.style.display = "block";   // ✅ показываем
+  if (cleaned) {
+    el.innerHTML = cleaned;
+    if (card) card.style.display = "block";  // 🔥 защита
   } else {
-    card.style.display = "none";    // ❌ скрываем полностью
+    if (card) card.style.display = "none";   // 🔥 защита
   }
 });
 
