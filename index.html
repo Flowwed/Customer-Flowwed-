@@ -892,7 +892,9 @@ videoBox.innerHTML = "";
 
 // источник
 
-const videoSrc = "https://www.w3schools.com/html/mov_bbb.mp4";
+const videoSrc = siteData.video_url || siteData.video_path;
+
+console.log("VIDEO PATH:", siteData.video_path); // ← ВОТ СЮДА
 
 if (!videoSrc) {
   console.log("No video");
