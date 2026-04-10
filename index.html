@@ -804,7 +804,7 @@ async function loadSiteData() {
     // 1️⃣ ищем в sites
 
 const siteRes = await fetch(
-  `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date,video_url,video_path&edit_token=eq.${encodeURIComponent(tk)}`,
+  `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date,video_url,video_path,stdvideo_url,fallback_url&edit_token=eq.${encodeURIComponent(tk)}`,
   {
     headers: {
       apikey: SUPABASE_KEY,
@@ -812,13 +812,14 @@ const siteRes = await fetch(
     }
   }
 );
-    const siteData = await siteRes.json();
-    if (siteData.length) return siteData[0];
 
-    // 2️⃣ если не нашли — ищем в reserves
+const siteData = await siteRes.json();
+if (siteData.length) return siteData[0];
+
+// 2️⃣ если не нашли — ищем в reserves
 
 const reserveRes = await fetch(
-  `${SUPABASE_URL}/rest/v1/reserves?select=couple_name,video_url,video_path&rsvptoken=eq.${encodeURIComponent(tk)}`,
+  `${SUPABASE_URL}/rest/v1/reserves?select=couple_name,video_url,video_path,stdvideo_url,fallback_url&rsvptoken=eq.${encodeURIComponent(tk)}`,
   {
     headers: {
       apikey: SUPABASE_KEY,
@@ -826,6 +827,7 @@ const reserveRes = await fetch(
     }
   }
 );
+
     const reserveData = await reserveRes.json();
     if (reserveData.length) return reserveData[0];
 
