@@ -835,8 +835,9 @@ async function loadSiteData() {
     console.error("loadSiteData failed:", e);
     return null;
   }
+}
 
-}(async()=>{
+(async()=>{
 const couplePromise = loadSiteData();
  await wait(1500);
 
@@ -879,55 +880,85 @@ if (siteData) {
     }
   }
 
-const videoBox = document.getElementById("video");
-const iframe = videoBox.querySelector("iframe");
-
-// 🔥 очищаем только если был video
+}
 
 const videoBox = document.getElementById("video");
 
-// чистим полностью контейнер
+// чистим контейнер
 videoBox.innerHTML = "";
 
-// объединяем источник (что есть — то и показываем)
+// источник
+
 const videoSrc = siteData.video_url || siteData.video_path;
 
-
-if (!videoSrc) return;
-
-// если это MP4 (или путь из storage)
-if (videoSrc.endsWith(".mp4") || siteData.video_path) {
-
-  const video = document.createElement("video");
-
-  video.src = siteData.video_path
-    ? `https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/galleries/${siteData.video_path}`
-    : videoSrc;
-
-  video.controls = true;
-  video.autoplay = true;
-  video.playsInline = true;
-
-  video.style.width = "100%";
-  video.style.height = "100%";
-
-  videoBox.appendChild(video);
-
+if (!videoSrc) {
+  console.log("No video");
 } else {
 
-  // иначе считаем что это Vimeo / iframe
-  const iframe = document.createElement("iframe");
+  if (videoSrc.endsWith(".mp4") || siteData.video_path) {
 
-  iframe.src = videoSrc;
-  iframe.style.width = "100%";
-  iframe.style.height = "100%";
-  iframe.frameBorder = "0";
+    const video = document.createElement("video");
 
-  videoBox.appendChild(iframe);
+    video.src = siteData.video_path
+      ? `https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/galleries/${siteData.video_path}`
+      : videoSrc;
+
+    video.controls = true;
+    video.autoplay = true;
+    video.muted = true;
+    video.playsInline = true;
+
+    video.style.width = "100%";
+    video.style.height = "100%";
+
+    videoBox.appendChild(video);
+
+  } else {
+
+    const iframe = document.createElement("iframe");
+
+    iframe.src = videoSrc;
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.frameBorder = "0";
+
+    videoBox.appendChild(iframe);
+  }
+
 }
 
 
-  const FULL = [
+let FULL = "";
+
+if (siteData) {
+  if (siteData.couple_name) {
+    coupleName = siteData.couple_name;
+
+    const nameEl = document.getElementById("coupleName");
+    nameEl.textContent = siteData.couple_name;
+
+    setTimeout(() => {
+      nameEl.classList.add("show");
+    }, 200);
+  }
+
+  if (siteData.wedding_date) {
+    const d = new Date(siteData.wedding_date);
+
+    const formatted = d.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+
+    const dateEl = document.getElementById("eventDate");
+    if (dateEl) {
+      dateEl.textContent = formatted;
+    }
+  }
+
+  // 👇 ВАЖНО: FULL ВНУТРИ ТОГО ЖЕ БЛОКА
+  FULL = [
     "Dear friends,",
     "",
     "Welcome to our small corner of the world.",
@@ -939,7 +970,7 @@ if (videoSrc.endsWith(".mp4") || siteData.video_path) {
     "With love,",
     coupleName || "Your Names"
   ].join("\n");
-
+}
 
 await type(FULL, true);
 
