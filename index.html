@@ -882,9 +882,14 @@ if (siteData) {
 const videoBox = document.getElementById("video");
 const iframe = videoBox.querySelector("iframe");
 
-// 🔥 1. Vimeo (ПРИОРИТЕТ)
+// 🔥 очищаем только если был video
+const existingVideo = videoBox.querySelector("video");
+if (existingVideo) existingVideo.remove();
+
+// 🔥 1. Vimeo (приоритет)
 if (siteData.video_url) {
 
+  iframe.style.display = "block";
   iframe.src = siteData.video_url;
 
   const player = new Vimeo.Player(iframe);
@@ -895,8 +900,10 @@ if (siteData.video_url) {
 
 }
 
-// 🔥 2. MP4 (fallback)
+// 🔥 2. MP4 fallback
 else if (siteData.video_path) {
+
+  iframe.style.display = "none";
 
   const video = document.createElement("video");
 
@@ -910,7 +917,6 @@ else if (siteData.video_path) {
   video.style.width = "100%";
   video.style.height = "100%";
 
-  videoBox.innerHTML = "";
   videoBox.appendChild(video);
 
 }
