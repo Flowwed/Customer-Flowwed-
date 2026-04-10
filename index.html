@@ -882,8 +882,21 @@ if (siteData) {
 const videoBox = document.getElementById("video");
 const iframe = videoBox.querySelector("iframe");
 
-// 🔥 1. MP4 из Supabase (пока просто fallback)
-if (siteData.video_path) {
+// 🔥 1. Vimeo (ПРИОРИТЕТ)
+if (siteData.video_url) {
+
+  iframe.src = siteData.video_url;
+
+  const player = new Vimeo.Player(iframe);
+
+  player.ready().then(() => {
+    player.setVolume(0.7);
+  });
+
+}
+
+// 🔥 2. MP4 (fallback)
+else if (siteData.video_path) {
 
   const video = document.createElement("video");
 
@@ -893,6 +906,7 @@ if (siteData.video_path) {
   video.controls = true;
   video.autoplay = true;
   video.playsInline = true;
+
   video.style.width = "100%";
   video.style.height = "100%";
 
@@ -901,20 +915,6 @@ if (siteData.video_path) {
 
 }
 
-// 🔥 2. Vimeo (как было)
-else if (siteData.video_url) {
-
-  iframe.src = siteData.video_url;
-
-  const player = new Vimeo.Player(iframe);
-
-  player.ready().then(() => {
-    player.setVolume(0.7);
-  });
-}
-
-
-}
 
   const FULL = [
     "Dear friends,",
