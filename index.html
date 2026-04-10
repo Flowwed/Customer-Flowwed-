@@ -879,8 +879,30 @@ if (siteData) {
     }
   }
 
-  if (siteData.video_url) {
-  const iframe = document.querySelector(".video iframe");
+const videoBox = document.getElementById("video");
+const iframe = videoBox.querySelector("iframe");
+
+// 🔥 1. MP4 из Supabase (пока просто fallback)
+if (siteData.video_path) {
+
+  const video = document.createElement("video");
+
+  video.src =
+    `https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/galleries/${siteData.video_path}`;
+
+  video.controls = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.style.width = "100%";
+  video.style.height = "100%";
+
+  videoBox.innerHTML = "";
+  videoBox.appendChild(video);
+
+}
+
+// 🔥 2. Vimeo (как было)
+else if (siteData.video_url) {
 
   iframe.src = siteData.video_url;
 
@@ -890,6 +912,8 @@ if (siteData) {
     player.setVolume(0.7);
   });
 }
+
+
 }
 
   const FULL = [
