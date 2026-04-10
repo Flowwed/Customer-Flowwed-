@@ -892,7 +892,13 @@ videoBox.innerHTML = "";
 
 // источник
 
-const videoSrc = siteData.video_url || siteData.video_path;
+const videoSrc =
+  siteData.video_url ||
+  siteData.video_path ||
+  siteData.stdvideo_url ||
+  siteData.fallback_url;
+
+
 
 console.log("VIDEO PATH:", siteData.video_path); // ← ВОТ СЮДА
 
