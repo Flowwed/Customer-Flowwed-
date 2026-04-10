@@ -883,32 +883,26 @@ const videoBox = document.getElementById("video");
 const iframe = videoBox.querySelector("iframe");
 
 // 🔥 очищаем только если был video
-const existingVideo = videoBox.querySelector("video");
-if (existingVideo) existingVideo.remove();
 
-// 🔥 1. Vimeo (приоритет)
-if (siteData.video_url) {
+const videoBox = document.getElementById("video");
 
-  iframe.style.display = "block";
-  iframe.src = siteData.video_url;
+// чистим полностью контейнер
+videoBox.innerHTML = "";
 
-  const player = new Vimeo.Player(iframe);
+// объединяем источник (что есть — то и показываем)
+const videoSrc = siteData.video_url || siteData.video_path;
 
-  player.ready().then(() => {
-    player.setVolume(0.7);
-  });
 
-}
+if (!videoSrc) return;
 
-// 🔥 2. MP4 fallback
-else if (siteData.video_path) {
-
-  iframe.style.display = "none";
+// если это MP4 (или путь из storage)
+if (videoSrc.endsWith(".mp4") || siteData.video_path) {
 
   const video = document.createElement("video");
 
-  video.src =
-    `https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/galleries/${siteData.video_path}`;
+  video.src = siteData.video_path
+    ? `https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/galleries/${siteData.video_path}`
+    : videoSrc;
 
   video.controls = true;
   video.autoplay = true;
@@ -919,9 +913,19 @@ else if (siteData.video_path) {
 
   videoBox.appendChild(video);
 
+} else {
+
+  // иначе считаем что это Vimeo / iframe
+  const iframe = document.createElement("iframe");
+
+  iframe.src = videoSrc;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.frameBorder = "0";
+
+  videoBox.appendChild(iframe);
 }
 
-}
 
   const FULL = [
     "Dear friends,",
