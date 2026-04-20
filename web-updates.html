@@ -554,41 +554,6 @@ font-weight: 650;
 
   <!-- CONTENT -->
 
-
-<div id="adminNotifyBlock" style="
-  max-width:1000px;
-  margin:30px auto;
-  padding:25px;
-  background:#fff7f8;
-  border-radius:20px;
-  text-align:center;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
-">
-
-  <h2>Notify your guests</h2>
-
-  <p style="color:#555;">Scan or share this link:</p>
-
-  <img id="qrCodeImg" style="margin-top:10px;" />
-
-  <p id="qrLink" style="font-size:13px;margin-top:10px;"></p>
-
-  <button id="notifyBtn" style="
-    margin-top:15px;
-    padding:12px 20px;
-    background:#b41111;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-weight:700;
-    cursor:pointer;
-  ">
-    Notify
-  </button>
-
-</div>
-
-
 <section>
   <div class="story-card">
     <h2>Latest from Us ✨</h2>
@@ -689,9 +654,6 @@ const token =
   params.get("token") ||
   sessionStorage.getItem("rsvpToken") ||
   "";
-
-const isAdmin = !!params.get("t");
-
 
 if (token) {
   sessionStorage.setItem("rsvpToken", token);
@@ -927,36 +889,6 @@ fetch("/footer.html")
     document.getElementById("footer-mount").innerHTML = html;
   });
 </script>
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const block = document.getElementById("adminNotifyBlock");
-
-  // 👉 если НЕ админ — убираем блок
-  if (!isAdmin) {
-    block?.remove();
-    return;
-  }
-
-  const link = `https://flowwed.netlify.app/web-updates?t=${token}`;
-
-  const qr = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(link)}`;
-
-  const img = document.getElementById("qrCodeImg");
-  const text = document.getElementById("qrLink");
-  const btn = document.getElementById("notifyBtn");
-
-  if (img) img.src = qr;
-  if (text) text.textContent = link;
-
-  btn?.addEventListener("click", () => {
-    navigator.clipboard.writeText(link);
-    alert("Link copied! Send it to your guests.");
-  });
-
-});
 
 
 </body>
