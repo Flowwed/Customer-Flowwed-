@@ -552,8 +552,17 @@ async function loadCoupleName(){
 
 const sb = window.supabase.createClient(
   "https://octwwpatppbenqwkcqaw.supabase.co",
-  SUPABASE_KEY
+  SUPABASE_KEY,
+  {
+    global: {
+      headers: {
+        site_edit_token: getToken()
+      }
+    }
+  }
 );
+
+
 
 async function loadWeddingData(){
   const params = new URLSearchParams(location.search);
