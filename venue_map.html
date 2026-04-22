@@ -632,15 +632,6 @@ if (data.schedule && Array.isArray(data.schedule) && data.schedule.length) {
 }
 
 
-    const el = document.createElement("div");
-    el.className = "timeline-item";
-    el.innerHTML = `
-      <div class="timeline-time">${t || ""}</div>
-      <div class="timeline-text">${txt || ""}</div>
-    `;
-    timeline.appendChild(el);
-  });
-
   // 👇 FLIGHTS
   document.querySelector(".card:nth-of-type(2) p").innerHTML = `
     ${data.flights_text || ""}
@@ -711,17 +702,6 @@ if (data.faq && Array.isArray(data.faq) && data.faq.length) {
 
 }
 
-
-
-    const el = document.createElement("div");
-    el.className = "faq-item";
-    el.innerHTML = `
-      <div class="faq-q">${q || ""}</div>
-      <div class="faq-a">${a || ""}</div>
-    `;
-    faq.appendChild(el);
-  });
-}
 
 loadCoupleName();
 loadWeddingData();
