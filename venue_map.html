@@ -306,6 +306,45 @@
         gap:6px;
       }
     }
+
+.nav-toggle{
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+  margin-left:auto;
+}
+
+/* MOBILE */
+@media (max-width: 768px){
+
+  .nav-toggle{
+    display:block;
+  }
+
+  .nav-center{
+    display:none;
+    width:100%;
+    flex-direction:column;
+    gap:14px;
+    margin-top:10px;
+  }
+
+  .nav-center.open{
+    display:flex;
+  }
+
+  .nav-center a{
+    padding:10px 0;
+    border-bottom:1px solid rgba(0,0,0,0.1);
+  }
+
+  .wedding-nav{
+    flex-wrap:wrap;
+  }
+}
+
+
+
   </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -318,6 +357,7 @@
   <div class="nav-left">
     <button class="back-btn" onclick="goBack()">← Back</button>
   </div>
+<div class="nav-toggle" onclick="toggleMenu()">☰</div>
 
   <div class="nav-center">
     <a data-page="home">Home</a>
@@ -513,6 +553,13 @@ window.addEventListener("load", () => {
     }
   });
 });
+
+
+function toggleMenu(){
+  document.querySelector(".nav-center").classList.toggle("open");
+}
+
+
 </script>
 
 <script>
