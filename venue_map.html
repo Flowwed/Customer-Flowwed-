@@ -594,6 +594,24 @@ sessionStorage.setItem("rsvpToken", token);
   const timeline = document.querySelector(".timeline");
   timeline.innerHTML = "";
 
+// 🔥 СНАЧАЛА JSON (новые)
+if (data.schedule && Array.isArray(data.schedule) && data.schedule.length) {
+
+  data.schedule
+    .filter(item => item.time || item.text)
+    .forEach(item => {
+      const el = document.createElement("div");
+      el.className = "timeline-item";
+      el.innerHTML = `
+        <div class="timeline-time">${item.time || ""}</div>
+        <div class="timeline-text">${item.text || ""}</div>
+      `;
+      timeline.appendChild(el);
+    });
+
+} else {
+
+  // fallback (старые 4 поля)
   [
     [data.schedule_time_1, data.schedule_text_1],
     [data.schedule_time_2, data.schedule_text_2],
@@ -602,6 +620,18 @@ sessionStorage.setItem("rsvpToken", token);
   ]
   .filter(([t,txt]) => t || txt)
   .forEach(([t,txt]) => {
+    const el = document.createElement("div");
+    el.className = "timeline-item";
+    el.innerHTML = `
+      <div class="timeline-time">${t || ""}</div>
+      <div class="timeline-text">${txt || ""}</div>
+    `;
+    timeline.appendChild(el);
+  });
+
+}
+
+
     const el = document.createElement("div");
     el.className = "timeline-item";
     el.innerHTML = `
@@ -644,6 +674,24 @@ sessionStorage.setItem("rsvpToken", token);
   const faq = document.querySelector(".faq-list");
   faq.innerHTML = "";
 
+// 🔥 СНАЧАЛА JSON (новые)
+if (data.faq && Array.isArray(data.faq) && data.faq.length) {
+
+  data.faq
+    .filter(item => item.q || item.a)
+    .forEach(item => {
+      const el = document.createElement("div");
+      el.className = "faq-item";
+      el.innerHTML = `
+        <div class="faq-q">${item.q || ""}</div>
+        <div class="faq-a">${item.a || ""}</div>
+      `;
+      faq.appendChild(el);
+    });
+
+} else {
+
+  // fallback (старые 4)
   [
     [data.faq_q1, data.faq_a1],
     [data.faq_q2, data.faq_a2],
@@ -652,6 +700,19 @@ sessionStorage.setItem("rsvpToken", token);
   ]
   .filter(([q,a]) => q || a)
   .forEach(([q,a]) => {
+    const el = document.createElement("div");
+    el.className = "faq-item";
+    el.innerHTML = `
+      <div class="faq-q">${q || ""}</div>
+      <div class="faq-a">${a || ""}</div>
+    `;
+    faq.appendChild(el);
+  });
+
+}
+
+
+
     const el = document.createElement("div");
     el.className = "faq-item";
     el.innerHTML = `
