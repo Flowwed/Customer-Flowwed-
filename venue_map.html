@@ -69,6 +69,32 @@ h1{color:#a52126;margin:0;}
   text-decoration:none;
   color:#732323;
 }
+
+.timeline{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.timeline-item{
+  display:flex;
+  gap:12px;
+  background:#fff5f6;
+  padding:10px;
+  border-radius:10px;
+}
+
+.timeline-time{
+  font-weight:700;
+  color:#a52126;
+  min-width:80px;
+}
+
+.timeline-text{
+  color:#6f2a2a;
+}
+
+
 </style>
 </head>
 
@@ -81,6 +107,11 @@ h1{color:#a52126;margin:0;}
 <div class="container">
 
 <div class="accordion">
+
+<div class="acc-item active">
+  <div class="acc-title">⏰ Schedule</div>
+  <div class="acc-content" id="schedule"></div>
+</div>
 
 <div class="acc-item">
 <div class="acc-title">✈️ Travel</div>
@@ -162,6 +193,51 @@ async function loadData(){
     <b>Airport:</b> ${data.airport || ""}<br>
     <b>Transfer:</b> ${data.transfer_time || ""}
   `;
+
+  // SCHEDULE
+
+const scheduleEl = document.getElementById("schedule");
+
+if (data.schedule && Array.isArray(data.schedule)) {
+
+  scheduleEl.innerHTML = `
+    <div class="timeline">
+      ${data.schedule
+        .filter(i => i.time || i.text)
+        .map(i => `
+          <div class="timeline-item">
+            <div class="timeline-time">${i.time || ""}</div>
+            <div class="timeline-text">${i.text || ""}</div>
+          </div>
+        `).join("")}
+    </div>
+  `;
+
+} else {
+
+  // fallback (старые поля)
+  const list = [
+    [data.schedule_time_1, data.schedule_text_1],
+    [data.schedule_time_2, data.schedule_text_2],
+    [data.schedule_time_3, data.schedule_text_3],
+    [data.schedule_time_4, data.schedule_text_4]
+  ];
+
+  scheduleEl.innerHTML = `
+    <div class="timeline">
+      ${list
+        .filter(([t, txt]) => t || txt)
+        .map(([t, txt]) => `
+          <div class="timeline-item">
+            <div class="timeline-time">${t || ""}</div>
+            <div class="timeline-text">${txt || ""}</div>
+          </div>
+        `).join("")}
+    </div>
+  `;
+}
+
+
 
   // HOTELS
   const hotelsEl = document.getElementById("hotels");
