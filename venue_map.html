@@ -349,6 +349,31 @@
   }
 }
 
+
+.hotel-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:10px;
+}
+
+.hotel-item{
+  display:block;
+  padding:12px 14px;
+  border-radius:12px;
+  background:#fff5f6;
+  color:#7a2a2a;
+  text-decoration:none;
+  font-weight:500;
+  transition:0.2s;
+}
+
+.hotel-item:hover{
+  background:#ffe3e7;
+  transform:translateY(-1px);
+}
+
+
   </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -427,14 +452,9 @@
         </p>
       </div>
 
-      <div class="card">
-        <h2>🏨 Where to Stay</h2>
-        <ul>
-          <li><b>Hotel Option 1</b> – 10 minutes from the venue</li>
-          <li><b>Hotel Option 2</b> – city center, restaurants nearby</li>
-          <li><b>Hotel Option 3</b> – budget-friendly and convenient</li>
-        </ul>
-      </div>
+<div class="card">
+  <h2>🏨 Where to Stay</h2>
+</div>
 
       <div class="card">
         <h2>🚗 Getting Around</h2>
@@ -688,13 +708,26 @@ if (data.schedule && Array.isArray(data.schedule) && data.schedule.length) {
     <b>Transfer:</b> ${data.transfer_time || ""}
   `;
 
-  // 👇 HOTELS
-  document.querySelector(".card:nth-of-type(3) ul").innerHTML = `
-    <li>${data.hotel_1 || ""}</li>
-    <li>${data.hotel_2 || ""}</li>
-    <li>${data.hotel_3 || ""}</li>
-  `;
+const hotelsEl = document.querySelector(".card:nth-of-type(3)");
 
+if (data.hotels) {
+  const lines = data.hotels.split("\n").filter(l => l.trim());
+
+  hotelsEl.innerHTML = `
+    <h2>🏨 Where to Stay</h2>
+    <div class="hotel-list">
+      ${lines.map(line => {
+        const [name, link] = line.split("—");
+        if (link) {
+          return `<a href="${link.trim()}" target="_blank" class="hotel-item">
+                    ${name.trim()}
+                  </a>`;
+        }
+        return `<div class="hotel-item">${line}</div>`;
+      }).join("")}
+    </div>
+  `;
+}
   // 👇 VENUE
   document.querySelector(".venue-box").innerHTML = `
     <b>${data.venue_name || ""}</b><br>
@@ -818,16 +851,6 @@ console.log("SCROLL FIELD:", changedField);
       <b>Airport:</b> ${data.airport || ""}
       <br>
       <b>Transfer:</b> ${data.transferTime || ""}
-    `;
-  }
-
-  // 👇 HOTELS
-  const hotels = document.querySelector(".card:nth-of-type(3) ul");
-  if (hotels) {
-    hotels.innerHTML = `
-      <li>${data.hotel1 || ""}</li>
-      <li>${data.hotel2 || ""}</li>
-      <li>${data.hotel3 || ""}</li>
     `;
   }
 
