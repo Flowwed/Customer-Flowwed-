@@ -292,7 +292,148 @@ font-weight: 650;
   width: 100%;
 }
 
+.vertical-menu-btn,
+.vertical-menu-dropdown {
+  display: none;
+}
 
+
+/* =========================
+   📱 MOBILE HAMBURGER MENU — 1:1
+   ========================= */
+
+@media (max-width: 900px) {
+
+  .wedding-nav > .nav-center,
+  .wedding-nav > .nav-left {
+    display: none !important;
+  }
+
+  .vertical-menu-btn {
+    position: fixed;
+    top: 22px;
+    right: 26px;
+
+    width: 30px;
+    height: 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    cursor: pointer;
+    z-index: 1200;
+  }
+
+  .vertical-menu-btn span {
+    height: 3px;
+    border-radius: 3px;
+    background: #732323;
+    box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  }
+
+  .vertical-menu-dropdown {
+    position: fixed;
+    top: 64px;
+    right: 26px;
+
+    width: 240px;
+    max-width: calc(100vw - 52px);
+
+    padding: 14px 18px 22px;
+
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,.92),
+      rgba(255,245,248,.88)
+    );
+
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+
+    border-radius: 18px 18px 30px 30px;
+
+    box-shadow:
+      0 32px 90px rgba(120,30,50,.35),
+      inset 0 1px 0 rgba(255,255,255,.65);
+
+    opacity: 0;
+    transform: translateY(-14px) scale(.97);
+    pointer-events: none;
+
+    transition:
+      opacity .32s ease,
+      transform .38s cubic-bezier(.22,1,.36,1);
+
+    z-index: 1200;
+
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+  }
+
+  .vertical-menu-dropdown.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .vertical-menu-dropdown .mobile-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 0 14px;
+    margin-bottom: 14px;
+
+    font-size: 16px;
+    font-weight: 500;
+    color: #732323;
+
+    cursor: pointer;
+    position: relative;
+  }
+
+
+  .vertical-menu-dropdown .nav-center {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    position: static;
+    transform: none;
+  }
+
+  .vertical-menu-dropdown .nav-center a {
+    font-size: 16px;
+    font-weight: 500;
+    color: #6f1f1f;
+    text-decoration: none;
+    padding: 6px 0;
+    position: relative;
+  }
+
+  .vertical-menu-dropdown .nav-center a::after {
+    display: none;
+  }
+
+  .vertical-menu-dropdown .nav-center a.active {
+    color: #a52126;
+    font-weight: 560;
+  }
+
+  .vertical-menu-dropdown .nav-center a.active::before {
+    content: "";
+    position: absolute;
+    left: -12px;
+    right: -12px;
+    top: -6px;
+    bottom: -6px;
+
+    background: rgba(165,33,38,.08);
+    border-radius: 12px;
+    z-index: -1;
+  }
+}
 
 
 @media (max-width: 900px) {
@@ -310,6 +451,9 @@ font-weight: 650;
     padding-right: 12px !important;
   }
 
+  .story-hero img {
+    height: 260px;
+  }
 
 }
 
@@ -369,17 +513,6 @@ font-weight: 650;
   display: none;
 }
 
-
-@media (max-width: 900px) {
-
-  .wedding-nav {
-    display: none !important;
-  }
-
-}
-
-
-
   </style>
 </head>
 
@@ -406,7 +539,6 @@ font-weight: 650;
 
 
 </nav>
-
 
 <div class="page-shell">
 
@@ -647,6 +779,48 @@ function goBack() {
 
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const vBtn = document.getElementById("hamburgerBtn");
+  const vMenu = document.getElementById("mobileMenu");
+  const navCenter = document.querySelector(".nav-center");
+
+  let vOpen = false;
+
+  if (window.innerWidth <= 900 && navCenter && vMenu && vMenu.childElementCount === 0) {
+
+    const back = document.createElement("div");
+    back.className = "mobile-back";
+    back.textContent = "← Back";
+    back.onclick = goBack;
+
+    vMenu.appendChild(back);
+    vMenu.appendChild(navCenter.cloneNode(true));
+  }
+
+  vBtn?.addEventListener("click", e => {
+    e.stopPropagation();
+    vOpen = !vOpen;
+    vMenu.classList.toggle("open", vOpen);
+  });
+
+  vMenu?.addEventListener("click", e => {
+    if (!e.target.closest("a")) return;
+    vOpen = false;
+    vMenu.classList.remove("open");
+  });
+
+  document.addEventListener("click", () => {
+    if (!vOpen) return;
+    vOpen = false;
+    vMenu.classList.remove("open");
+  });
+
+});
+
+</script>
+
 
 <!-- LANDSCAPE NOTICE -->
 <div class="landscape-notice" id="landscapeNotice">
@@ -698,7 +872,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<!-- MOBILE HAMBURGER -->
+<div class="vertical-menu-btn" id="hamburgerBtn">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 
+<div class="vertical-menu-dropdown" id="mobileMenu"></div>
+
+<div id="footer-mount"></div>
+
+<script>
+fetch("/footer.html")
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById("footer-mount").innerHTML = html;
+  });
+</script>
 
 
 </body>
