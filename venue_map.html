@@ -269,12 +269,23 @@ async function loadData(){
 loadData();
 
 // accordion
+
 document.querySelectorAll(".acc-title").forEach(t=>{
   t.onclick = ()=>{
+    const item = t.parentElement;
+
+    // если уже открыт → закрываем
+    if(item.classList.contains("active")){
+      item.classList.remove("active");
+      return;
+    }
+
+    // иначе: закрываем все и открываем нужный
     document.querySelectorAll(".acc-item").forEach(i=>i.classList.remove("active"));
-    t.parentElement.classList.add("active");
+    item.classList.add("active");
   };
 });
+
 </script>
 
 </body>
