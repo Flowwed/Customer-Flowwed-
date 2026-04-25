@@ -196,7 +196,43 @@
 }
 
 
+.faq-item{
+  margin-bottom:12px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#fff5f6;
+}
 
+.faq-question{
+  padding:14px;
+  font-weight:600;
+  color:#a52126;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.faq-answer{
+  max-height:0;
+  overflow:hidden;
+  padding:0 14px;
+  transition:0.3s ease;
+  color:#6f2a2a;
+}
+
+.faq-item.active .faq-answer{
+  max-height:200px;
+  padding:10px 14px 14px;
+}
+
+.faq-arrow{
+  transition:0.3s;
+}
+
+.faq-item.active .faq-arrow{
+  transform:rotate(90deg);
+}
 
 </style>
 </head>
