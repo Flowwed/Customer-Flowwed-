@@ -450,7 +450,17 @@ if (data.faq && data.faq.length) {
     `;
   }).join("");
 
-}
+
+// 👇 ВОТ СЮДА ВСТАВЛЯЕШЬ
+setTimeout(() => {
+  document.querySelectorAll(".faq-question").forEach(q => {
+    q.onclick = () => {
+      const item = q.parentElement;
+      item.classList.toggle("active");
+    };
+  });
+}, 0);
+
 }
 
 loadData();
