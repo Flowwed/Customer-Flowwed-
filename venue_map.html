@@ -8,29 +8,93 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{margin:0;font-family:Arial;background:#fdeff1;color:#732323;}
-header{text-align:center;padding:40px 20px;}
+body{
+  margin:0;
+  font-family:Arial;
+  background:#fdeff1;
+  color:#732323;
+}
+
+header{
+  text-align:center;
+  padding:40px 20px;
+}
+
 h1{color:#a52126;margin:0;}
 
-.container{max-width:900px;margin:0 auto;padding:20px;}
+.container{
+  max-width:900px;
+  margin:0 auto;
+  padding:20px;
+}
 
-.accordion{display:flex;flex-direction:column;gap:12px;}
+.accordion{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
 
-.acc-item{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,0.1);}
-.acc-title{padding:16px;cursor:pointer;font-weight:600;background:#fff5f6;}
-.acc-content{max-height:0;overflow:hidden;transition:.3s;padding:0 16px;}
-.acc-item.active .acc-content{max-height:1000px;padding:16px;}
+.acc-item{
+  background:#fff;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 6px 16px rgba(0,0,0,0.1);
+}
+
+.acc-title{
+  padding:16px;
+  cursor:pointer;
+  font-weight:600;
+  background:#fff5f6;
+}
+
+.acc-content{
+  max-height:0;
+  overflow:hidden;
+  transition:0.3s;
+  padding:0 16px;
+}
+
+.acc-item.active .acc-content{
+  max-height:800px;
+  padding:16px;
+}
 
 .hotel-item{
-display:block;margin:8px 0;padding:10px;border-radius:10px;
-background:#ffe5e8;text-decoration:none;color:#732323;
+  display:block;
+  margin:8px 0;
+  padding:10px;
+  border-radius:10px;
+  background:#ffe5e8;
+  text-decoration:none;
+  color:#732323;
 }
 
-.timeline{display:flex;flex-direction:column;gap:10px;}
-.timeline-item{
-display:flex;gap:12px;background:#fff5f6;padding:10px;border-radius:10px;
+.timeline{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
-.timeline-time{font-weight:700;color:#a52126;min-width:80px;}
+
+.timeline-item{
+  display:flex;
+  gap:12px;
+  background:#fff5f6;
+  padding:10px;
+  border-radius:10px;
+}
+
+.timeline-time{
+  font-weight:700;
+  color:#a52126;
+  min-width:80px;
+}
+
+.timeline-text{
+  color:#6f2a2a;
+}
+
+
 </style>
 </head>
 
@@ -44,34 +108,39 @@ display:flex;gap:12px;background:#fff5f6;padding:10px;border-radius:10px;
 
 <div class="accordion">
 
-<!-- SCHEDULE -->
 <div class="acc-item active">
   <div class="acc-title">⏰ Schedule</div>
   <div class="acc-content" id="schedule"></div>
 </div>
 
-<!-- TRAVEL -->
 <div class="acc-item">
-  <div class="acc-title">✈️ Travel & Stay</div>
-  <div class="acc-content" id="travel"></div>
+<div class="acc-title">✈️ Travel</div>
+<div class="acc-content" id="travel"></div>
 </div>
 
-<!-- VENUE -->
 <div class="acc-item">
-  <div class="acc-title">📍 Venue</div>
-  <div class="acc-content" id="venue"></div>
+<div class="acc-title">🏨 Hotels</div>
+<div class="acc-content" id="hotels"></div>
 </div>
 
-<!-- DETAILS -->
 <div class="acc-item">
-  <div class="acc-title">👗 Event Details</div>
-  <div class="acc-content" id="details"></div>
+<div class="acc-title">📍 Venue</div>
+<div class="acc-content" id="venue"></div>
 </div>
 
-<!-- FAQ -->
 <div class="acc-item">
-  <div class="acc-title">❓ FAQ</div>
-  <div class="acc-content" id="faq"></div>
+<div class="acc-title">👗 Dress Code</div>
+<div class="acc-content" id="dress"></div>
+</div>
+
+<div class="acc-item">
+<div class="acc-title">🗺 Things to Do</div>
+<div class="acc-content" id="things"></div>
+</div>
+
+<div class="acc-item">
+<div class="acc-title">❓ FAQ</div>
+<div class="acc-content" id="faq"></div>
 </div>
 
 </div>
@@ -80,15 +149,20 @@ display:flex;gap:12px;background:#fff5f6;padding:10px;border-radius:10px;
 
 <script>
 const SUPABASE_URL = "https://octwwpatppbenqwkcqaw.supabase.co";
-const SUPABASE_KEY = "YOUR_KEY";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdHd3cGF0cHBiZW5xd2tjcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NjYxMjYsImV4cCI6MjA3NDU0MjEyNn0.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI"
+; // ← вставь свой
 
 function getToken(){
   const p = new URLSearchParams(location.search);
   return p.get("t") || p.get("token") || "";
 }
 
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY,{
-  global:{headers:{site_edit_token:getToken()}}
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+  global:{
+    headers:{
+      site_edit_token: getToken()
+    }
+  }
 });
 
 async function loadData(){
@@ -101,88 +175,114 @@ async function loadData(){
     .eq("site_edit_token", token)
     .maybeSingle();
 
-  if(error || !data) return;
+  if(error){
+    console.log(error);
+    return;
+  }
 
+  if(!data) return;
+
+  // NAME
   document.getElementById("coupleName").innerText =
     data.couple_name || "Wedding";
 
-  // ================= SCHEDULE =================
-  const s = document.getElementById("schedule");
+  // TRAVEL
+  document.getElementById("travel").innerHTML = `
+    ${data.flights_text || ""}
+    <br><br>
+    <b>Airport:</b> ${data.airport || ""}<br>
+    <b>Transfer:</b> ${data.transfer_time || ""}
+  `;
 
-  if(data.schedule){
-    s.innerHTML = data.schedule.map(i=>`
-      <div class="timeline-item">
-        <div class="timeline-time">${i.time||""}</div>
-        <div>${i.text||""}</div>
-      </div>
-    `).join("");
-  }
+  // SCHEDULE
 
-  // ================= TRAVEL =================
-  let html = "";
+const scheduleEl = document.getElementById("schedule");
 
-  if(data.flights_text){
-    html += `<b>Travel Notes</b><br>${data.flights_text}<br><br>`;
-  }
+if (data.schedule && Array.isArray(data.schedule)) {
 
-  if(data.airport || data.transfer_time){
-    html += `<b>Arrival</b><br>
-    Airport: ${data.airport||""}<br>
-    Transfer: ${data.transfer_time||""}<br><br>`;
-  }
+  scheduleEl.innerHTML = `
+    <div class="timeline">
+      ${data.schedule
+        .filter(i => i.time || i.text)
+        .map(i => `
+          <div class="timeline-item">
+            <div class="timeline-time">${i.time || ""}</div>
+            <div class="timeline-text">${i.text || ""}</div>
+          </div>
+        `).join("")}
+    </div>
+  `;
+
+} else {
+
+  // fallback (старые поля)
+  const list = [
+    [data.schedule_time_1, data.schedule_text_1],
+    [data.schedule_time_2, data.schedule_text_2],
+    [data.schedule_time_3, data.schedule_text_3],
+    [data.schedule_time_4, data.schedule_text_4]
+  ];
+
+  scheduleEl.innerHTML = `
+    <div class="timeline">
+      ${list
+        .filter(([t, txt]) => t || txt)
+        .map(([t, txt]) => `
+          <div class="timeline-item">
+            <div class="timeline-time">${t || ""}</div>
+            <div class="timeline-text">${txt || ""}</div>
+          </div>
+        `).join("")}
+    </div>
+  `;
+}
+
+
+
+  // HOTELS
+  const hotelsEl = document.getElementById("hotels");
 
   if(data.hotels){
-    html += `<b>Where to Stay</b><br>`;
-    html += data.hotels.split("\n").map(line=>{
-      const [n,l]=line.split("—");
-      if(l){
-        return `<a class="hotel-item" href="${l.trim()}" target="_blank">${n.trim()}</a>`;
+    hotelsEl.innerHTML = data.hotels.split("\n").map(line=>{
+      const [name, link] = line.split("—");
+      if(link){
+        return `<a class="hotel-item" href="${link.trim()}" target="_blank">${name.trim()}</a>`;
       }
       return `<div class="hotel-item">${line}</div>`;
     }).join("");
-    html += "<br>";
+  } else {
+    hotelsEl.innerHTML = "No hotel info yet.";
   }
 
-  if(data.stay_links){
-    html += `<b>Booking Platforms</b><br>`;
-    html += data.stay_links.split("\n").map(line=>{
-      const [n,l]=line.split("—");
-      return `<a class="hotel-item" href="${l.trim()}" target="_blank">${n.trim()}</a>`;
-    }).join("");
-    html += "<br>";
-  }
-
-  if(data.things_to_do){
-    html += `<b>Things to Do</b><br>${data.things_to_do}`;
-  }
-
-  document.getElementById("travel").innerHTML = html;
-
-  // ================= VENUE =================
+  // VENUE
   document.getElementById("venue").innerHTML = `
-    <b>${data.venue_name||""}</b><br>
-    ${data.venue_address||""}<br><br>
-    <a href="${data.map_link||"#"}" target="_blank">Open map</a>
+    <b>${data.venue_name || ""}</b><br>
+    ${data.venue_address || ""}<br><br>
+    <a href="${data.map_link || "#"}" target="_blank">Open map</a>
   `;
 
-  // ================= DETAILS =================
-  document.getElementById("details").innerHTML = `
-    <b>Dress Code</b><br>${data.dress_code||""}<br><br>
-    <b>Important Info</b><br>${data.important_info||""}
-  `;
+  // DRESS
+  document.getElementById("dress").innerHTML =
+    data.dress_code || "";
 
-  // ================= FAQ =================
-  const faq = document.getElementById("faq");
-  faq.innerHTML = "";
+  // THINGS
+  document.getElementById("things").innerHTML =
+    data.things_to_do || "";
 
-  (data.faq||[]).forEach(f=>{
-    faq.innerHTML += `<b>${f.q}</b><br>${f.a}<br><br>`;
-  });
+  // FAQ
+  const faqEl = document.getElementById("faq");
+  faqEl.innerHTML = "";
+
+  if(data.faq){
+    data.faq.forEach(f=>{
+      faqEl.innerHTML += `<b>${f.q}</b><br>${f.a}<br><br>`;
+    });
+  }
 }
 
 loadData();
 
-// accordion
+// ACCORDION (auto-close others)
 document.querySelectorAll(".acc-title").forEach(t=>{
   t.onclick = ()=>{
     document.querySelectorAll(".acc-item").forEach(i=>i.classList.remove("active"));
