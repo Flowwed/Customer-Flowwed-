@@ -8,87 +8,29 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#fdeff1;
-  color:#732323;
-}
-
-header{
-  text-align:center;
-  padding:40px 20px;
-}
-
+body{margin:0;font-family:Arial;background:#fdeff1;color:#732323;}
+header{text-align:center;padding:40px 20px;}
 h1{color:#a52126;margin:0;}
 
-.container{
-  max-width:900px;
-  margin:0 auto;
-  padding:20px;
-}
+.container{max-width:900px;margin:0 auto;padding:20px;}
 
-.accordion{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
+.accordion{display:flex;flex-direction:column;gap:12px;}
 
-.acc-item{
-  background:#fff;
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 6px 16px rgba(0,0,0,0.1);
-}
-
-.acc-title{
-  padding:16px;
-  cursor:pointer;
-  font-weight:600;
-  background:#fff5f6;
-}
-
-.acc-content{
-  max-height:0;
-  overflow:hidden;
-  transition:0.3s;
-  padding:0 16px;
-}
-
-.acc-item.active .acc-content{
-  max-height:1000px;
-  padding:16px;
-}
+.acc-item{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,0.1);}
+.acc-title{padding:16px;cursor:pointer;font-weight:600;background:#fff5f6;}
+.acc-content{max-height:0;overflow:hidden;transition:.3s;padding:0 16px;}
+.acc-item.active .acc-content{max-height:1000px;padding:16px;}
 
 .hotel-item{
-  display:block;
-  margin:8px 0;
-  padding:10px;
-  border-radius:10px;
-  background:#ffe5e8;
-  text-decoration:none;
-  color:#732323;
+display:block;margin:8px 0;padding:10px;border-radius:10px;
+background:#ffe5e8;text-decoration:none;color:#732323;
 }
 
-.timeline{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
+.timeline{display:flex;flex-direction:column;gap:10px;}
 .timeline-item{
-  display:flex;
-  gap:12px;
-  background:#fff5f6;
-  padding:10px;
-  border-radius:10px;
+display:flex;gap:12px;background:#fff5f6;padding:10px;border-radius:10px;
 }
-
-.timeline-time{
-  font-weight:700;
-  color:#a52126;
-  min-width:80px;
-}
+.timeline-time{font-weight:700;color:#a52126;min-width:80px;}
 </style>
 </head>
 
@@ -102,31 +44,31 @@ h1{color:#a52126;margin:0;}
 
 <div class="accordion">
 
-<!-- ✅ SCHEDULE -->
+<!-- SCHEDULE -->
 <div class="acc-item active">
   <div class="acc-title">⏰ Schedule</div>
   <div class="acc-content" id="schedule"></div>
 </div>
 
-<!-- ✅ TRAVEL (ВСЁ ВНУТРИ) -->
+<!-- TRAVEL -->
 <div class="acc-item">
   <div class="acc-title">✈️ Travel & Stay</div>
   <div class="acc-content" id="travel"></div>
 </div>
 
-<!-- ✅ VENUE -->
+<!-- VENUE -->
 <div class="acc-item">
   <div class="acc-title">📍 Venue</div>
   <div class="acc-content" id="venue"></div>
 </div>
 
-<!-- ✅ DETAILS -->
+<!-- DETAILS -->
 <div class="acc-item">
   <div class="acc-title">👗 Event Details</div>
   <div class="acc-content" id="details"></div>
 </div>
 
-<!-- ✅ FAQ -->
+<!-- FAQ -->
 <div class="acc-item">
   <div class="acc-title">❓ FAQ</div>
   <div class="acc-content" id="faq"></div>
@@ -138,35 +80,33 @@ h1{color:#a52126;margin:0;}
 
 <script>
 const SUPABASE_URL = "https://octwwpatppbenqwkcqaw.supabase.co";
-const SUPABASE_KEY = "ТВОЙ_KEY";
+const SUPABASE_KEY = "YOUR_KEY";
 
 function getToken(){
   const p = new URLSearchParams(location.search);
   return p.get("t") || p.get("token") || "";
 }
 
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-  global:{ headers:{ site_edit_token: getToken() } }
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY,{
+  global:{headers:{site_edit_token:getToken()}}
 });
 
 async function loadData(){
   const token = getToken();
   if(!token) return;
 
-  const { data } = await sb
+  const { data, error } = await sb
     .from("wedding_info")
     .select("*")
     .eq("site_edit_token", token)
     .maybeSingle();
 
-  if(!data) return;
+  if(error || !data) return;
 
   document.getElementById("coupleName").innerText =
     data.couple_name || "Wedding";
 
-  // =========================
-  // SCHEDULE
-  // =========================
+  // ================= SCHEDULE =================
   const s = document.getElementById("schedule");
 
   if(data.schedule){
@@ -178,9 +118,7 @@ async function loadData(){
     `).join("");
   }
 
-  // =========================
-  // TRAVEL (ВСЁ В ОДНОМ)
-  // =========================
+  // ================= TRAVEL =================
   let html = "";
 
   if(data.flights_text){
@@ -220,26 +158,20 @@ async function loadData(){
 
   document.getElementById("travel").innerHTML = html;
 
-  // =========================
-  // VENUE
-  // =========================
+  // ================= VENUE =================
   document.getElementById("venue").innerHTML = `
     <b>${data.venue_name||""}</b><br>
     ${data.venue_address||""}<br><br>
     <a href="${data.map_link||"#"}" target="_blank">Open map</a>
   `;
 
-  // =========================
-  // DETAILS
-  // =========================
+  // ================= DETAILS =================
   document.getElementById("details").innerHTML = `
     <b>Dress Code</b><br>${data.dress_code||""}<br><br>
     <b>Important Info</b><br>${data.important_info||""}
   `;
 
-  // =========================
-  // FAQ
-  // =========================
+  // ================= FAQ =================
   const faq = document.getElementById("faq");
   faq.innerHTML = "";
 
