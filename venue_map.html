@@ -211,6 +211,13 @@ h1{color:#a52126;margin:0;}
 
 <header>
   <h1 id="coupleName">Wedding</h1>
+<div id="eventDate" style="
+  margin-top:8px;
+  font-size:18px;
+  opacity:0.9;
+  font-weight:500;
+"></div>
+
 </header>
 
 <div class="container">
@@ -303,6 +310,18 @@ async function loadData(){
 
   document.getElementById("coupleName").innerText =
     data.couple_name || "Wedding";
+
+if (data.wedding_date) {
+  const d = new Date(data.wedding_date);
+
+  const formatted = d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+
+  document.getElementById("eventDate").textContent = formatted;
+}
 
   // SCHEDULE
   const scheduleEl = document.getElementById("schedule");
@@ -427,6 +446,21 @@ function goBack() {
     window.location.href = buildLink("home");
   }
 }
+
+(function setActiveNav() {
+  let current = location.pathname.split("/").pop();
+  current = current.replace(".html", "");
+
+  document.querySelectorAll(".nav-center a").forEach(link => {
+    let page = link.dataset.page || "";
+    page = page.replace(".html", "");
+
+    if (page === current) {
+      link.classList.add("active");
+    }
+  });
+})();
+
 
 </script>
 
