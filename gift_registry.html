@@ -820,11 +820,29 @@ if (honeymoonFund.venmo) {
 // 🏦 ZELLE (ПОКА ПРОСТО КРАСИВО)
 if (honeymoonFund.zelle) {
   html += `
-    <p style="margin-top:12px;">
-      🏦 Zelle: <strong>${honeymoonFund.zelle}</strong>
-    </p>
+    <div style="margin-top:14px;">
+      <div style="margin-bottom:6px;">🏦 Zelle</div>
+
+      <div style="display:flex;gap:8px;justify-content:center;">
+        <input id="zelleField"
+          value="${honeymoonFund.zelle}"
+          readonly
+          style="
+            padding:8px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            width:180px;
+            text-align:center;
+          ">
+
+        <button onclick="copyZelle()" class="btn" style="padding:8px 12px;">
+          Copy
+        </button>
+      </div>
+    </div>
   `;
 }
+
 
 html += `</div>`;
 
@@ -1137,6 +1155,18 @@ function enableAutoScroll(row, speed = 0.6) {
 
   requestAnimationFrame(step);
 }
+
+
+window.copyZelle = function () {
+  const input = document.getElementById("zelleField");
+  input.select();
+  document.execCommand("copy");
+
+  alert("Copied!");
+};
+
+
+
 
 </script>
 
