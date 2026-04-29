@@ -847,24 +847,38 @@ if (honeymoonFund.zelle) {
 
 
 // 📷 QR код
+
 if (honeymoonFund.paypal) {
-  html += `
-    <div style="margin-top:22px;">
 
-<div style="margin-top:10px;font-weight:600;color:#a52126;">
-  💳 PayPal QR
-</div>
+  if (isMobile()) {
+    // 📱 MOBILE
+    html += `
+      <a href="${honeymoonFund.paypal}"
+         target="_blank"
+         class="btn"
+         style="display:block;margin:16px auto;max-width:260px;">
+         💳 Open PayPal
+      </a>
+    `;
+  } else {
+    // 💻 DESKTOP
+    html += `
+      <div style="margin-top:22px;text-align:center;">
 
-<canvas id="qrCanvas"></canvas>
+        <div style="font-weight:600;color:#a52126;margin-bottom:6px;">
+          💳 PayPal QR
+        </div>
 
-<div style="font-size:13px;margin-top:6px;color:#666;">
-  Scan with your phone to open PayPal
-</div>
+        <canvas id="qrCanvas"></canvas>
 
-    </div>
-  `;
+        <div style="font-size:13px;margin-top:6px;color:#666;">
+          Scan with your phone to open PayPal
+        </div>
+
+      </div>
+    `;
+  }
 }
-
 
 html += `</div>`;
 
@@ -1258,6 +1272,12 @@ function goBack() {
     }
   });
 })();
+
+
+function isMobile() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
 </script>
 
 
