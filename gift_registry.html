@@ -627,6 +627,20 @@ function getToken() {
 
 const token = getToken();
 
+let honeymoonFund = null;
+
+async function loadFund() {
+  if (!token) return;
+
+  const { data } = await supabase
+    .from("honeymoon_fund")
+    .select("*")
+    .eq("edit_token", token)
+    .single();
+
+  honeymoonFund = data || null;
+}
+
 
 /* ===== CATEGORIES ===== */
 const CATEGORIES = {
@@ -703,8 +717,6 @@ if (weddingDate) {
   if (subtitleEl) subtitleEl.style.opacity = "1";
 }   // ← ВОТ ЭТА СКОБКА ОБЯЗАТЕЛЬНА
 
-loadCoupleName();  // ← И ВЫЗОВ ФУНКЦИИ
-
 
 /* ===== LOAD + RENDER ===== */
 async function loadGifts() {
@@ -761,6 +773,51 @@ function renderGifts(gifts) {
     section.dataset.cat = catKey;
 
     const items = grouped[catKey] || [];
+
+// 💖 SPECIAL CASE: Honeymoon Fund
+if (catKey === "cash") {
+
+  if (!honeymoonFund) {
+    section.innerHTML = `
+      <div class="empty-state">
+        <p>Honeymoon fund coming soon 💖</p>
+      </div>
+    `;
+    container.appendChild(section);
+    return;
+  }
+
+  let html = `
+    <div class="empty-state">
+      <p style="margin-bottom:16px;">
+        Your presence is our greatest gift ❤️<br>
+        But if you'd like to contribute to our honeymoon:
+      </p>
+  `;
+
+  if (honeymoonFund.paypal) {
+    html += `
+      <a href="${honeymoonFund.paypal}" target="_blank" class="btn">
+        💳 Send via PayPal
+      </a><br><br>
+    `;
+  }
+
+  if (honeymoonFund.venmo) {
+    html += `<p><strong>Venmo:</strong> ${honeymoonFund.venmo}</p>`;
+  }
+
+  if (honeymoonFund.zelle) {
+    html += `<p><strong>Zelle:</strong> ${honeymoonFund.zelle}</p>`;
+  }
+
+  html += `</div>`;
+
+  section.innerHTML = html;
+  container.appendChild(section);
+  return;
+}
+
 
     if (items.length === 0) {
       section.innerHTML = `
@@ -901,9 +958,12 @@ rightBtn.onclick = () => {
 }
 
 /* ===== INIT ===== */
-loadCoupleName();
-loadGifts();
-
+/* ===== INIT ===== */
+(async () => {
+  loadCoupleName();
+  await loadFund();
+  loadGifts();
+})();
 
 
 /* ===== RESERVE MODAL LOGIC (FIX) ===== */
