@@ -795,16 +795,37 @@ let html = `
     </p>
 `;
 
-// 💳 PAYPAL
-if (honeymoonFund.paypal) {
+// 💳 PAYPAL (с суммами + Other)
+if (honeymoonFund.paypal && honeymoonFund.paypal.includes("paypal.me")) {
+
+  const base = honeymoonFund.paypal;
+
   html += `
-    <a href="${honeymoonFund.paypal}" target="_blank"
-       class="btn"
-       style="display:block;margin:10px auto;max-width:260px;">
-       💳 PayPal
-    </a>
+    <div style="margin-top:12px;text-align:center;">
+
+      <div style="margin-bottom:8px;font-weight:600;">
+        💳 PayPal
+      </div>
+
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+
+        <a href="${base}/50" target="_blank" class="btn">$50</a>
+
+        <a href="${base}/100" target="_blank" class="btn">$100</a>
+
+        <a href="${base}/200" target="_blank" class="btn">$200</a>
+
+        <a href="${base}" target="_blank" class="btn" style="background:#fff;color:#b33639;border:2px solid #b33639;">
+          Other
+        </a>
+
+      </div>
+
+    </div>
   `;
 }
+
+
 
 // 📱 VENMO PRO
 if (honeymoonFund.venmo) {
@@ -870,54 +891,10 @@ if (honeymoonFund.zelle) {
 
 
 
-// 📷 QR код
-
-if (honeymoonFund.paypal) {
-
-  if (isMobile()) {
-    // 📱 MOBILE
-    html += `
-      <a href="${honeymoonFund.paypal}"
-         target="_blank"
-         class="btn"
-         style="display:block;margin:16px auto;max-width:260px;">
-         💳 Open PayPal
-      </a>
-    `;
-  } else {
-    // 💻 DESKTOP
-    html += `
-      <div style="margin-top:22px;text-align:center;">
-
-        <div style="font-weight:600;color:#a52126;margin-bottom:6px;">
-          💳 PayPal QR
-        </div>
-
-        <canvas id="qrCanvas"></canvas>
-
-        <div style="font-size:13px;margin-top:6px;color:#666;">
-          Scan with your phone to open PayPal
-        </div>
-
-      </div>
-    `;
-  }
-}
-
 html += `</div>`;
 
 
   section.innerHTML = html;
-
-if (honeymoonFund?.paypal) {
-  const canvas = section.querySelector("#qrCanvas");
-
-  if (canvas) {
-    QRCode.toCanvas(canvas, honeymoonFund.paypal, {
-      width: 160
-    });
-  }
-}
 
 
 // 📷 VENMO QR RENDER
