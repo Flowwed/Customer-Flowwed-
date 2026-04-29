@@ -923,15 +923,28 @@ if (!videoSrc) {
       ? `https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/galleries/${siteData.video_path}`
       : videoSrc;
 
-    video.controls = true;
-    video.autoplay = true;
-    video.muted = true;
-    video.playsInline = true;
+video.controls = true;
 
-    video.style.width = "100%";
-    video.style.height = "100%";
+video.autoplay = true;
+video.muted = true;       // обязательно для автоплея
+video.playsInline = true;
 
-    videoBox.appendChild(video);
+video.style.width = "100%";
+video.style.height = "100%";
+
+videoBox.appendChild(video);
+
+// 🔊 авто-unmute при первом действии пользователя
+const enableSound = () => {
+  video.muted = false;
+  video.play().catch(()=>{});
+  
+  window.removeEventListener("click", enableSound);
+  window.removeEventListener("touchstart", enableSound);
+};
+
+window.addEventListener("click", enableSound);
+window.addEventListener("touchstart", enableSound);
 
   } else {
 
