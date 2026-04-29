@@ -1207,12 +1207,18 @@ function enableAutoScroll(row, speed = 0.6) {
 
 window.copyZelle = function () {
   const input = document.getElementById("zelleField");
+  const btn = event.target;
+
   input.select();
   document.execCommand("copy");
 
-  alert("Copied!");
-};
+  const original = btn.textContent;
+  btn.textContent = "Copied ✓";
 
+  setTimeout(() => {
+    btn.textContent = original;
+  }, 1500);
+};
 
 
 
