@@ -806,17 +806,41 @@ if (honeymoonFund.paypal) {
   `;
 }
 
-// 📱 VENMO (КНОПКА)
+// 📱 VENMO PRO
 if (honeymoonFund.venmo) {
-  html += `
-    <a href="https://venmo.com/${honeymoonFund.venmo.replace('@','')}"
-       target="_blank"
-       class="btn"
-       style="display:block;margin:10px auto;max-width:260px;">
-       📱 Venmo ${honeymoonFund.venmo}
-    </a>
-  `;
+  const username = honeymoonFund.venmo.replace('@','');
+
+  if (isMobile()) {
+    // 📱 MOBILE → открывает приложение Venmo
+    html += `
+      <a href="venmo://paycharge?txn=pay&recipients=${username}"
+         class="btn"
+         style="display:block;margin:10px auto;max-width:260px;">
+         📱 Pay with Venmo ${honeymoonFund.venmo}
+      </a>
+    `;
+  } else {
+    // 💻 DESKTOP → web + QR
+    html += `
+      <a href="https://venmo.com/${username}"
+         target="_blank"
+         class="btn"
+         style="display:block;margin:10px auto;max-width:260px;">
+         📱 Venmo ${honeymoonFund.venmo}
+      </a>
+
+      <div style="margin-top:14px;text-align:center;">
+        <canvas id="venmoQR"></canvas>
+        <div style="font-size:13px;color:#666;margin-top:6px;">
+          Scan with Venmo
+        </div>
+      </div>
+    `;
+  }
 }
+
+
+
 
 // 🏦 ZELLE (ПОКА ПРОСТО КРАСИВО)
 if (honeymoonFund.zelle) {
@@ -895,6 +919,18 @@ if (honeymoonFund?.paypal) {
   }
 }
 
+
+// 📷 VENMO QR RENDER
+if (honeymoonFund?.venmo) {
+  const username = honeymoonFund.venmo.replace('@','');
+  const canvas = section.querySelector("#venmoQR");
+
+  if (canvas) {
+    QRCode.toCanvas(canvas, `https://venmo.com/${username}`, {
+      width: 160
+    });
+  }
+}
 
   container.appendChild(section);
   return;
