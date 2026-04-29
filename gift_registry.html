@@ -795,35 +795,67 @@ let html = `
     </p>
 `;
 
-// 💳 PAYPAL (с суммами + Other)
-if (honeymoonFund.paypal && honeymoonFund.paypal.includes("paypal.me")) {
+// 💳 PAYPAL (через email fallback)
+if (honeymoonFund.paypal) {
 
-  const base = honeymoonFund.paypal;
+  // если есть paypal.me → норм кнопки
+  if (honeymoonFund.paypal.includes("paypal.me")) {
 
-  html += `
-    <div style="margin-top:12px;text-align:center;">
+    const base = honeymoonFund.paypal;
 
-      <div style="margin-bottom:8px;font-weight:600;">
-        💳 PayPal
+    html += `
+      <div style="margin-top:12px;text-align:center;">
+        <div style="margin-bottom:8px;font-weight:600;">
+          💳 PayPal
+        </div>
+
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+          <a href="${base}/50" target="_blank" class="btn">$50</a>
+          <a href="${base}/100" target="_blank" class="btn">$100</a>
+          <a href="${base}/200" target="_blank" class="btn">$200</a>
+          <a href="${base}" target="_blank" class="btn" style="background:#fff;color:#b33639;border:2px solid #b33639;">
+            Other
+          </a>
+        </div>
       </div>
+    `;
 
-      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+  } else {
 
-        <a href="${base}/50" target="_blank" class="btn">$50</a>
+    // ❗ fallback через email
+    html += `
+      <div style="margin-top:16px;">
 
-        <a href="${base}/100" target="_blank" class="btn">$100</a>
+        <div style="margin-bottom:6px;">💳 PayPal</div>
 
-        <a href="${base}/200" target="_blank" class="btn">$200</a>
+        <div style="display:flex;gap:8px;justify-content:center;">
+          <input id="paypalField"
+            value="${honeymoonFund.paypal}"
+            readonly
+            style="
+              padding:8px;
+              border-radius:8px;
+              border:1px solid #ccc;
+              width:200px;
+              text-align:center;
+            ">
 
-        <a href="${base}" target="_blank" class="btn" style="background:#fff;color:#b33639;border:2px solid #b33639;">
-          Other
-        </a>
+          <button onclick="copyPayPal(event)" class="btn" style="padding:8px 12px;">
+            Copy
+          </button>
+        </div>
+
+        <div style="font-size:12px;color:#666;margin-top:6px;">
+          Send via PayPal app
+        </div>
 
       </div>
-
-    </div>
-  `;
+    `;
+  }
 }
+
+
+
 
 
 
@@ -1232,6 +1264,23 @@ window.copyZelle = function () {
     btn.textContent = original;
   }, 1500);
 };
+
+
+window.copyPayPal = function (e) {
+  const btn = e.target;
+  const input = document.getElementById("paypalField");
+
+  input.select();
+  document.execCommand("copy");
+
+  const original = btn.textContent;
+  btn.textContent = "Copied ✓";
+
+  setTimeout(() => {
+    btn.textContent = original;
+  }, 1500);
+};
+
 
 
 
