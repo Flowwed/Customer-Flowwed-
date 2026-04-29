@@ -850,10 +850,17 @@ if (honeymoonFund.zelle) {
 if (honeymoonFund.paypal) {
   html += `
     <div style="margin-top:22px;">
-      <canvas id="qrCanvas"></canvas>
-      <div style="font-size:13px;margin-top:6px;color:#666;">
-        Scan to pay
-      </div>
+
+<div style="margin-top:10px;font-weight:600;color:#a52126;">
+  💳 PayPal QR
+</div>
+
+<canvas id="qrCanvas"></canvas>
+
+<div style="font-size:13px;margin-top:6px;color:#666;">
+  Scan with your phone to open PayPal
+</div>
+
     </div>
   `;
 }
