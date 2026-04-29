@@ -787,31 +787,49 @@ if (catKey === "cash") {
     return;
   }
 
-  let html = `
-    <div class="empty-state">
-      <p style="margin-bottom:16px;">
-        Your presence is our greatest gift ❤️<br>
-        But if you'd like to contribute to our honeymoon:
-      </p>
+let html = `
+  <div class="empty-state" style="text-align:center">
+
+    <p style="margin-bottom:18px;font-size:16px;">
+      Your presence is our greatest gift ❤️<br>
+      But if you'd like to contribute to our honeymoon:
+    </p>
+`;
+
+// 💳 PAYPAL
+if (honeymoonFund.paypal) {
+  html += `
+    <a href="${honeymoonFund.paypal}" target="_blank"
+       class="btn"
+       style="display:block;margin:10px auto;max-width:260px;">
+       💳 PayPal
+    </a>
   `;
+}
 
-  if (honeymoonFund.paypal) {
-    html += `
-      <a href="${honeymoonFund.paypal}" target="_blank" class="btn">
-        💳 Send via PayPal
-      </a><br><br>
-    `;
-  }
+// 📱 VENMO (КНОПКА)
+if (honeymoonFund.venmo) {
+  html += `
+    <a href="https://venmo.com/${honeymoonFund.venmo.replace('@','')}"
+       target="_blank"
+       class="btn"
+       style="display:block;margin:10px auto;max-width:260px;">
+       📱 Venmo ${honeymoonFund.venmo}
+    </a>
+  `;
+}
 
-  if (honeymoonFund.venmo) {
-    html += `<p><strong>Venmo:</strong> ${honeymoonFund.venmo}</p>`;
-  }
+// 🏦 ZELLE (ПОКА ПРОСТО КРАСИВО)
+if (honeymoonFund.zelle) {
+  html += `
+    <p style="margin-top:12px;">
+      🏦 Zelle: <strong>${honeymoonFund.zelle}</strong>
+    </p>
+  `;
+}
 
-  if (honeymoonFund.zelle) {
-    html += `<p><strong>Zelle:</strong> ${honeymoonFund.zelle}</p>`;
-  }
+html += `</div>`;
 
-  html += `</div>`;
 
   section.innerHTML = html;
   container.appendChild(section);
@@ -957,7 +975,6 @@ rightBtn.onclick = () => {
 
 }
 
-/* ===== INIT ===== */
 /* ===== INIT ===== */
 (async () => {
   loadCoupleName();
