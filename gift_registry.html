@@ -789,7 +789,17 @@ if (catKey === "cash") {
   }
 
 
-let html = `<div style="display:flex;flex-direction:column;gap:18px;max-width:420px;margin:0 auto;">`;
+let html = `
+  <div style="
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    justify-content:center;
+    max-width:900px;
+    margin:0 auto;
+  ">
+`;
+
 
 if (honeymoonFund.venmo) {
   const username = honeymoonFund.venmo.replace('@','');
