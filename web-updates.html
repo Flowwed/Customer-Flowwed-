@@ -590,7 +590,7 @@ font-weight: 650;
   <div class="nav-center">
     <a data-page="home">Home</a>
     <a data-page="photo_gallery.html">Photo Gallery</a>
-    <a id="ourStoryNavBtn" data-page="our_story.html">Our Story</a>
+    <a data-page="our_story.html">Our Story</a>
     <a data-page="web-updates.html">Updates</a>
 
     <a data-page="venue_map.html">Travel & Event</a>
@@ -782,56 +782,11 @@ html += `
 }
 
 loadStoryContent();
-loadStoryToggle();
 
 </script>
 
+
 <script>
-
-async function loadStoryToggle() {
-
-  const token = getToken();
-
-  if (!token) return;
-
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/our_story_page?select=story_enabled&edit_token=eq.${token}`,
-    {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`
-      }
-    }
-  );
-
-  const data = await res.json();
-
-  if (!data.length) return;
-
-  const enabled =
-    data[0].story_enabled === true ||
-    data[0].story_enabled === "true";
-
-if (!enabled) {
-
-  const desktopLink =
-    document.querySelector('.nav-center a[data-page="our_story.html"]');
-
-  if (desktopLink) {
-    desktopLink.remove();
-  }
-
-  const mobileLink =
-    document.querySelector('#mobileMenu a[data-page="our_story.html"]');
-
-  if (mobileLink) {
-    mobileLink.remove();
-  }
-
-}
-}
-
-
 function getToken() {
   const params = new URLSearchParams(location.search);
   const token =
@@ -906,11 +861,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     vMenu.appendChild(back);
     vMenu.appendChild(navCenter.cloneNode(true));
-    loadStoryToggle();
-
-
   }
-
 
   vBtn?.addEventListener("click", e => {
     e.stopPropagation();
