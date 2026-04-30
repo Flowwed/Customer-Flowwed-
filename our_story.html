@@ -1252,6 +1252,8 @@ async function loadStoryContent() {
 
     const row = data[0];
 
+console.log("STORY ENABLED:", row.story_enabled);
+
 const storyEnabled =
   row.story_enabled === true ||
   row.story_enabled === "true";
