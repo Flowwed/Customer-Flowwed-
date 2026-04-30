@@ -66,16 +66,17 @@ async function loadStoryToggle() {
 
   // ===== HIDE PHOTO GALLERY =====
 
-  if (toggles.gallery === false) {
+if (toggles.gallery === false) {
 
-    document
-      .querySelectorAll('[data-page="photo_gallery.html"]')
-      .forEach(el => {
-        el.remove();
-      });
+  document
+    .querySelectorAll(
+      '[data-page="photo_gallery.html"], [data-path="/photo_gallery"]'
+    )
+    .forEach(el => {
+      el.remove();
+    });
 
-  }
-
+}
 }
 
 document.addEventListener("DOMContentLoaded", () => {
