@@ -578,63 +578,28 @@ progress {
   }
 }
 
+/* ===== PAYPAL MINIMAL LINKS ===== */
 
-/* ===== PAYPAL GRID ===== */
-
-.paypal-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-
-  margin-top: 14px;
-}
-
-.paypal-amount,
-.paypal-custom {
+.paypal-links {
   display: flex;
-  align-items: center;
   justify-content: center;
-
-  height: 48px;
-
-  border-radius: 14px;
-
-  font-weight: 700;
-  text-decoration: none;
-
-  transition: all .22s ease;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
-/* amount buttons */
-.paypal-amount {
-  background: linear-gradient(135deg, #b33639, #922c31);
-  color: white;
+.paypal-links a {
+  color: #0070ba;
+  text-decoration: underline;
 
-  box-shadow:
-    0 6px 14px rgba(179,54,57,.22);
+  font-size: 15px;
+  font-weight: 500;
+
+  transition: opacity .2s ease;
 }
 
-.paypal-amount:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 10px 22px rgba(179,54,57,.28);
+.paypal-links a:hover {
+  opacity: .7;
 }
-
-/* custom button */
-.paypal-custom {
-  grid-column: span 2;
-
-  background: #fff;
-  color: #b33639;
-
-  border: 2px solid #b33639;
-}
-
-.paypal-custom:hover {
-  background: #f8dede;
-}
-
-
 
 /* =========================
    GLASS LOADING OVERLAY
@@ -983,35 +948,25 @@ if (honeymoonFund.paypal) {
       <div class="empty-state" style="width:260px;">
         <div style="font-weight:600;margin-bottom:10px;">💳 PayPal</div>
 
-<div class="paypal-grid">
+<div class="paypal-links">
 
-  <a href="${base}/50"
-     target="_blank"
-     class="paypal-amount">
-     $50
+  <a href="${base}/50" target="_blank">
+    $50
   </a>
 
-  <a href="${base}/100"
-     target="_blank"
-     class="paypal-amount">
-     $100
+  <a href="${base}/100" target="_blank">
+    $100
   </a>
 
-  <a href="${base}/200"
-     target="_blank"
-     class="paypal-amount">
-     $200
+  <a href="${base}/200" target="_blank">
+    $200
   </a>
 
-  <a href="${base}"
-     target="_blank"
-     class="paypal-custom">
-     Custom Amount
+  <a href="${base}" target="_blank">
+    Other
   </a>
 
 </div>
-      </div>
-    `;
 
   } else {
 
