@@ -79,6 +79,19 @@ async function loadStoryToggle() {
 
   }
 
+if (toggles.travel === false) {
+
+  document
+    .querySelectorAll(
+      '[data-page="venue_map.html"], [data-path="/venue_map"]'
+    )
+    .forEach(el => {
+      el.remove();
+    });
+
+}
+
+
   // ===== SHOW NAVBAR AFTER FILTER =====
 
   document
