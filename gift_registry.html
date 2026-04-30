@@ -788,118 +788,30 @@ if (catKey === "cash") {
     return;
   }
 
-let html = `
-  <div class="empty-state" style="text-align:center">
 
-    <p style="margin-bottom:18px;font-size:16px;">
-    </p>
-`;
+let html = `<div style="display:flex;flex-direction:column;gap:18px;max-width:420px;margin:0 auto;">`;
 
-// 💳 PAYPAL (через email fallback)
-if (honeymoonFund.paypal) {
-
-  // если есть paypal.me → норм кнопки
-  if (honeymoonFund.paypal.includes("paypal.me")) {
-
-    const base = honeymoonFund.paypal;
-
-    html += `
-      <div style="margin-top:12px;text-align:center;">
-        <div style="margin-bottom:8px;font-weight:600;">
-          💳 PayPal
-        </div>
-
-        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-          <a href="${base}/50" target="_blank" class="btn">$50</a>
-          <a href="${base}/100" target="_blank" class="btn">$100</a>
-          <a href="${base}/200" target="_blank" class="btn">$200</a>
-          <a href="${base}" target="_blank" class="btn" style="background:#fff;color:#b33639;border:2px solid #b33639;">
-            Other
-          </a>
-        </div>
-      </div>
-    `;
-
-  } else {
-
-    // ❗ fallback через email
-    html += `
-      <div style="margin-top:16px;">
-
-        <div style="margin-bottom:6px;">💳 PayPal</div>
-
-        <div style="display:flex;gap:8px;justify-content:center;">
-          <input id="paypalField"
-            value="${honeymoonFund.paypal}"
-            readonly
-            style="
-              padding:8px;
-              border-radius:8px;
-              border:1px solid #ccc;
-              width:200px;
-              text-align:center;
-            ">
-
-          <button onclick="copyPayPal(event)" class="btn" style="padding:8px 12px;">
-            Copy
-          </button>
-        </div>
-
-        <div style="font-size:12px;color:#666;margin-top:6px;">
-          Send via PayPal app
-        </div>
-
-      </div>
-    `;
-  }
-}
-
-
-
-
-
-
-// 📱 VENMO PRO
 if (honeymoonFund.venmo) {
   const username = honeymoonFund.venmo.replace('@','');
 
-  if (isMobile()) {
-    // 📱 MOBILE → открывает приложение Venmo
-    html += `
-      <a href="venmo://paycharge?txn=pay&recipients=${username}"
-         class="btn"
-         style="display:block;margin:10px auto;max-width:260px;">
-         📱 Pay with Venmo ${honeymoonFund.venmo}
-      </a>
-    `;
-  } else {
-    // 💻 DESKTOP → web + QR
-    html += `
-      <a href="https://venmo.com/${username}"
-         target="_blank"
-         class="btn"
-         style="display:block;margin:10px auto;max-width:260px;">
-         📱 Venmo ${honeymoonFund.venmo}
-      </a>
+  html += `
+    <div class="empty-state">
+      <div style="font-weight:600;margin-bottom:10px;">📱 Venmo</div>
 
-      <div style="margin-top:14px;text-align:center;">
-        <canvas id="venmoQR"></canvas>
-        <div style="font-size:13px;color:#666;margin-top:6px;">
-          Scan with Venmo
-        </div>
-      </div>
-    `;
-  }
+      <a href="https://venmo.com/${username}"
+         class="btn"
+         style="display:block;margin:0 auto;max-width:240px;">
+         Pay with Venmo ${honeymoonFund.venmo}
+      </a>
+    </div>
+  `;
 }
 
 
-
-
-// 🏦 ZELLE (ПОКА ПРОСТО КРАСИВО)
 if (honeymoonFund.zelle) {
   html += `
-    <div style="margin-top:14px;">
-      <div style="margin-bottom:6px;">🏦 Zelle</div>
+    <div class="empty-state">
+      <div style="font-weight:600;margin-bottom:10px;">🏦 Zelle</div>
 
       <div style="display:flex;gap:8px;justify-content:center;">
         <input id="zelleField"
@@ -913,7 +825,7 @@ if (honeymoonFund.zelle) {
             text-align:center;
           ">
 
-        <button onclick="copyZelle()" class="btn" style="padding:8px 12px;">
+        <button onclick="copyZelle(event)" class="btn" style="padding:8px 12px;">
           Copy
         </button>
       </div>
@@ -921,6 +833,54 @@ if (honeymoonFund.zelle) {
   `;
 }
 
+
+if (honeymoonFund.paypal) {
+
+  // 👉 если есть paypal.me
+  if (honeymoonFund.paypal.includes("paypal.me")) {
+
+    const base = honeymoonFund.paypal;
+
+    html += `
+      <div class="empty-state">
+        <div style="font-weight:600;margin-bottom:10px;">💳 PayPal</div>
+
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+          <a href="${base}/50" target="_blank" class="btn">$50</a>
+          <a href="${base}/100" target="_blank" class="btn">$100</a>
+          <a href="${base}/200" target="_blank" class="btn">$200</a>
+          <a href="${base}" target="_blank" class="btn buy-btn">Other</a>
+        </div>
+      </div>
+    `;
+
+  } else {
+
+    // 👉 email fallback
+    html += `
+      <div class="empty-state">
+        <div style="font-weight:600;margin-bottom:10px;">💳 PayPal</div>
+
+        <div style="display:flex;gap:8px;justify-content:center;">
+          <input id="paypalField"
+            value="${honeymoonFund.paypal}"
+            readonly
+            style="
+              padding:8px;
+              border-radius:8px;
+              border:1px solid #ccc;
+              width:180px;
+              text-align:center;
+            ">
+
+          <button onclick="copyPayPal(event)" class="btn" style="padding:8px 12px;">
+            Copy
+          </button>
+        </div>
+      </div>
+    `;
+  }
+}
 
 
 html += `</div>`;
@@ -951,6 +911,7 @@ if (honeymoonFund?.venmo) {
   <div class="empty-state">
     <p>
       List coming soon.
+
       <br>
       Thank you for being part of our journey 🤍
     </p>
