@@ -91,6 +91,17 @@ if (toggles.travel === false) {
 
 }
 
+if (toggles.justMarried === false) {
+
+  document
+    .querySelectorAll(
+      '[data-page="just_married.html"], [data-path="/just_married"]'
+    )
+    .forEach(el => {
+      el.remove();
+    });
+
+}
 
   // ===== SHOW NAVBAR AFTER FILTER =====
 
