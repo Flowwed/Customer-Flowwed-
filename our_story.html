@@ -1251,7 +1251,11 @@ async function loadStoryContent() {
     if (!data || !data.length) return;
 
     const row = data[0];
-const storyEnabled = row.story_enabled !== false;
+
+const storyEnabled =
+  row.story_enabled === true ||
+  row.story_enabled === "true";
+
 
 document.querySelectorAll('[data-page="our_story.html"]')
   .forEach(link => {
