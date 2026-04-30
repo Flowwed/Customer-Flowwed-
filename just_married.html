@@ -1541,8 +1541,12 @@ if (gridEl) {
     const photo = e.target.closest(".photo");
     if (!photo) return;
 
+
     const img = photo.querySelector("img");
     if (!img) return;
+
+// 🔥 ВОТ СЮДА
+  startExperience();
 
     e.preventDefault();
     e.stopPropagation();
