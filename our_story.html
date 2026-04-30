@@ -1253,11 +1253,14 @@ async function loadStoryContent() {
     const row = data[0];
 const storyEnabled = row.story_enabled !== false;
 
-const storyLink = document.getElementById("storyNavLink");
+document.querySelectorAll('[data-page="our_story.html"]')
+  .forEach(link => {
 
-if (storyLink && !storyEnabled) {
-  storyLink.style.display = "none";
-}
+    link.style.display =
+      storyEnabled ? "" : "none";
+
+});
+
 
     const fields = [
       "how_we_met",
