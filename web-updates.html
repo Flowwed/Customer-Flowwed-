@@ -812,14 +812,23 @@ async function loadStoryToggle() {
     data[0].story_enabled === true ||
     data[0].story_enabled === "true";
 
-  if (!enabled) {
+if (!enabled) {
 
-    document.querySelectorAll('[data-page="our_story.html"]')
-      .forEach(el => {
-        el.style.display = "none";
-      });
+  const desktopLink =
+    document.querySelector('.nav-center a[data-page="our_story.html"]');
 
+  if (desktopLink) {
+    desktopLink.remove();
   }
+
+  const mobileLink =
+    document.querySelector('#mobileMenu a[data-page="our_story.html"]');
+
+  if (mobileLink) {
+    mobileLink.remove();
+  }
+
+}
 }
 
 
