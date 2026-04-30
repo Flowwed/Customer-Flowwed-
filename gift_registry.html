@@ -559,6 +559,26 @@ progress {
   display: none;
 }
 
+
+/* ===== HONEYMOON GRID ===== */
+
+.fund-grid {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+  .fund-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
 </style>
 </head>
 
@@ -780,7 +800,7 @@ if (catKey === "cash") {
 
   if (!honeymoonFund) {
     section.innerHTML = `
-      <div class="empty-state">
+      <div class="empty-state" style="width:260px;">
         <p>Honeymoon fund coming soon 💖</p>
       </div>
     `;
@@ -790,21 +810,14 @@ if (catKey === "cash") {
 
 
 let html = `
-  <div style="
-    display:flex;
-    gap:18px;
-    justify-content:center;
-    max-width:900px;
-    margin:0 auto;
-  ">
+  <div class="fund-grid">
 `;
-
 
 if (honeymoonFund.venmo) {
   const username = honeymoonFund.venmo.replace('@','');
 
   html += `
-    <div class="empty-state">
+    <div class="empty-state" style="width:260px;">
       <div style="font-weight:600;margin-bottom:10px;">📱 Venmo</div>
 
       <a href="https://venmo.com/${username}"
@@ -819,7 +832,7 @@ if (honeymoonFund.venmo) {
 
 if (honeymoonFund.zelle) {
   html += `
-    <div class="empty-state">
+    <div class="empty-state" style="width:260px;">
       <div style="font-weight:600;margin-bottom:10px;">🏦 Zelle</div>
 
       <div style="display:flex;gap:8px;justify-content:center;">
@@ -851,7 +864,7 @@ if (honeymoonFund.paypal) {
     const base = honeymoonFund.paypal;
 
     html += `
-      <div class="empty-state">
+      <div class="empty-state" style="width:260px;">
         <div style="font-weight:600;margin-bottom:10px;">💳 PayPal</div>
 
         <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
@@ -867,7 +880,7 @@ if (honeymoonFund.paypal) {
 
     // 👉 email fallback
     html += `
-      <div class="empty-state">
+      <div class="empty-state" style="width:260px;">
         <div style="font-weight:600;margin-bottom:10px;">💳 PayPal</div>
 
         <div style="display:flex;gap:8px;justify-content:center;">
@@ -917,7 +930,7 @@ if (honeymoonFund?.venmo) {
 
     if (items.length === 0) {
       section.innerHTML = `
-  <div class="empty-state">
+  <div class="empty-state" style="width:260px;">
     <p>
       List coming soon.
 
