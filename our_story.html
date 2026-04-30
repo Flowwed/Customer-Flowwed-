@@ -845,7 +845,7 @@ section {
   <div class="nav-center">
     <a data-page="home">Home</a>
     <a data-page="photo_gallery.html">Photo Gallery</a>
-    <a data-page="our_story.html">Our Story</a>
+    <a id="storyNavLink" data-page="our_story.html">Our Story</a>
     <a data-page="web-updates.html">Updates</a>
     <a data-page="venue_map.html">Travel & Event</a>
     <a data-page="wed_party.html">Wedding Party</a>
@@ -1238,7 +1238,7 @@ async function loadStoryContent() {
 
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/our_story_page?select=how_we_met,growing_together,proposal,new_chapter,custom&edit_token=eq.${token}`,
+      `${SUPABASE_URL}/rest/v1/our_story_page?select=how_we_met,growing_together,proposal,new_chapter,custom,story_enabled&edit_token=eq.${token}`,
       {
         headers: {
           apikey: SUPABASE_KEY,
@@ -1251,6 +1251,13 @@ async function loadStoryContent() {
     if (!data || !data.length) return;
 
     const row = data[0];
+const storyEnabled = row.story_enabled !== false;
+
+const storyLink = document.getElementById("storyNavLink");
+
+if (storyLink && !storyEnabled) {
+  storyLink.style.display = "none";
+}
 
     const fields = [
       "how_we_met",
