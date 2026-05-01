@@ -103,6 +103,19 @@ if (toggles.justMarried === false) {
 
 }
 
+
+if (toggles.gift_registry === false) {
+
+  document
+    .querySelectorAll(
+      '[data-page="gift_registry.html"], [data-path="/gift_registry"]'
+    )
+    .forEach(el => {
+      el.remove();
+    });
+
+}
+
   // ===== SHOW NAVBAR AFTER FILTER =====
 
   document
