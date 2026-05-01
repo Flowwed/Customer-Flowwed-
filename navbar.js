@@ -116,6 +116,18 @@ if (toggles.gift_registry === false) {
 
 }
 
+if (toggles.updates === false) {
+
+  document
+    .querySelectorAll(
+      '[data-page="web-updates.html"], [data-path="/web-updates"]'
+    )
+    .forEach(el => {
+      el.remove();
+    });
+
+}
+
   // ===== SHOW NAVBAR AFTER FILTER =====
 
   document
