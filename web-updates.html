@@ -720,10 +720,29 @@ const token =
   sessionStorage.getItem("rsvpToken") ||
   "";
 
-if (token) {
-  sessionStorage.setItem("rsvpToken", token);
-  loadCoupleName(token);
-}  
+(async () => {
+
+  if (token) {
+    sessionStorage.setItem("rsvpToken", token);
+
+    await loadCoupleName(token);
+    await loadStoryContent();
+  }
+
+  const overlay = document.getElementById("loadingOverlay");
+
+  if (overlay) {
+
+    overlay.classList.add("hide");
+
+    setTimeout(() => {
+      overlay.remove();
+    }, 350);
+
+  }
+
+})();
+
 </script>
 
 
@@ -781,7 +800,6 @@ html += `
   }
 }
 
-loadStoryContent();
 
 </script>
 
@@ -955,17 +973,6 @@ fetch("/footer.html")
   });
 </script>
 
-<script>
-window.addEventListener("load", () => {
-  const overlay = document.getElementById("loadingOverlay");
-
-  if (overlay) {
-    setTimeout(() => {
-      overlay.classList.add("hide");
-    }, 300); // небольшая задержка как в примере
-  }
-});
-</script>
 
 <script src="/navbar.js"></script>
 
