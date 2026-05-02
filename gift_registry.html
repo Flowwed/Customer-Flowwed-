@@ -1163,11 +1163,24 @@ rightBtn.onclick = () => {
 
 /* ===== INIT ===== */
 (async () => {
-  loadCoupleName();
-  await loadFund();
-  loadGifts();
-})();
 
+  await loadCoupleName();
+  await loadFund();
+  await loadGifts();
+
+  const overlay = document.getElementById("loadingOverlay");
+
+  if (overlay) {
+
+    overlay.classList.add("hide");
+
+    setTimeout(() => {
+      overlay.remove();
+    }, 350);
+
+  }
+
+})();
 
 /* ===== RESERVE MODAL LOGIC (FIX) ===== */
 let currentGiftId = null;
@@ -1570,18 +1583,6 @@ fetch("/footer.html")
   });
 </script>
 
-
-<script>
-window.addEventListener("load", () => {
-  const overlay = document.getElementById("loadingOverlay");
-
-  if (overlay) {
-    setTimeout(() => {
-      overlay.classList.add("hide");
-    }, 300); // небольшая задержка как в примере
-  }
-});
-</script>
 
 <script src="/navbar.js"></script>
 
