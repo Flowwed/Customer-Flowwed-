@@ -456,11 +456,12 @@ async function loadData(){
   const token = getToken();
   if(!token) return;
 
-  const { data } = await sb
-    .from("wedding_info")
-    .select("*")
-    .eq("site_edit_token", token)
-    .maybeSingle();
+const { data } = await sb
+  .from("sites")
+  .select("couple_name, wedding_date")
+  .eq("edit_token", token)
+  .maybeSingle();
+
 
   if(!data) return;
 
