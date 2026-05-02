@@ -456,20 +456,25 @@ async function loadData(){
   const token = getToken();
   if(!token) return;
 
-const { data } = await sb
+  const { data } = await sb
+    .from("wedding_info")
+    .select("*")
+    .eq("site_edit_token", token)
+    .maybeSingle();
+
+const { data: siteData } = await sb
   .from("sites")
   .select("couple_name, wedding_date")
   .eq("edit_token", token)
   .maybeSingle();
 
-
   if(!data) return;
 
-  document.getElementById("coupleName").innerText =
-    data.couple_name || "Wedding";
+document.getElementById("coupleName").innerText =
+  siteData?.couple_name || "Wedding";
 
-if (data.wedding_date) {
-  const d = new Date(data.wedding_date);
+if (siteData?.wedding_date) {
+  const d = new Date(siteData.wedding_date);
 
   const formatted = d.toLocaleDateString("en-US", {
     year: "numeric",
