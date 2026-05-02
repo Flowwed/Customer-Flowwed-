@@ -1921,6 +1921,7 @@ const album = document.querySelector(".album");
 
 /* используем уже выбранный набор */
 const balloonTexts = window.balloonTexts;
+window.randomHintsEnabled = true;
 
 const INTRO_LIMIT = 4;
 
@@ -2285,7 +2286,7 @@ async function loadCoupleName(){
 
   try{
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/sites?select=couple_name&edit_token=eq.${token}`,
+      `${SUPABASE_URL}/rest/v1/sites?select=couple_name,page_toggles&edit_token=eq.${token}`,
       {
         headers:{
           apikey: SUPABASE_KEY,
@@ -2313,6 +2314,12 @@ async function loadCoupleName(){
 
 
     document.title = fullName;
+
+const toggles =
+  arr[0].page_toggles || {};
+
+window.randomHintsEnabled =
+  toggles.randomHints !== false;
 
   }catch(e){
     console.log("loadCoupleName error", e);
