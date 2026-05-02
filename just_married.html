@@ -2050,7 +2050,17 @@ introFinished = true;
 }
 
 function spawnGroup(){
-if (groupActive) return; // 🔥 ВОТ ЭТО КРИТИЧНО
+
+  if (
+    introFinished &&
+    !window.randomHintsEnabled
+  ) {
+    return;
+  }
+
+  if (groupActive) return;
+
+
 
   groupActive = true;
 
