@@ -395,13 +395,14 @@ function parseLinks(text){
 
 
 async function loadData(){
+
   const token = getToken();
   if(!token) return;
 
   const { data } = await sb
-    .from("wedding_info")
-    .select("*")
-    .eq("site_edit_token", token)
+    .from("sites")
+    .select("couple_name, wedding_date")
+    .eq("edit_token", token)
     .maybeSingle();
 
   if(!data) return;
@@ -409,17 +410,21 @@ async function loadData(){
   document.getElementById("coupleName").innerText =
     data.couple_name || "Wedding";
 
-if (data.wedding_date) {
-  const d = new Date(data.wedding_date);
+  if(data.wedding_date){
 
-  const formatted = d.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
+    const d = new Date(data.wedding_date);
 
-  document.getElementById("eventDate").textContent = formatted;
+    const formatted = d.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+
+    document.getElementById("eventDate").textContent = formatted;
+  }
 }
+
+
 
   // SCHEDULE
   const scheduleEl = document.getElementById("schedule");
