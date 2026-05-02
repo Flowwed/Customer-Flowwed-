@@ -994,7 +994,6 @@ if (weddingDate) {
   }
 }
 
-loadCoupleName();
 </script>
 
 <script>
@@ -1126,15 +1125,17 @@ window.addEventListener("keydown", (e) => {
    🍎 APPLE STYLE MARQUEE — JS DRIVEN
    ========================================= */
 
-loadStoryImageSlider().then(() => {
+async function initStorySlider(){
+
+  await loadStoryImageSlider();
+
   const track = document.getElementById("storyHeroImages");
   if (!track) return;
-// 📱 MOBILE — НИЧЕГО НЕ ДЕЛАЕМ, только grid из CSS
-if (window.innerWidth <= 768) {
-  return;
-}
 
-
+  // 📱 MOBILE — НИЧЕГО НЕ ДЕЛАЕМ
+  if (window.innerWidth <= 768) {
+    return;
+  }
 
   if (track.children.length < 4) return;
 
@@ -1145,24 +1146,27 @@ if (window.innerWidth <= 768) {
   if (!marquee) return;
 
   let x = 0;
-  let velocity = 0.08; // auto-scroll speed
+  let velocity = 0.08;
   let isDragging = false;
   let lastX = 0;
   let rafId = null;
 
   const render = () => {
+
     x -= velocity;
 
-    // бесконечный loop
+    // infinite loop
     if (Math.abs(x) >= track.scrollWidth / 2) {
       x = 0;
     }
 
     track.style.transform = `translateX(${x}px)`;
+
     rafId = requestAnimationFrame(render);
   };
 
   const stop = () => cancelAnimationFrame(rafId);
+
   const start = () => render();
 
   /* ---------- DRAG ---------- */
@@ -1174,33 +1178,46 @@ if (window.innerWidth <= 768) {
   };
 
   const moveDrag = (clientX) => {
+
     if (!isDragging) return;
+
     const dx = clientX - lastX;
+
     lastX = clientX;
+
     x += dx;
+
     velocity = dx * 0.15;
   };
 
   const endDrag = () => {
+
     if (!isDragging) return;
+
     isDragging = false;
+
     startInertia();
   };
 
   /* ---------- INERTIA ---------- */
 
   const startInertia = () => {
+
     const friction = 0.95;
 
     const step = () => {
+
       velocity *= friction;
 
       if (Math.abs(velocity) < 0.01) {
+
         velocity = 0.15;
+
         return;
       }
 
       x += velocity;
+
       requestAnimationFrame(step);
     };
 
@@ -1210,19 +1227,37 @@ if (window.innerWidth <= 768) {
   /* ---------- EVENTS ---------- */
 
   marquee.addEventListener("mouseenter", stop);
+
   marquee.addEventListener("mouseleave", start);
 
-  marquee.addEventListener("mousedown", e => startDrag(e.clientX));
-  window.addEventListener("mousemove", e => moveDrag(e.clientX));
+  marquee.addEventListener("mousedown", e => {
+    startDrag(e.clientX);
+  });
+
+  window.addEventListener("mousemove", e => {
+    moveDrag(e.clientX);
+  });
+
   window.addEventListener("mouseup", endDrag);
 
-  marquee.addEventListener("touchstart", e => startDrag(e.touches[0].clientX), { passive: true });
-  marquee.addEventListener("touchmove", e => moveDrag(e.touches[0].clientX), { passive: true });
+  marquee.addEventListener(
+    "touchstart",
+    e => startDrag(e.touches[0].clientX),
+    { passive: true }
+  );
+
+  marquee.addEventListener(
+    "touchmove",
+    e => moveDrag(e.touches[0].clientX),
+    { passive: true }
+  );
+
   marquee.addEventListener("touchend", endDrag);
 
-  // старт
+  // START
   start();
-});
+}
+
 </script>
 
 <script>
@@ -1297,7 +1332,6 @@ fields.forEach(key => {
   }
 }
 
-loadStoryContent();
 </script>
 
 <script>
@@ -1416,17 +1450,6 @@ fetch("/footer.html")
   });
 </script>
 
-<script>
-window.addEventListener("load", () => {
-  const overlay = document.getElementById("loadingOverlay");
-
-  if (overlay) {
-    setTimeout(() => {
-      overlay.classList.add("hide");
-    }, 300); // небольшая задержка как в примере
-  }
-});
-</script>
 
 <script src="/navbar.js"></script>
 
