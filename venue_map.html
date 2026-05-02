@@ -567,6 +567,8 @@ setTimeout(() => {
 }
 }
 
+loadData();
+
 // accordion
 
 document.querySelectorAll(".acc-title").forEach(t=>{
@@ -636,19 +638,6 @@ function goBack() {
 
 </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-
-  await loadData();
-
-  const overlay = document.getElementById("loadingOverlay");
-
-  if (overlay) {
-    overlay.remove();
-  }
-
-});
-</script>
 
 <script src="/navbar.js"></script>
 
