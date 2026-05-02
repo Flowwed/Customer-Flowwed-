@@ -570,7 +570,6 @@ setTimeout(() => {
 
 }
 }
-loadData();
 
 // accordion
 
@@ -642,14 +641,16 @@ function goBack() {
 </script>
 
 <script>
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+
+  await loadData();
+
   const overlay = document.getElementById("loadingOverlay");
 
   if (overlay) {
-    setTimeout(() => {
-      overlay.classList.add("hide");
-    }, 300); // небольшая задержка как в примере
+    overlay.classList.add("hide");
   }
+
 });
 </script>
 
