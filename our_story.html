@@ -1334,7 +1334,32 @@ fields.forEach(key => {
 
 </script>
 
+
 <script>
+
+(async () => {
+
+  await loadCoupleName();
+
+  await initStorySlider();
+
+  await loadStoryContent();
+
+  const overlay = document.getElementById("loadingOverlay");
+
+  if (overlay) {
+
+    overlay.classList.add("hide");
+
+    setTimeout(() => {
+      overlay.remove();
+    }, 350);
+
+  }
+
+})();
+
+
 function getToken() {
   const params = new URLSearchParams(location.search);
   const token =
