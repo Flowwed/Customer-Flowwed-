@@ -1177,7 +1177,9 @@ grid.addEventListener("scroll", () => {
    🚀 APP INIT
    ========================= */
 (async () => {
+
   const params = new URLSearchParams(location.search);
+
   const token =
     params.get("t") ||
     params.get("token") ||
@@ -1189,13 +1191,24 @@ grid.addEventListener("scroll", () => {
     loadCoupleName(token);
   }
 
-  await loadGallery();   // ⬅️ ВАЖНО: дождаться DOM
-// 🔥 iOS Safari scroll fix
-document.body.style.minHeight = "200vh";
-window.scrollTo(0, 1);
+  await loadGallery();
+
+  const overlay = document.getElementById("loadingOverlay");
+
+  if (overlay) {
+
+    overlay.classList.add("hide");
+
+    setTimeout(() => {
+      overlay.remove();
+    }, 350);
+
+  }
+
+  document.body.style.minHeight = "200vh";
+  window.scrollTo(0, 1);
 
 })();
-
 
 </script>
 
@@ -1372,17 +1385,6 @@ fetch("/footer.html")
   });
 </script>
 
-<script>
-window.addEventListener("load", () => {
-  const overlay = document.getElementById("loadingOverlay");
-
-  if (overlay) {
-    setTimeout(() => {
-      overlay.classList.add("hide");
-    }, 300); // небольшая задержка как в примере
-  }
-});
-</script>
 
 <script src="/navbar.js"></script>
 
