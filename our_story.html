@@ -262,18 +262,48 @@ section {
 
   width: 320px;
   flex-shrink: 0;
+position: relative;
+overflow: hidden;
+border-radius: 26px;
 }
 
 .story-photo-caption {
-  font-size: 15px;
-  line-height: 1.45;
-  color: #6f2a2a;
 
-  padding: 0 4px;
+  position: absolute;
 
-  text-align: center;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+
+  padding: 10px 14px;
+
+  border-radius: 18px;
+
+  background: rgba(255,255,255,.18);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255,255,255,.22);
+
+  color: white;
+
+  font-size: 14px;
+  line-height: 1.35;
+
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.45);
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.18);
+
+  opacity: 0;
+  transform: translateY(8px);
+
+  transition:
+    opacity .35s ease,
+    transform .35s ease;
 }
-
 
 
 /* APPLE MARQUEE */
