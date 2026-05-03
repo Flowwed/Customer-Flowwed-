@@ -1299,6 +1299,17 @@ document.addEventListener("click", (e) => {
   lightbox.classList.add("active");
 });
 
+// закрытие по клику вне фото
+lightbox.addEventListener("click", (e) => {
+
+  if (e.target === lightbox) {
+
+    lightbox.classList.remove("active");
+
+  }
+
+});
+
 
 /* =========================================
    🍎 APPLE STYLE MARQUEE — JS DRIVEN
