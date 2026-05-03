@@ -297,44 +297,54 @@ border-radius: 26px;
   box-shadow:
     0 8px 30px rgba(0,0,0,.18);
 
-opacity: 1;
-transform: translateY(0);
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
 
-max-height: 44px;
 overflow: hidden;
+text-overflow: ellipsis;
+
+max-height: 42px;
+
+padding-right: 18px;
 
 transition:
   max-height .45s ease,
   opacity .35s ease,
   transform .35s ease;
+
 }
 
 .story-photo-caption::after {
 
-  content: "";
+  content: "...";
 
   position: absolute;
 
-  left: 0;
-  right: 0;
-  bottom: 0;
+  right: 12px;
+  bottom: 8px;
 
-  height: 26px;
+  font-size: 18px;
+  line-height: 1;
 
-  border-radius: 0 0 18px 18px;
+  color: rgba(255,255,255,.92);
 
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0),
-    rgba(255,255,255,.18)
-  );
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.45);
+
+  transition: opacity .25s ease;
 }
 
 .story-photo-card:hover .story-photo-caption {
 
+  -webkit-line-clamp: unset;
+
   max-height: 220px;
 }
 
+.story-photo-card:hover .story-photo-caption::after {
+  opacity: 0;
+}
 
 
 /* APPLE MARQUEE */
