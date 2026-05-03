@@ -566,6 +566,48 @@ border-radius: 26px;
   transition: transform .45s cubic-bezier(.2,.8,.2,1);
 }
 
+
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 64px;
+  height: 64px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.14);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  color: white;
+  font-size: 42px;
+  line-height: 1;
+
+  cursor: pointer;
+  z-index: 10000;
+
+  transition:
+    transform .25s ease,
+    background .25s ease;
+}
+
+.lightbox-arrow:hover {
+  transform: translateY(-50%) scale(1.08);
+  background: rgba(255,255,255,.22);
+}
+
+.lightbox-arrow.left {
+  left: 38px;
+}
+
+.lightbox-arrow.right {
+  right: 38px;
+}
+
 .lightbox-content {
 
   display: flex;
@@ -1270,11 +1312,30 @@ document.body.appendChild(lightbox);
 
 const lightboxImg = lightbox.querySelector("img");
 
+const lightboxCaption =
+  lightbox.querySelector(".lightbox-caption");
+
+const leftArrow =
+  lightbox.querySelector(".lightbox-arrow.left");
+
+const rightArrow =
+  lightbox.querySelector(".lightbox-arrow.right");
+
+let currentImageIndex = 0;
+
+
 // клик по фото в hero
 document.addEventListener("click", (e) => {
 
   const img = e.target.closest(".story-hero img");
   if (!img) return;
+
+const images = [
+  ...document.querySelectorAll(".story-hero img")
+];
+
+currentImageIndex = images.indexOf(img);
+
 
   const card = img.closest(".story-photo-card");
 
@@ -1282,14 +1343,8 @@ document.addEventListener("click", (e) => {
     card?.querySelector(".story-photo-caption")
       ?.innerText || "";
 
-  lightboxImg.src = img.src;
+  showImage(currentImageIndex);
 
-  const lightboxCaption =
-    lightbox.querySelector(".lightbox-caption");
-
-  if (lightboxCaption) {
-    lightboxCaption.innerText = caption;
-  }
 
   lightbox.classList.add("active");
 });
@@ -1303,6 +1358,46 @@ lightbox.addEventListener("click", (e) => {
 
   }
 
+});
+
+
+function showImage(index) {
+
+  const images = [
+    ...document.querySelectorAll(".story-hero img")
+  ];
+
+  if (!images.length) return;
+
+  if (index < 0) {
+    index = images.length - 1;
+  }
+
+  if (index >= images.length) {
+    index = 0;
+  }
+
+  currentImageIndex = index;
+
+  const img = images[index];
+
+  lightboxImg.src = img.src;
+
+  const card = img.closest(".story-photo-card");
+
+  lightboxCaption.innerText =
+    card?.querySelector(".story-photo-caption")
+      ?.innerText || "";
+}
+
+leftArrow.addEventListener("click", (e) => {
+  e.stopPropagation();
+  showImage(currentImageIndex - 1);
+});
+
+rightArrow.addEventListener("click", (e) => {
+  e.stopPropagation();
+  showImage(currentImageIndex + 1);
 });
 
 
