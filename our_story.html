@@ -1380,21 +1380,31 @@ const start = () => {
     stop();
   };
 
-  const moveDrag = (clientX) => {
+const moveDrag = (clientX) => {
 
-    if (!isDragging) return;
+  if (!isDragging) return;
 
-    const dx = clientX - lastX;
+  const dx = clientX - lastX;
 
-    lastX = clientX;
+  lastX = clientX;
 
-    x -= dx;
-track.style.transform = `translateX(${x}px)`;
+  x -= dx;
 
+  // 🔥 LOOP FIX
+  if (-x >= totalWidth) {
+    x += totalWidth;
+  }
 
+  if (x > 0) {
+    x -= totalWidth;
+  }
 
-    velocity = dx * 0.15;
-  };
+  track.style.transform =
+    `translate3d(${x}px,0,0)`;
+
+  velocity = dx * 0.15;
+};
+
 
 const endDrag = () => {
 
