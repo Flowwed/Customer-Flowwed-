@@ -1332,19 +1332,27 @@ async function initStorySlider(){
   let lastX = 0;
   let rafId = null;
 
-  const render = () => {
+const totalWidth = track.scrollWidth / 2;
 
-    x -= velocity;
+const render = () => {
 
-    // infinite loop
-    if (Math.abs(x) >= track.scrollWidth / 2) {
-      x = 0;
-    }
+  x -= velocity;
 
-    track.style.transform = `translateX(${x}px)`;
+  // seamless infinite loop
+  if (-x >= totalWidth) {
+    x += totalWidth;
+  }
 
-    rafId = requestAnimationFrame(render);
-  };
+  // safety when dragging right
+  if (x > 0) {
+    x -= totalWidth;
+  }
+
+  track.style.transform =
+    `translate3d(${x}px,0,0)`;
+
+  rafId = requestAnimationFrame(render);
+};
 
   const stop = () => {
   cancelAnimationFrame(rafId);
