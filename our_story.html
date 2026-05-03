@@ -1384,7 +1384,10 @@ async function initStorySlider(){
 
     lastX = clientX;
 
-    x += dx;
+    x -= dx;
+track.style.transform = `translateX(${x}px)`;
+
+
 
     velocity = dx * 0.15;
   };
