@@ -1203,7 +1203,17 @@ function enableAutoScroll(row, speed = 0.25) {
 
 const lightbox = document.createElement("div");
 lightbox.className = "image-lightbox";
-lightbox.innerHTML = `<img />`;
+
+lightbox.innerHTML = `
+  <div class="lightbox-content">
+
+    <img />
+
+    <div class="lightbox-caption"></div>
+
+  </div>
+`;
+
 document.body.appendChild(lightbox);
 
 const lightboxImg = lightbox.querySelector("img");
