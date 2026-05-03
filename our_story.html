@@ -1252,6 +1252,8 @@ const lightbox = document.createElement("div");
 lightbox.className = "image-lightbox";
 
 lightbox.innerHTML = `
+  <button class="lightbox-arrow left">‹</button>
+
   <div class="lightbox-content">
 
     <img />
@@ -1259,7 +1261,10 @@ lightbox.innerHTML = `
     <div class="lightbox-caption"></div>
 
   </div>
+
+  <button class="lightbox-arrow right">›</button>
 `;
+
 
 document.body.appendChild(lightbox);
 
