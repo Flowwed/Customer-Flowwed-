@@ -1391,29 +1391,35 @@ const moveDrag = (clientX) => {
 
   x += dx;
 
-  // seamless loop
-  if (-x >= totalWidth) {
-    x += totalWidth;
+  // STOP AT LAST REAL PHOTO
+  const maxDrag =
+    -(totalWidth - marquee.clientWidth);
+
+  if (x < maxDrag) {
+    x = maxDrag;
   }
 
+  // STOP AT FIRST PHOTO
   if (x > 0) {
-    x -= totalWidth;
+    x = 0;
   }
 
   track.style.transform =
     `translate3d(${x}px,0,0)`;
-
-  velocity = dx * 0.15;
 };
 
-  const endDrag = () => {
 
-    if (!isDragging) return;
+const endDrag = () => {
 
-    isDragging = false;
+  if (!isDragging) return;
 
-    startInertia();
-  };
+  isDragging = false;
+
+  velocity = 0.15;
+
+  start();
+};
+
 
   /* ---------- INERTIA ---------- */
 
