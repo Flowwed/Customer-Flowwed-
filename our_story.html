@@ -1402,12 +1402,16 @@ const endDrag = () => {
 
   isDragging = false;
 
-  stop();   // 🔥 сначала чистим старый RAF
-  start();  // 🔥 запускаем новый autoplay
+  startInertia();
 };
 
 
+
   /* ---------- EVENTS ---------- */
+
+  marquee.addEventListener("mouseenter", stop);
+
+  marquee.addEventListener("mouseleave", start);
 
   marquee.addEventListener("mousedown", e => {
     startDrag(e.clientX);
