@@ -1406,48 +1406,6 @@ const endDrag = () => {
 };
 
 
-  /* ---------- INERTIA ---------- */
-
-const startInertia = () => {
-
-  const friction = 0.95;
-
-  const step = () => {
-
-    velocity *= friction;
-
-    // когда drag почти остановился
-    if (Math.abs(velocity) < 0.01) {
-
-      velocity = 0.45;
-
-      start(); // ← ВОЗВРАЩАЕМ autoplay
-
-      return;
-    }
-
-    x += velocity;
-
-    // LOOP FIX
-    if (-x >= totalWidth) {
-      x += totalWidth;
-    }
-
-    if (x > 0) {
-      x -= totalWidth;
-    }
-
-    // обновляем позицию
-    track.style.transform =
-      `translate3d(${x}px,0,0)`;
-
-    requestAnimationFrame(step);
-  };
-
-  requestAnimationFrame(step);
-};
-
-
 
   /* ---------- EVENTS ---------- */
 
