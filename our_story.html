@@ -253,6 +253,29 @@ section {
     0 18px 30px rgba(0,0,0,0.18),
     0 6px 14px rgba(0,0,0,0.12);
 }
+
+
+.story-photo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 320px;
+  flex-shrink: 0;
+}
+
+.story-photo-caption {
+  font-size: 15px;
+  line-height: 1.45;
+  color: #6f2a2a;
+
+  padding: 0 4px;
+
+  text-align: center;
+}
+
+
+
 /* APPLE MARQUEE */
 @keyframes marquee {
   from {
@@ -1069,18 +1092,36 @@ try {
     const r = map[slot];
     if (!r || !r.path) return;
 
-    const img = document.createElement("img");
-    img.src =
-      buildPublicUrl(SUPABASE_BUCKET, r.path) +
-      `?v=${Date.now()}`;
+const card = document.createElement("div");
+card.className = "story-photo-card";
 
-    if (first) {
-      img.classList.add("active");
-      first = false;
-    }
+const img = document.createElement("img");
 
-// внутри loadStoryImageSlider
-container.appendChild(img);
+img.src =
+  buildPublicUrl(SUPABASE_BUCKET, r.path) +
+  `?v=${Date.now()}`;
+
+if (first) {
+  img.classList.add("active");
+  first = false;
+}
+
+card.appendChild(img);
+
+if (r.caption) {
+
+  const cap = document.createElement("div");
+
+  cap.className = "story-photo-caption";
+
+  cap.innerText = r.caption;
+
+  card.appendChild(cap);
+}
+
+container.appendChild(card);
+
+
 });
 
 }
