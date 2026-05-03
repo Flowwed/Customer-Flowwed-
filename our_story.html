@@ -1327,23 +1327,24 @@ async function initStorySlider(){
   if (!marquee) return;
 
   let x = 0;
-  let velocity = 0.35;
+  let velocity = 0.45;
   let isDragging = false;
   let lastX = 0;
   let rafId = null;
+  let isRunning = false;
 
 const totalWidth = track.scrollWidth / 2;
 
 const render = () => {
 
+  if (!isRunning) return;
+
   x -= velocity;
 
-  // seamless infinite loop
   if (-x >= totalWidth) {
     x += totalWidth;
   }
 
-  // safety when dragging right
   if (x > 0) {
     x -= totalWidth;
   }
@@ -1354,12 +1355,21 @@ const render = () => {
   rafId = requestAnimationFrame(render);
 };
 
-  const stop = () => {
+
+const stop = () => {
+
+  isRunning = false;
+
   cancelAnimationFrame(rafId);
 };
 
+const start = () => {
 
-  const start = () => render();
+  if (isRunning) return;
+
+  isRunning = true;
+  render();
+};
 
   /* ---------- DRAG ---------- */
 
