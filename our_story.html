@@ -1363,11 +1363,9 @@ async function initStorySlider(){
 
 const startDrag = (clientX) => {
 
-  stop();
-
   isDragging = true;
+
   lastX = clientX;
-  velocity = 0;
 };
 
   const moveDrag = (clientX) => {
