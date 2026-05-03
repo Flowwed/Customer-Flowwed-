@@ -1380,18 +1380,31 @@ const render = () => {
     velocity = 0;
   };
 
-  const moveDrag = (clientX) => {
 
-    if (!isDragging) return;
+const moveDrag = (clientX) => {
 
-    const dx = clientX - lastX;
+  if (!isDragging) return;
 
-    lastX = clientX;
+  const dx = clientX - lastX;
 
-    x += dx;
+  lastX = clientX;
 
-    velocity = dx * 0.15;
-  };
+  x += dx;
+
+  // seamless loop
+  if (-x >= totalWidth) {
+    x += totalWidth;
+  }
+
+  if (x > 0) {
+    x -= totalWidth;
+  }
+
+  track.style.transform =
+    `translate3d(${x}px,0,0)`;
+
+  velocity = dx * 0.15;
+};
 
   const endDrag = () => {
 
