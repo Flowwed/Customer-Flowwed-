@@ -1377,6 +1377,7 @@ async function initStorySlider(){
     isDragging = true;
     lastX = clientX;
     velocity = 0;
+    track.style.animationPlayState = "paused";
   };
 
   const moveDrag = (clientX) => {
@@ -1397,6 +1398,10 @@ async function initStorySlider(){
     if (!isDragging) return;
 
     isDragging = false;
+
+setTimeout(() => {
+  track.style.animationPlayState = "running";
+}, 1200);
 
     startInertia();
   };
