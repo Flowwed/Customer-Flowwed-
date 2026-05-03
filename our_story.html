@@ -1396,18 +1396,15 @@ track.style.transform = `translateX(${x}px)`;
     velocity = dx * 0.15;
   };
 
-  const endDrag = () => {
+const endDrag = () => {
 
-    if (!isDragging) return;
+  if (!isDragging) return;
 
-    isDragging = false;
+  isDragging = false;
 
-setTimeout(() => {
-  track.style.animationPlayState = "running";
-}, 1200);
+  startInertia();
+};
 
-    startInertia();
-  };
 
   /* ---------- INERTIA ---------- */
 
@@ -1449,6 +1446,7 @@ const startInertia = () => {
 
   requestAnimationFrame(step);
 };
+
 
 
   /* ---------- EVENTS ---------- */
