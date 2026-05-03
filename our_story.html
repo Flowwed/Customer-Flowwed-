@@ -1360,7 +1360,10 @@ async function initStorySlider(){
     rafId = requestAnimationFrame(render);
   };
 
-  const stop = () => cancelAnimationFrame(rafId);
+  const stop = () => {
+  cancelAnimationFrame(rafId);
+};
+
 
   const start = () => render();
 
@@ -1370,7 +1373,7 @@ async function initStorySlider(){
     isDragging = true;
     lastX = clientX;
     velocity = 0;
-    track.style.animationPlayState = "paused";
+    stop();
   };
 
   const moveDrag = (clientX) => {
