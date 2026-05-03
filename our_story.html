@@ -1390,7 +1390,7 @@ const moveDrag = (clientX) => {
 
   x -= dx;
 
-  // 🔥 LOOP FIX
+  // 🔥 НЕ ДАЕМ ВЫЙТИ ЗА LOOP
   if (-x >= totalWidth) {
     x += totalWidth;
   }
@@ -1404,7 +1404,6 @@ const moveDrag = (clientX) => {
 
   velocity = dx * 0.15;
 };
-
 
 const endDrag = () => {
 
