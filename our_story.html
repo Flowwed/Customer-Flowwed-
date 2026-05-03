@@ -223,8 +223,20 @@ section {
 /* VIEWPORT */
 .story-marquee {
   width: 100%;
-  overflow: hidden;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: none;
 }
+
+.story-marquee::-webkit-scrollbar {
+  display: none;
+}
+
+
 
 /* ДВИЖУЩАЯСЯ ЛЕНТА */
 .story-track {
@@ -1332,7 +1344,7 @@ async function initStorySlider(){
   // duplicate content (infinite)
   track.innerHTML += track.innerHTML;
 
-  const marquee = track.parentElement;
+  const marquee = track.closest(".story-marquee");
   if (!marquee) return;
 
   let x = 0;
@@ -1350,7 +1362,7 @@ async function initStorySlider(){
       x = 0;
     }
 
-    marquee.scrollLeft = Math.abs(x);
+    track.style.transform = `translateX(${x}px)`;
 
     rafId = requestAnimationFrame(render);
   };
@@ -1366,7 +1378,6 @@ async function initStorySlider(){
     lastX = clientX;
     velocity = 0;
   };
-
 
   const moveDrag = (clientX) => {
 
