@@ -1361,11 +1361,14 @@ async function initStorySlider(){
 
   /* ---------- DRAG ---------- */
 
-  const startDrag = (clientX) => {
-    isDragging = true;
-    lastX = clientX;
-    velocity = 0;
-  };
+const startDrag = (clientX) => {
+
+  stop();
+
+  isDragging = true;
+  lastX = clientX;
+  velocity = 0;
+};
 
   const moveDrag = (clientX) => {
 
