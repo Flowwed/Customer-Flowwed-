@@ -1332,7 +1332,7 @@ async function initStorySlider(){
   // duplicate content (infinite)
   track.innerHTML += track.innerHTML;
 
-  const marquee = track.closest(".story-hero");
+  const marquee = track.parentElement;
   if (!marquee) return;
 
   let x = 0;
@@ -1350,7 +1350,7 @@ async function initStorySlider(){
       x = 0;
     }
 
-    track.style.transform = `translateX(${x}px)`;
+    marquee.scrollLeft = Math.abs(x);
 
     rafId = requestAnimationFrame(render);
   };
@@ -1361,12 +1361,12 @@ async function initStorySlider(){
 
   /* ---------- DRAG ---------- */
 
-const startDrag = (clientX) => {
+  const startDrag = (clientX) => {
+    isDragging = true;
+    lastX = clientX;
+    velocity = 0;
+  };
 
-  isDragging = true;
-
-  lastX = clientX;
-};
 
   const moveDrag = (clientX) => {
 
