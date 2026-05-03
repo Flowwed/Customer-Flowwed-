@@ -237,14 +237,9 @@ section {
   gap: 22px;
   width: max-content;
 
-  animation: marquee 45s linear infinite;
   will-change: transform;
 }
 
-/* PAUSE ON HOVER */
-.story-marquee:hover .story-track {
-  animation-play-state: paused;
-}
 
 /* КАРТИНКИ */
 .story-track img {
@@ -326,15 +321,6 @@ border-radius: 26px;
   background: rgba(255,255,255,.22);
 }
 
-/* APPLE MARQUEE */
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
 
 /* =========================
    🍏 APPLE EDGE FADE
