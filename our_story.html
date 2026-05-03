@@ -1220,23 +1220,26 @@ const lightboxImg = lightbox.querySelector("img");
 
 // клик по фото в hero
 document.addEventListener("click", (e) => {
+
   const img = e.target.closest(".story-hero img");
   if (!img) return;
 
+  const card = img.closest(".story-photo-card");
+
+  const caption =
+    card?.querySelector(".story-photo-caption")
+      ?.innerText || "";
+
   lightboxImg.src = img.src;
-  lightbox.classList.add("active");
-});
 
-// закрытие по клику
-lightbox.addEventListener("click", () => {
-  lightbox.classList.remove("active");
-});
+  const lightboxCaption =
+    lightbox.querySelector(".lightbox-caption");
 
-// закрытие по ESC
-window.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    lightbox.classList.remove("active");
+  if (lightboxCaption) {
+    lightboxCaption.innerText = caption;
   }
+
+  lightbox.classList.add("active");
 });
 
 
