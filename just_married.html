@@ -1364,22 +1364,32 @@ function startExperience() {
 
 waitForReady(() => {
 
-  // 🔥 переключаемся в режим captions
   introFinished = true;
 
-  // 🔥 очищаем текущие balloons
+  // ⛔ floating выключен:
+  // intro balloons остаются навсегда
+  if (!window.randomHintsEnabled) {
+    return;
+  }
+
+  // ✅ floating включен:
+  // работаем как раньше
   balloonsRoot.classList.add("hide-all");
 
   setTimeout(() => {
+
     balloonsRoot.innerHTML = "";
     groupActive = false;
 
-    spawnGroup(); // уже captions
+    spawnGroup();
+
   }, 700);
 
 });
 
+
 }
+
 
 function waitForReady(callback) {
   const check = setInterval(() => {
