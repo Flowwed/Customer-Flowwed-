@@ -50,6 +50,13 @@
 
 /* ====== STORY CARDS ====== */
 
+/* hover — “парит” */
+section:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 45px 90px rgba(0, 0, 0, 0.22),
+    0 18px 36px rgba(0, 0, 0, 0.14);
+}
 
 /* заголовки внутри карточек */
 section h2 {
@@ -237,9 +244,14 @@ section {
   gap: 22px;
   width: max-content;
 
+  animation: marquee 45s linear infinite;
   will-change: transform;
 }
 
+/* PAUSE ON HOVER */
+.story-marquee:hover .story-track {
+  animation-play-state: paused;
+}
 
 /* КАРТИНКИ */
 .story-track img {
@@ -321,6 +333,15 @@ border-radius: 26px;
   background: rgba(255,255,255,.22);
 }
 
+/* APPLE MARQUEE */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
 
 /* =========================
    🍏 APPLE EDGE FADE
@@ -1327,49 +1348,28 @@ async function initStorySlider(){
   if (!marquee) return;
 
   let x = 0;
-  let velocity = 0.45;
+  let velocity = 0.08;
   let isDragging = false;
   let lastX = 0;
   let rafId = null;
-  let isRunning = false;
 
-const totalWidth = track.scrollWidth / 2;
+  const render = () => {
 
-const render = () => {
+    x -= velocity;
 
-  if (!isRunning) return;
+    // infinite loop
+    if (Math.abs(x) >= track.scrollWidth / 2) {
+      x = 0;
+    }
 
-  x -= velocity;
+    track.style.transform = `translateX(${x}px)`;
 
-  if (-x >= totalWidth) {
-    x += totalWidth;
-  }
+    rafId = requestAnimationFrame(render);
+  };
 
-  if (x > 0) {
-    x -= totalWidth;
-  }
+  const stop = () => cancelAnimationFrame(rafId);
 
-  track.style.transform =
-    `translate3d(${x}px,0,0)`;
-
-  rafId = requestAnimationFrame(render);
-};
-
-
-const stop = () => {
-
-  isRunning = false;
-
-  cancelAnimationFrame(rafId);
-};
-
-const start = () => {
-
-  if (isRunning) return;
-
-  isRunning = true;
-  render();
-};
+  const start = () => render();
 
   /* ---------- DRAG ---------- */
 
@@ -1377,7 +1377,6 @@ const start = () => {
     isDragging = true;
     lastX = clientX;
     velocity = 0;
-    stop();
   };
 
   const moveDrag = (clientX) => {
@@ -1388,10 +1387,7 @@ const start = () => {
 
     lastX = clientX;
 
-    x -= dx;
-track.style.transform = `translateX(${x}px)`;
-
-
+    x += dx;
 
     velocity = dx * 0.15;
   };
@@ -1401,10 +1397,6 @@ track.style.transform = `translateX(${x}px)`;
     if (!isDragging) return;
 
     isDragging = false;
-
-setTimeout(() => {
-  track.style.animationPlayState = "running";
-}, 1200);
 
     startInertia();
   };
