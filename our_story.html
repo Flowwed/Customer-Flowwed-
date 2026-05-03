@@ -1327,23 +1327,24 @@ async function initStorySlider(){
   if (!marquee) return;
 
   let x = 0;
-  let velocity = 0.08;
+  let velocity = 0.45;
   let isDragging = false;
   let lastX = 0;
   let rafId = null;
+  let isRunning = false;
 
 const totalWidth = track.scrollWidth / 2;
 
 const render = () => {
 
+  if (!isRunning) return;
+
   x -= velocity;
 
-  // seamless loop
   if (-x >= totalWidth) {
     x += totalWidth;
   }
 
-  // drag safety
   if (x > 0) {
     x -= totalWidth;
   }
@@ -1354,34 +1355,21 @@ const render = () => {
   rafId = requestAnimationFrame(render);
 };
 
+
 const stop = () => {
+
+  isRunning = false;
+
   cancelAnimationFrame(rafId);
-  rafId = null;
 };
 
 const start = () => {
 
-  if (rafId) return;
+  if (isRunning) return;
 
-  const loop = () => {
-
-    x -= velocity;
-
-    // INFINITE AUTO LOOP ONLY
-    if (-x >= totalWidth) {
-      x = 0;
-    }
-
-    track.style.transform =
-      `translate3d(${x}px,0,0)`;
-
-    rafId = requestAnimationFrame(loop);
-  };
-
-  loop();
+  isRunning = true;
+  render();
 };
-
-
 
   /* ---------- DRAG ---------- */
 
@@ -1389,73 +1377,79 @@ const start = () => {
     isDragging = true;
     lastX = clientX;
     velocity = 0;
+    stop();
   };
 
+  const moveDrag = (clientX) => {
 
-const moveDrag = (clientX) => {
+    if (!isDragging) return;
 
-  if (!isDragging) return;
+    const dx = clientX - lastX;
 
-  const dx = clientX - lastX;
+    lastX = clientX;
 
-  lastX = clientX;
-
-  x += dx;
-
-  // STOP AT LAST REAL PHOTO
-  const maxDrag =
-    -(totalWidth - marquee.clientWidth);
-
-  if (x < maxDrag) {
-    x = maxDrag;
-  }
-
-  // STOP AT FIRST PHOTO
-  if (x > 0) {
-    x = 0;
-  }
-
-  track.style.transform =
-    `translate3d(${x}px,0,0)`;
-};
+    x -= dx;
+track.style.transform = `translateX(${x}px)`;
 
 
-const endDrag = () => {
 
-  if (!isDragging) return;
+    velocity = dx * 0.15;
+  };
 
-  isDragging = false;
+  const endDrag = () => {
 
-  velocity = 0.15;
+    if (!isDragging) return;
 
-  start();
-};
+    isDragging = false;
 
+setTimeout(() => {
+  track.style.animationPlayState = "running";
+}, 1200);
+
+    startInertia();
+  };
 
   /* ---------- INERTIA ---------- */
 
-  const startInertia = () => {
+const startInertia = () => {
 
-    const friction = 0.95;
+  const friction = 0.95;
 
-    const step = () => {
+  const step = () => {
 
-      velocity *= friction;
+    velocity *= friction;
 
-      if (Math.abs(velocity) < 0.01) {
+    // когда drag почти остановился
+    if (Math.abs(velocity) < 0.01) {
 
-        velocity = 0.15;
+      velocity = 0.45;
 
-        return;
-      }
+      start(); // ← ВОЗВРАЩАЕМ autoplay
 
-      x += velocity;
+      return;
+    }
 
-      requestAnimationFrame(step);
-    };
+    x += velocity;
+
+    // LOOP FIX
+    if (-x >= totalWidth) {
+      x += totalWidth;
+    }
+
+    if (x > 0) {
+      x -= totalWidth;
+    }
+
+    // обновляем позицию
+    track.style.transform =
+      `translate3d(${x}px,0,0)`;
 
     requestAnimationFrame(step);
   };
+
+  requestAnimationFrame(step);
+};
+
 
   /* ---------- EVENTS ---------- */
 
