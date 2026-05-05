@@ -1067,6 +1067,25 @@ body.special-mode #pagination {
   to{ transform:rotate(360deg); }
 }
 
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-text {
+  margin-top: 16px;
+
+  color: #a52126;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  letter-spacing: 0.02em;
+}
+
+
 .nav-center a[data-page="wed_party.html"]{
   display: none;
 }
@@ -2725,12 +2744,21 @@ fetch("/footer.html")
 
 
 <div id="loadingOverlay">
-  <div class="loader"></div>
+
+  <div class="loading-content">
+
+    <div class="loader"></div>
+
+    <div class="loading-text">
+      Loading...
+    </div>
+
+  </div>
+
 </div>
 
+
 <script src="/navbar.js"></script>
-
-
 
 </body>
 </html>
