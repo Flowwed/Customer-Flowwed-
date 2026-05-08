@@ -1200,17 +1200,12 @@ async function loadStoryImageSlider() {
 
   sessionStorage.setItem("rsvpToken", token);
 
-  const storySlots = [
-    "img2","img3","img4","img5",
-    "img13","img14","img15","img16",
-    "img50"
-  ];
 
 let rows = [];
 
 try {
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/guests_photo_captions?edit_token=eq.${token}&page_key=eq.story`,
+const res = await fetch(
+  `${SUPABASE_URL}/rest/v1/guests_photo_captions?select=*&edit_token=eq.${token}&page_key=eq.story`,
     {
       headers: {
         apikey: SUPABASE_KEY,
@@ -1224,8 +1219,8 @@ try {
   return;
 }
   if (!Array.isArray(rows)) return;
+console.log("ALL STORY ROWS:", rows);
 
-  const map = Object.fromEntries(rows.map(r => [r.slot, r]));
   const container = document.getElementById("storyHeroImages");
   if (!container) return;
 
@@ -1233,9 +1228,9 @@ try {
 
   let first = true;
 
-  storySlots.forEach(slot => {
-    const r = map[slot];
-    if (!r || !r.path) return;
+rows.forEach(r => {
+
+  if (!r.path) return;
 
 const card = document.createElement("div");
 card.className = "story-photo-card";
