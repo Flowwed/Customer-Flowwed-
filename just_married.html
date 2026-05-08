@@ -1631,6 +1631,21 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 
 <script>
+function getToken(){
+  const p = new URLSearchParams(location.search);
+  const t =
+    p.get("t") ||
+    p.get("token") ||
+    sessionStorage.getItem("rsvpToken") ||
+    "";
+
+  if (t) sessionStorage.setItem("rsvpToken", t);
+  return t;
+}
+</script>
+
+
+<script>
 async function loadGalleryRowsFromSupabase() {
   const params = new URLSearchParams(location.search);
   const page = Math.max(1, Math.min(5, parseInt(params.get("page")) || 1));
