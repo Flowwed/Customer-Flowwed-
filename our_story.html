@@ -223,7 +223,12 @@ section {
   border-radius: 28px;
 
   z-index: 999;
+
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
 }
+
 
 /* VIEWPORT */
 .story-marquee {
@@ -246,17 +251,11 @@ section {
   width: 100%;
   height: max-content;
 
-  animation: verticalMarquee 45s linear infinite;
-
   will-change: transform;
+
+  transform: translate3d(0,0,0);
 }
 
-
-
-/* PAUSE ON HOVER */
-.story-marquee:hover .story-track {
-  animation-play-state: paused;
-}
 
 /* КАРТИНКИ */
 .story-track img {
@@ -1389,13 +1388,13 @@ async function initStorySlider(){
   // duplicate content (infinite)
   track.innerHTML += track.innerHTML;
 
-  const marquee = track.closest(".story-marquee");
+  const marquee = track.closest(".story-hero");
   if (!marquee) return;
 
   let x = 0;
   let velocity = 0.08;
   let isDragging = false;
-  let lastX = 0;
+  let lastY = 0;
   let rafId = null;
 
   const render = () => {
@@ -1415,35 +1414,35 @@ if (Math.abs(x) >= track.scrollHeight / 2) {
 
   const start = () => render();
 
-  /* ---------- DRAG ---------- */
+/* ---------- DRAG ---------- */
 
-  const startDrag = (clientX) => {
-    isDragging = true;
-    lastX = clientX;
-    velocity = 0;
-  };
+const startDrag = (clientY) => {
+  isDragging = true;
+  lastY = clientY;
+  velocity = 0;
+};
 
-  const moveDrag = (clientX) => {
+const moveDrag = (clientY) => {
 
-    if (!isDragging) return;
+  if (!isDragging) return;
 
-    const dx = clientX - lastX;
+  const dy = clientY - lastY;
 
-    lastX = clientX;
+  lastY = clientY;
 
-    x += dx;
+  x += dy;
 
-    velocity = dx * 0.15;
-  };
+  velocity = dy * 0.15;
+};
 
-  const endDrag = () => {
+const endDrag = () => {
 
-    if (!isDragging) return;
+  if (!isDragging) return;
 
-    isDragging = false;
+  isDragging = false;
 
-    startInertia();
-  };
+  startInertia();
+};
 
   /* ---------- INERTIA ---------- */
 
@@ -1477,24 +1476,24 @@ if (Math.abs(x) >= track.scrollHeight / 2) {
   marquee.addEventListener("mouseleave", start);
 
   marquee.addEventListener("mousedown", e => {
-    startDrag(e.clientX);
+    startDrag(e.clientY);
   });
 
   window.addEventListener("mousemove", e => {
-    moveDrag(e.clientX);
+    moveDrag(e.clientY);
   });
 
   window.addEventListener("mouseup", endDrag);
 
   marquee.addEventListener(
     "touchstart",
-    e => startDrag(e.touches[0].clientX),
+    e => startDrag(e.touches[0].clientY),
     { passive: true }
   );
 
   marquee.addEventListener(
     "touchmove",
-    e => moveDrag(e.touches[0].clientX),
+    e => moveDrag(e.touches[0].clientY),
     { passive: true }
   );
 
