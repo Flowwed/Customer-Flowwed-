@@ -1701,7 +1701,22 @@ function closeLightbox(e){
   ribbonPaused = false;
 }
 
-lightbox.addEventListener("pointerdown", closeLightbox);
+lightbox.addEventListener("pointerdown", (e) => {
+
+  // ⛔ не закрывать при клике по стрелкам
+  if (e.target.closest(".lightbox-arrow")) {
+    return;
+  }
+
+  // ⛔ не закрывать при клике по фото
+  if (e.target.closest(".lightbox-figure")) {
+    return;
+  }
+
+  closeLightbox(e);
+});
+
+
 window.addEventListener("keydown",e=>{
   if(e.key==="Escape") closeLightbox();
 });
