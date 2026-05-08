@@ -238,8 +238,10 @@ section {
   position: relative;
 
   overflow: hidden;
-}
 
+  touch-action: pan-y;
+  cursor: grab;
+}
 
 /* ДВИЖУЩАЯСЯ ЛЕНТА */
 .story-track {
@@ -1402,6 +1404,12 @@ async function initStorySlider() {
   let y = 0;
   const speed = 0.15;
 
+const marquee = track.closest(".story-marquee");
+
+let isDragging = false;
+let startY = 0;
+let currentY = 0;
+
   const singleHeight = track.scrollHeight / 2;
 
   function animate() {
@@ -1419,6 +1427,67 @@ async function initStorySlider() {
   }
 
   animate();
+
+/* ===== MANUAL SCROLL ===== */
+
+marquee.addEventListener("mousedown", e => {
+  isDragging = true;
+  startY = e.clientY;
+  marquee.style.cursor = "grabbing";
+});
+
+window.addEventListener("mousemove", e => {
+
+  if (!isDragging) return;
+
+  const delta = e.clientY - startY;
+
+  startY = e.clientY;
+
+  y += delta;
+
+  track.style.transform =
+    `translate3d(0, ${y}px, 0)`;
+});
+
+window.addEventListener("mouseup", () => {
+  isDragging = false;
+  marquee.style.cursor = "grab";
+});
+
+
+/* TOUCH */
+
+marquee.addEventListener("touchstart", e => {
+
+  isDragging = true;
+  startY = e.touches[0].clientY;
+
+}, { passive: true });
+
+marquee.addEventListener("touchmove", e => {
+
+  if (!isDragging) return;
+
+  const delta =
+    e.touches[0].clientY - startY;
+
+  startY = e.touches[0].clientY;
+
+  y += delta;
+
+  track.style.transform =
+    `translate3d(0, ${y}px, 0)`;
+
+}, { passive: true });
+
+marquee.addEventListener("touchend", () => {
+
+  isDragging = false;
+
+});
+
+
 }
 
 
