@@ -1392,7 +1392,7 @@ async function initStorySlider(){
   if (!marquee) return;
 
   let y = 0;
-  let velocity = 0.08;
+  let velocity = 0.35;
   let isDragging = false;
   let lastY = 0;
   let rafId = null;
@@ -1457,7 +1457,7 @@ const endDrag = () => {
 
       if (Math.abs(velocity) < 0.01) {
 
-        velocity = 0.15;
+        velocity = 0.35;
 
         return;
       }
