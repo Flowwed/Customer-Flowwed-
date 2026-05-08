@@ -1414,7 +1414,11 @@ async function initStorySlider(){
     requestAnimationFrame(animate);
   }
 
-  animate();
+  requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    animate();
+  });
+});
 
   /* ---------- DRAG ---------- */
 
