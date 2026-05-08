@@ -231,7 +231,7 @@ section {
 
 /* ====== HERO ====== */
 .story-hero {
-  position: fixed;
+  position: absolute;
 
   top: 385px;
   right: 70px;
@@ -1639,21 +1639,23 @@ function updateStoryHeroHeight() {
 
   const hero = document.querySelector(".story-hero");
   const header = document.querySelector("header");
-  const footer = document.querySelector("#footer-mount");
 
   if (!hero || !header || !footer) return;
 
   const headerBottom =
     header.getBoundingClientRect().bottom + window.scrollY;
 
-  const footerTop =
-    footer.getBoundingClientRect().top + window.scrollY;
 
   const topOffset = 40;
-  const bottomOffset = 40;
 
-  const height =
-    footerTop - headerBottom - topOffset - bottomOffset;
+const section =
+  document.querySelector("section");
+
+if (!section) return;
+
+const height = section.offsetHeight;
+
+
 
   hero.style.top =
     `${headerBottom + topOffset}px`;
