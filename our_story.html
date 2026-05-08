@@ -210,13 +210,13 @@ section {
 
 /* ====== HERO ====== */
 .story-hero {
-  position: fixed;
+  position: fixed !important;
 
   top: 345px;
-  right: 34px;
+  right: 74px;
 
   width: 220px;
-  height: calc(100vh - 160px);
+  height: calc(100vh - 380px);
 
   overflow: hidden;
 
@@ -224,11 +224,11 @@ section {
 
   z-index: 999;
 
-  transform: translateZ(0);
   will-change: transform;
   backface-visibility: hidden;
-}
 
+  transform: none;
+}
 
 
 /* VIEWPORT */
