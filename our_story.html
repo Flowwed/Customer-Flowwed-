@@ -270,17 +270,15 @@ section {
   transform: scale(1.01);
 }
 
-
 /* ===== MOVING COLUMN ===== */
 .story-track {
 
-  display: grid;
+  display: flex;
+  flex-direction: column;
 
-  grid-auto-flow: row;
+  align-items: center;
 
   gap: 12px;
-
-  justify-content: center;
 
   width: 100%;
   height: max-content;
@@ -295,10 +293,19 @@ section {
 }
 
 
-
 /* ===== IMAGES ===== */
 .story-track img {
-  width: 100%;
+
+  height: calc(
+    (
+      100vh
+      - 140px
+      - (12px * 6)
+    ) / 7
+  );
+
+  width: auto;
+
   aspect-ratio: 1 / 1;
 
   object-fit: contain;
@@ -317,20 +324,8 @@ section {
 
 /* ===== CARD ===== */
 .story-photo-card {
+
   position: relative;
-
-  width: min(
-    100%,
-    calc(
-      (
-        100vh
-        - 140px
-        - 12px * 6
-      ) / 7
-    )
-  );
-
-  aspect-ratio: 1 / 1;
 
   flex-shrink: 0;
 
@@ -340,7 +335,6 @@ section {
 
   background: #f7eeee;
 }
-
 
 
 .story-photo-caption {
