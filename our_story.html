@@ -254,6 +254,7 @@ section {
   will-change: transform;
 
   transform: translate3d(0,0,0);
+transition: transform 0s linear;
 }
 
 
@@ -711,7 +712,6 @@ border-radius: 26px;
 
   overflow: visible;
 
-  animation: marquee 38s linear infinite;  /* как desktop */
 }
 
   .story-track::-webkit-scrollbar {
@@ -1371,54 +1371,55 @@ rightArrow.addEventListener("click", (e) => {
    🍎 APPLE STYLE MARQUEE — FIXED
    ========================================= */
 
-async function initStorySlider(){
+async function initStorySlider() {
 
   await loadStoryImageSlider();
 
   const track = document.getElementById("storyHeroImages");
   if (!track) return;
 
-  // mobile
-  if (window.innerWidth <= 768) {
-    return;
-  }
+  if (window.innerWidth <= 768) return;
 
-  if (track.children.length < 4) return;
+  if (track.children.length < 2) return;
 
-  // duplicate for infinite loop
+  // duplicate
   track.innerHTML += track.innerHTML;
 
-  const marquee = track.closest(".story-hero");
-  if (!marquee) return;
+  // WAIT IMAGES
+  const images = track.querySelectorAll("img");
+
+  await Promise.all(
+    [...images].map(img => {
+      if (img.complete) return Promise.resolve();
+
+      return new Promise(res => {
+        img.onload = res;
+        img.onerror = res;
+      });
+    })
+  );
 
   let y = 0;
-  let speed = 0.35;
+  const speed = 0.35;
 
-  let isDragging = false;
-  let lastY = 0;
+  const singleHeight = track.scrollHeight / 2;
 
   function animate() {
 
-    if (!isDragging) {
+    y -= speed;
 
-      y -= speed;
-
-      if (Math.abs(y) >= track.scrollHeight / 2) {
-        y = 0;
-      }
-
-      track.style.transform =
-        `translate3d(0, ${y}px, 0)`;
+    if (Math.abs(y) >= singleHeight) {
+      y = 0;
     }
+
+    track.style.transform =
+      `translate3d(0, ${y}px, 0)`;
 
     requestAnimationFrame(animate);
   }
 
-  requestAnimationFrame(() => {
-  requestAnimationFrame(() => {
-    animate();
-  });
-});
+  animate();
+}
 
   /* ---------- DRAG ---------- */
 
