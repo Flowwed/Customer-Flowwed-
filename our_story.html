@@ -277,12 +277,10 @@ section {
   display: flex;
   flex-direction: column;
 
-  align-items: center;
-
   gap: 12px;
 
   width: 100%;
-  min-height: 100%;
+  height: max-content;
 
   will-change: transform;
 
@@ -293,12 +291,11 @@ section {
   transition: transform 0s linear;
 }
 
-
-
 /* ===== IMAGES ===== */
 .story-track img {
+
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
 
   object-fit: contain;
 
@@ -313,7 +310,6 @@ section {
     0 3px 8px rgba(0,0,0,0.08);
 }
 
-
 /* ===== CARD ===== */
 .story-photo-card {
   position: relative;
@@ -327,8 +323,19 @@ section {
   border-radius: 24px;
 
   background: #f7eeee;
-}
 
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  height: calc(
+    (
+      100vh
+      - 120px
+      - 48px
+    ) / 5
+  );
+}
 
 .story-photo-caption {
 
@@ -1416,8 +1423,9 @@ rightArrow.addEventListener("click", (e) => {
   showImage(currentImageIndex + 1);
 });
 
+
 /* =========================================
-   🍎 APPLE STYLE MARQUEE — ADAPTIVE
+   🍎 APPLE STYLE MARQUEE — FIXED
    ========================================= */
 
 async function initStorySlider() {
@@ -1427,14 +1435,22 @@ async function initStorySlider() {
   const track = document.getElementById("storyHeroImages");
   if (!track) return;
 
-  const hero = document.querySelector(".story-hero");
-  if (!hero) return;
+const hero = document.querySelector(".story-hero");
+if (!hero) return;
 
   if (window.innerWidth <= 768) return;
 
   if (track.children.length < 2) return;
 
-  // WAIT IMAGES
+  // duplicate
+const clone = track.cloneNode(true);
+
+while (clone.firstChild) {
+  track.appendChild(clone.firstChild);
+}
+  
+
+// WAIT IMAGES
   const images = track.querySelectorAll("img");
 
   await Promise.all(
@@ -1448,118 +1464,108 @@ async function initStorySlider() {
     })
   );
 
-  // =========================
-  // CHECK IF ALL CARDS FIT
-  // =========================
 
-  const heroHeight = hero.clientHeight;
+let y = 0;
 
-  const cards = [
-    ...track.querySelectorAll(".story-photo-card")
-  ];
-
-  let totalHeight = 0;
-
-  cards.forEach(card => {
-    totalHeight += card.getBoundingClientRect().height + 12;
-  });
-
-  // если все фото помещаются — НЕ запускаем marquee
-  if (totalHeight <= heroHeight) {
-    track.style.transform = "none";
-    track.style.justifyContent = "flex-start";
-    return;
-  }
-
-  // =========================
-  // MANY IMAGES = MARQUEE
-  // =========================
-
-  const clone = track.cloneNode(true);
-
-  while (clone.firstChild) {
-    track.appendChild(clone.firstChild);
-  }
-
-  let y = 0;
   const speed = 0.25;
 
-  const marquee = track.closest(".story-marquee");
+const marquee = track.closest(".story-marquee");
 
-  let isDragging = false;
-  let startY = 0;
+let isDragging = false;
+let startY = 0;
+let currentY = 0;
 
   function getSingleHeight() {
-    return track.scrollHeight / 2;
+  return track.scrollHeight / 2;
+}
+
+
+function animate() {
+
+if (document.hidden) {
+  requestAnimationFrame(animate);
+  return;
+}
+
+
+  if (!isDragging) {
+
+    y -= speed;
+
   }
 
-  function animate() {
-
-    if (document.hidden) {
-      requestAnimationFrame(animate);
-      return;
-    }
-
-    if (!isDragging) {
-      y -= speed;
-    }
-
-    if (Math.abs(y) >= getSingleHeight()) {
-      y = 0;
-    }
-
-    track.style.transform =
-      `translate3d(0, ${y}px, 0)`;
-
-    requestAnimationFrame(animate);
+  if (Math.abs(y) >= getSingleHeight()) {
+    y = 0;
   }
+
+  track.style.transform =
+    `translate3d(0, ${y}px, 0)`;
+
+  requestAnimationFrame(animate);
+}
+
 
   animate();
 
-  /* ===== MANUAL SCROLL ===== */
+/* ===== MANUAL SCROLL ===== */
 
-  marquee.addEventListener("mousedown", e => {
-    isDragging = true;
-    startY = e.clientY;
-  });
+marquee.addEventListener("mousedown", e => {
+  isDragging = true;
+  startY = e.clientY;
+});
 
-  window.addEventListener("mousemove", e => {
-    if (!isDragging) return;
+window.addEventListener("mousemove", e => {
 
-    const delta = e.clientY - startY;
-    startY = e.clientY;
+  if (!isDragging) return;
 
-    y += delta;
+  const delta = e.clientY - startY;
 
-    track.style.transform =
-      `translate3d(0, ${y}px, 0)`;
-  });
+  startY = e.clientY;
 
-  window.addEventListener("mouseup", () => {
-    isDragging = false;
-  });
+  y += delta;
 
-  marquee.addEventListener("touchstart", e => {
-    isDragging = true;
-    startY = e.touches[0].clientY;
-  }, { passive: true });
+  track.style.transform =
+    `translate3d(0, ${y}px, 0)`;
+});
 
-  marquee.addEventListener("touchmove", e => {
-    if (!isDragging) return;
+window.addEventListener("mouseup", () => {
+  isDragging = false;
+});
 
-    const delta = e.touches[0].clientY - startY;
-    startY = e.touches[0].clientY;
+/* TOUCH */
 
-    y += delta;
+marquee.addEventListener("touchstart", e => {
 
-    track.style.transform =
-      `translate3d(0, ${y}px, 0)`;
-  }, { passive: true });
+  isDragging = true;
+  startY = e.touches[0].clientY;
 
-  marquee.addEventListener("touchend", () => {
-    isDragging = false;
-  });
+}, { passive: true });
+
+marquee.addEventListener("touchmove", e => {
+
+  if (!isDragging) return;
+
+  const delta =
+    e.touches[0].clientY - startY;
+
+  startY = e.touches[0].clientY;
+
+  y += delta;
+
+  track.style.transform =
+    `translate3d(0, ${y}px, 0)`;
+
+}, { passive: true });
+
+marquee.addEventListener("touchend", () => {
+
+  isDragging = false;
+
+});
+
+
 }
+
 
 </script>
 
