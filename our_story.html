@@ -1472,12 +1472,6 @@ let currentY = 0;
 function animate() {
 
 
-if (document.hidden) {
-  requestAnimationFrame(animate);
-  return;
-}
-
-
   if (!isDragging) {
 
     y -= speed;
