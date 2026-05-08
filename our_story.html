@@ -1391,25 +1391,26 @@ async function initStorySlider(){
   const marquee = track.closest(".story-hero");
   if (!marquee) return;
 
-  let x = 0;
+  let y = 0;
   let velocity = 0.08;
   let isDragging = false;
   let lastY = 0;
   let rafId = null;
 
-  const render = () => {
+const render = () => {
 
-    x -= velocity;
-track.style.transform = `translateY(${x}px)`;
+  y -= velocity;
 
-    // infinite loop
-if (Math.abs(x) >= track.scrollHeight / 2) {
-  x = 0;
-}
+  track.style.transform =
+    `translate3d(0, ${y}px, 0)`;
 
-    rafId = requestAnimationFrame(render);
-  };
+  // infinite loop
+  if (Math.abs(y) >= track.scrollHeight / 2) {
+    y = 0;
+  }
 
+  rafId = requestAnimationFrame(render);
+};
   const stop = () => cancelAnimationFrame(rafId);
 
   const start = () => render();
@@ -1430,7 +1431,7 @@ const moveDrag = (clientY) => {
 
   lastY = clientY;
 
-  x += dy;
+  y += dy;
 
   velocity = dy * 0.15;
 };
