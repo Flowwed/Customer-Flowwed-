@@ -1610,23 +1610,17 @@ ribbonTrack.addEventListener("pointerdown", function (e) {
   ribbonPaused = true;
   lightboxOpen = true;
 
-lbImg.src = img.src;
+const images = [
+  ...document.querySelectorAll(
+    "#grid .photo img, #ribbon img"
+  )
+];
 
-const raw = img.dataset.caption || img.alt || "";
-const clean = raw.replace(/[\r\n]+/g, " ").replace(/\s+/g, " ").trim();
+currentImageIndex = [...images].findIndex(i =>
+  i.src === img.src
+);
 
-if (clean) {
-  lbCaption.textContent = clean;
-  lbCaption.style.display = "block";
-} else {
-  lbCaption.textContent = "";
-  lbCaption.style.display = "none";
-}
-
-lbImg.onload = () => {
-  const w = lbImg.getBoundingClientRect().width;
-  lbCaption.style.width = w + "px";
-};
+showImage(currentImageIndex);
 
 lightbox.classList.add("active");
 
@@ -1634,9 +1628,11 @@ lightbox.classList.add("active");
 
 function showImage(index){
 
-  const images = [
-    ...document.querySelectorAll("#grid .photo img")
-  ];
+const images = [
+  ...document.querySelectorAll(
+    "#grid .photo img, #ribbon img"
+  )
+];
 
   if (!images.length) return;
 
@@ -1740,11 +1736,15 @@ if (gridEl) {
 
     const img = photo.querySelector("img");
 
+if (!img) return;
+
 const images = [
   ...document.querySelectorAll("#grid .photo img")
 ];
 
-currentImageIndex = images.indexOf(img);
+currentImageIndex = [...images].findIndex(i =>
+  i.src === img.src
+);
 
     if (!img) return;
 
