@@ -1242,7 +1242,7 @@ const card = document.createElement("div");
 card.className = "story-photo-card";
 
 const img = document.createElement("img");
-img.loading = "lazy";
+img.loading = "eager";
 img.decoding = "async";
 
 img.src = buildPublicUrl(SUPABASE_BUCKET, r.path);
@@ -1634,7 +1634,7 @@ fields.forEach(key => {
 
   await loadCoupleName();
 
-  // await initStorySlider();
+  await initStorySlider();
 
   await loadStoryContent();
 
