@@ -210,26 +210,22 @@ section {
 
 /* ====== HERO ====== */
 .story-hero {
-  position: fixed !important;
+  position: fixed;
 
-  top: 345px;
-  right: 74px;
+  top: 50%;
+  right: 54px;
+
+  transform: translateY(-50%);
 
   width: 220px;
-  height: calc(100vh - 380px);
+  height: calc(100vh - 140px);
 
   overflow: hidden;
 
   border-radius: 28px;
 
   z-index: 999;
-
-  will-change: transform;
-  backface-visibility: hidden;
-
-  transform: none;
 }
-
 
 /* VIEWPORT */
 .story-marquee {
