@@ -1642,27 +1642,44 @@ function updateStoryHeroHeight() {
 
   if (!hero || !header) return;
 
+  const cards =
+    document.querySelectorAll(".story-card");
+
+  if (!cards.length) return;
+
+  // только видимые карточки
+  const visibleCards = [...cards].filter(card =>
+    getComputedStyle(card).display !== "none"
+  );
+
+  if (!visibleCards.length) return;
+
+  const lastCard =
+    visibleCards[visibleCards.length - 1];
+
+  // верх hero
   const headerBottom =
-    header.getBoundingClientRect().bottom + window.scrollY;
+    header.getBoundingClientRect().bottom +
+    window.scrollY;
 
   const topOffset = 40;
 
-  const section =
-    document.querySelector("section");
+  const heroTop =
+    headerBottom + topOffset;
 
-  if (!section) return;
+  // 🔥 низ последней карточки
+  const lastCardBottom =
+    lastCard.getBoundingClientRect().bottom +
+    window.scrollY;
 
+  // итоговая высота ribbon
   const height =
-    section.scrollHeight +
-    section.offsetTop -
-    140;
+    lastCardBottom - heroTop;
 
-  hero.style.top =
-    `${headerBottom + topOffset}px`;
-
-  hero.style.height =
-    `${height}px`;
+  hero.style.top = `${heroTop}px`;
+  hero.style.height = `${height}px`;
 }
+
 
 (async () => {
 
