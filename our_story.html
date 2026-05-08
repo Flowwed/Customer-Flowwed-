@@ -95,7 +95,7 @@ section {
 /* ====== ОТДЕЛЬНАЯ КАРТОЧКА ====== */
 .story-card {
   margin-top: 50px;
-  padding: 50px 60px;
+  padding: 42px 46px;
 
   max-height: 220px;
   overflow-y: auto;
@@ -117,6 +117,10 @@ section {
     box-shadow 0.35s ease;
 }
 
+
+.story-card {
+  margin-right: 30px;
+}
 
 /* Apple-like scrollbar */
 .story-card::-webkit-scrollbar{
@@ -209,23 +213,31 @@ section {
   position: fixed;
 
   top: 140px;
-  right: 30px;
+  right: 40px;
 
   width: 340px;
   height: 78vh;
 
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+
   overflow: hidden;
 
-  z-index: 20;
+  z-index: 50;
 }
-
 
 
 /* VIEWPORT */
 .story-marquee {
   width: 100%;
+  height: 100%;
+
+  position: relative;
+
   overflow: hidden;
 }
+
 
 /* ДВИЖУЩАЯСЯ ЛЕНТА */
 .story-track {
@@ -1482,13 +1494,12 @@ async function initStorySlider(){
   const render = () => {
 
     x -= velocity;
+track.style.transform = `translateY(${x}px)`;
 
     // infinite loop
-    if (Math.abs(x) >= track.scrollWidth / 2) {
-      x = 0;
-    }
-
-    track.style.transform = `translateX(${x}px)`;
+if (Math.abs(x) >= track.scrollHeight / 2) {
+  x = 0;
+}
 
     rafId = requestAnimationFrame(render);
   };
