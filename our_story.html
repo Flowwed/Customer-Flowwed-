@@ -231,13 +231,14 @@ section {
 
 /* ====== HERO ====== */
 .story-hero {
-  position: sticky;
+  position: absolute;
 
-  top: 40px;
+  top: 385px;
   right: 70px;
 
   width: 340px;
 
+  height: 300px;
   min-height: 700px;
   max-height: 1400px;
 
@@ -1652,7 +1653,11 @@ const section =
 
 if (!section) return;
 
-const height = section.offsetHeight;
+const rect = section.getBoundingClientRect();
+
+const height = rect.height + 120;
+
+
 
   hero.style.top =
     `${headerBottom + topOffset}px`;
