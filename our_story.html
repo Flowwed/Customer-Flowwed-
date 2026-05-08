@@ -1645,30 +1645,17 @@ function updateStoryHeroHeight() {
   const headerBottom =
     header.getBoundingClientRect().bottom + window.scrollY;
 
-
   const topOffset = 40;
 
-const section =
-  document.querySelector("section");
+  const section =
+    document.querySelector("section");
 
-if (!section) return;
+  if (!section) return;
 
-const sectionHeight = section.scrollHeight;
-
-const cards = document.querySelectorAll(".story-card");
-
-let extra = 0;
-
-cards.forEach(card => {
-  const styles = getComputedStyle(card);
-
-  extra +=
-    parseFloat(styles.marginTop || 0) +
-    parseFloat(styles.marginBottom || 0);
-});
-
-const height = sectionHeight + extra - 120;
-
+  const height =
+    section.scrollHeight +
+    section.offsetTop -
+    140;
 
   hero.style.top =
     `${headerBottom + topOffset}px`;
@@ -1676,7 +1663,6 @@ const height = sectionHeight + extra - 120;
   hero.style.height =
     `${height}px`;
 }
-
 
 (async () => {
 
