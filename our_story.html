@@ -265,9 +265,6 @@ section {
 
 /* ===== IMAGES ===== */
 .story-track img {
-  position: relative;
-  z-index: 2;
-
   width: 100%;
   aspect-ratio: 1 / 1;
 
@@ -298,25 +295,8 @@ section {
   border-radius: 24px;
 
   background: #f7eeee;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.story-photo-bg {
-  position: absolute;
-  inset: 0;
-
-  background-size: cover;
-  background-position: center;
-
-  filter: blur(26px) brightness(0.9);
-
-  transform: scale(1.2);
-
-  opacity: 0.9;
-}
 
 .story-photo-caption {
 
@@ -1234,24 +1214,17 @@ const card = document.createElement("div");
 card.className = "story-photo-card";
 
 const img = document.createElement("img");
-const bg = document.createElement("div");
-bg.className = "story-photo-bg";
 
 img.src =
   buildPublicUrl(SUPABASE_BUCKET, r.path) +
   `?v=${Date.now()}`;
-bg.style.backgroundImage =
-  `url('${img.src}')`;
-
 
 if (first) {
   img.classList.add("active");
   first = false;
 }
 
-card.appendChild(bg);
 card.appendChild(img);
-
 
 if (r.caption) {
 
