@@ -84,12 +84,13 @@ section p:last-child {
 
 /* контейнер */
 section {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 20px;
-  
-}
+  max-width: calc(100% - 420px);
 
+  margin-left: 40px;
+  margin-right: auto;
+
+  padding: 20px;
+}
 
 /* ====== ОТДЕЛЬНАЯ КАРТОЧКА ====== */
 .story-card {
@@ -205,10 +206,20 @@ section {
 
 /* ====== HERO ====== */
 .story-hero {
-  max-width: 1100px;
-  margin: 40px auto 60px;
+  position: fixed;
+
+  top: 140px;
+  right: 30px;
+
+  width: 340px;
+  height: 78vh;
+
   overflow: hidden;
+
+  z-index: 20;
 }
+
+
 
 /* VIEWPORT */
 .story-marquee {
@@ -219,12 +230,19 @@ section {
 /* ДВИЖУЩАЯСЯ ЛЕНТА */
 .story-track {
   display: flex;
-  gap: 22px;
-  width: max-content;
+  flex-direction: column;
 
-  animation: marquee 45s linear infinite;
+  gap: 18px;
+
+  width: 100%;
+  height: max-content;
+
+  animation: verticalMarquee 45s linear infinite;
+
   will-change: transform;
 }
+
+
 
 /* PAUSE ON HOVER */
 .story-marquee:hover .story-track {
@@ -233,8 +251,8 @@ section {
 
 /* КАРТИНКИ */
 .story-track img {
-  width: 320px;
-  height: 240px;
+  width: 100%;
+  height: 220px;
   object-fit: cover;
   flex-shrink: 0;
   border-radius: 26px;
@@ -250,7 +268,7 @@ section {
   flex-direction: column;
   gap: 10px;
 
-  width: 320px;
+  width: 100%;
   flex-shrink: 0;
 position: relative;
 overflow: hidden;
@@ -312,14 +330,16 @@ border-radius: 26px;
 }
 
 /* APPLE MARQUEE */
-@keyframes marquee {
+@keyframes verticalMarquee {
   from {
-    transform: translateX(0);
+    transform: translateY(0);
   }
+
   to {
-    transform: translateX(-50%);
+    transform: translateY(-50%);
   }
 }
+
 
 /* =========================
    🍏 APPLE EDGE FADE
