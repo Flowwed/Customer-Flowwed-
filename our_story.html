@@ -240,7 +240,6 @@ section {
 
   height: 300px;
   min-height: 700px;
-  max-height: 1400px;
 
   overflow: hidden;
 
@@ -1689,7 +1688,12 @@ function updateStoryHeroHeight() {
 
   await loadStoryContent();
 
-updateStoryHeroHeight();
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    updateStoryHeroHeight();
+  });
+});
+
 
 window.addEventListener(
   "resize",
