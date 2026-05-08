@@ -282,7 +282,10 @@ html,body{
   display:flex;
   gap:18px;
   width:max-content;
+
   will-change:transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .ribbon-track img{
@@ -1508,16 +1511,21 @@ if (document.hidden) {
   if (!ribbonPaused) {
     y -= 0.35;
 
-    if (Math.abs(y) >= ribbon.scrollHeight / 2) {
-      y = 0;
-    }
+const singleHeight = ribbon.scrollHeight / 2;
 
-    ribbon.style.transform = `translateY(${y}px)`;
+if (Math.abs(y) >= singleHeight) {
+  y = 0;
+}
+
+ribbon.style.transform =
+  `translate3d(0, ${y}px, 0)`;
+
   }
+
+
   requestAnimationFrame(runRibbon);
 }
 
-runRibbon();
 
 /* LIGHTBOX */
 const lightbox = document.getElementById("lightbox");
@@ -1760,6 +1768,16 @@ img.dataset.index = index;
   ribbon.appendChild(img);
 });
 
+// =========================
+// DUPLICATE RIBBON CONTENT
+// =========================
+
+const originalNodes = [...ribbon.children];
+
+originalNodes.forEach(node => {
+  ribbon.appendChild(node.cloneNode(true));
+});
+
 
   /* === RENDER GRID (1-в-1 как в образце) === */
   const grid = document.getElementById("grid");
@@ -1861,8 +1879,16 @@ images.forEach(img => {
 if (loaded === images.length) finishLoading();
 
 function finishLoading(){
+
   overlay.classList.add("hide");
+
+  if (!window.__ribbonStarted) {
+    window.__ribbonStarted = true;
+    runRibbon();
+  }
 }
+
+
 
   /* =========================
      SMART PAGINATION (HERE)
