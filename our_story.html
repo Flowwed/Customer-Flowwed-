@@ -17,6 +17,25 @@
       line-height: 1.6;
     }
 
+
+.story-layout {
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 40px;
+
+  width: 100%;
+
+  max-width: 1500px;
+
+  margin: 0 auto;
+
+  position: relative;
+}
+
+
     header{
       text-align:center;
       padding:50px 10px;
@@ -231,14 +250,16 @@ section {
 
 /* ====== HERO ====== */
 .story-hero {
-  position: absolute;
 
-  top: 385px;
-  right: 70px;
+  flex-shrink: 0;
 
   width: 340px;
 
-  height: 300px;
+  position: sticky;
+  top: 40px;
+
+  align-self: flex-start;
+
   min-height: 700px;
   max-height: 1400px;
 
@@ -248,6 +269,7 @@ section {
 
   z-index: 10;
 }
+
 
 /* VIEWPORT */
 .story-marquee {
@@ -1053,6 +1075,8 @@ footer,
 
 <div class="page-shell">
 
+<div class="story-layout">
+
   <!-- HEADER -->
   <header>
     <h1 id="coupleName" data-hidden></h1>
@@ -1098,7 +1122,7 @@ footer,
   <div id="custom"></div>
 </div>
 </section>
-
+</div>
 
  </div> 
 
