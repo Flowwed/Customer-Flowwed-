@@ -223,7 +223,7 @@ section {
   right: 70px;
 
   width: 340px;
-  height: 760px;
+  height: calc(100vh - 360px);
 
   overflow: hidden;
 
@@ -1420,30 +1420,8 @@ if (!hero) return;
     })
   );
 
-  const heroHeight = hero.clientHeight;
 
-const firstCard =
-  track.querySelector(".story-photo-card");
-
-const cardHeight =
-  firstCard.offsetHeight;
-
-const gap = 12;
-
-const totalCardHeight =
-  cardHeight + gap;
-
-const visibleCount =
-  Math.floor(heroHeight / totalCardHeight);
-
-const usedHeight =
-  visibleCount * totalCardHeight;
-
-const remaining =
-  heroHeight - usedHeight;
-
-let y = remaining / 2;
-
+let y = 0;
 
   const speed = 0.25;
 
