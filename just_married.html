@@ -1500,13 +1500,12 @@ let lightboxOpen = false;
 
 function runRibbon(){
 
-  if (document.hidden){
-    setTimeout(runRibbon, 250);
-    return;
-  }
+if (document.hidden) {
+  requestAnimationFrame(runRibbon);
+  return;
+}
 
   if (!ribbonPaused) {
-
     y -= 0.35;
 
     if (Math.abs(y) >= ribbon.scrollHeight / 2) {
@@ -1515,9 +1514,10 @@ function runRibbon(){
 
     ribbon.style.transform = `translateY(${y}px)`;
   }
-
   requestAnimationFrame(runRibbon);
 }
+
+runRibbon();
 
 /* LIGHTBOX */
 const lightbox = document.getElementById("lightbox");
@@ -2435,6 +2435,7 @@ document.querySelectorAll("[data-page]").forEach(link => {
   link.href = buildLink(page);
 });
 </script>
+
 
 <script>
 /* =========================
