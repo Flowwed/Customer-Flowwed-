@@ -1433,19 +1433,24 @@ let currentY = 0;
 
   const singleHeight = track.scrollHeight / 2;
 
-  function animate() {
+function animate() {
+
+  if (!isDragging) {
 
     y -= speed;
 
-    if (Math.abs(y) >= singleHeight) {
-      y = 0;
-    }
-
-    track.style.transform =
-      `translate3d(0, ${y}px, 0)`;
-
-    requestAnimationFrame(animate);
   }
+
+  if (Math.abs(y) >= singleHeight) {
+    y = 0;
+  }
+
+  track.style.transform =
+    `translate3d(0, ${y}px, 0)`;
+
+  requestAnimationFrame(animate);
+}
+
 
   animate();
 
