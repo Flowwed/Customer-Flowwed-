@@ -277,10 +277,12 @@ section {
   display: flex;
   flex-direction: column;
 
+  align-items: center;
+
   gap: 12px;
 
   width: 100%;
-  height: max-content;
+  min-height: 100%;
 
   will-change: transform;
 
@@ -290,6 +292,8 @@ section {
   transform: translate3d(0,0,0);
   transition: transform 0s linear;
 }
+
+
 
 /* ===== IMAGES ===== */
 .story-track img {
@@ -1412,9 +1416,8 @@ rightArrow.addEventListener("click", (e) => {
   showImage(currentImageIndex + 1);
 });
 
-
 /* =========================================
-   🍎 APPLE STYLE MARQUEE — FIXED
+   🍎 APPLE STYLE MARQUEE — ADAPTIVE
    ========================================= */
 
 async function initStorySlider() {
@@ -1424,22 +1427,14 @@ async function initStorySlider() {
   const track = document.getElementById("storyHeroImages");
   if (!track) return;
 
-const hero = document.querySelector(".story-hero");
-if (!hero) return;
+  const hero = document.querySelector(".story-hero");
+  if (!hero) return;
 
   if (window.innerWidth <= 768) return;
 
   if (track.children.length < 2) return;
 
-  // duplicate
-const clone = track.cloneNode(true);
-
-while (clone.firstChild) {
-  track.appendChild(clone.firstChild);
-}
-  
-
-// WAIT IMAGES
+  // WAIT IMAGES
   const images = track.querySelectorAll("img");
 
   await Promise.all(
@@ -1453,108 +1448,118 @@ while (clone.firstChild) {
     })
   );
 
+  // =========================
+  // CHECK IF ALL CARDS FIT
+  // =========================
 
-let y = 0;
+  const heroHeight = hero.clientHeight;
 
+  const cards = [
+    ...track.querySelectorAll(".story-photo-card")
+  ];
+
+  let totalHeight = 0;
+
+  cards.forEach(card => {
+    totalHeight += card.getBoundingClientRect().height + 12;
+  });
+
+  // если все фото помещаются — НЕ запускаем marquee
+  if (totalHeight <= heroHeight) {
+    track.style.transform = "none";
+    track.style.justifyContent = "flex-start";
+    return;
+  }
+
+  // =========================
+  // MANY IMAGES = MARQUEE
+  // =========================
+
+  const clone = track.cloneNode(true);
+
+  while (clone.firstChild) {
+    track.appendChild(clone.firstChild);
+  }
+
+  let y = 0;
   const speed = 0.25;
 
-const marquee = track.closest(".story-marquee");
+  const marquee = track.closest(".story-marquee");
 
-let isDragging = false;
-let startY = 0;
-let currentY = 0;
+  let isDragging = false;
+  let startY = 0;
 
   function getSingleHeight() {
-  return track.scrollHeight / 2;
-}
-
-
-function animate() {
-
-if (document.hidden) {
-  requestAnimationFrame(animate);
-  return;
-}
-
-
-  if (!isDragging) {
-
-    y -= speed;
-
+    return track.scrollHeight / 2;
   }
 
-  if (Math.abs(y) >= getSingleHeight()) {
-    y = 0;
+  function animate() {
+
+    if (document.hidden) {
+      requestAnimationFrame(animate);
+      return;
+    }
+
+    if (!isDragging) {
+      y -= speed;
+    }
+
+    if (Math.abs(y) >= getSingleHeight()) {
+      y = 0;
+    }
+
+    track.style.transform =
+      `translate3d(0, ${y}px, 0)`;
+
+    requestAnimationFrame(animate);
   }
-
-  track.style.transform =
-    `translate3d(0, ${y}px, 0)`;
-
-  requestAnimationFrame(animate);
-}
-
 
   animate();
 
-/* ===== MANUAL SCROLL ===== */
+  /* ===== MANUAL SCROLL ===== */
 
-marquee.addEventListener("mousedown", e => {
-  isDragging = true;
-  startY = e.clientY;
-});
+  marquee.addEventListener("mousedown", e => {
+    isDragging = true;
+    startY = e.clientY;
+  });
 
-window.addEventListener("mousemove", e => {
+  window.addEventListener("mousemove", e => {
+    if (!isDragging) return;
 
-  if (!isDragging) return;
+    const delta = e.clientY - startY;
+    startY = e.clientY;
 
-  const delta = e.clientY - startY;
+    y += delta;
 
-  startY = e.clientY;
+    track.style.transform =
+      `translate3d(0, ${y}px, 0)`;
+  });
 
-  y += delta;
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
 
-  track.style.transform =
-    `translate3d(0, ${y}px, 0)`;
-});
+  marquee.addEventListener("touchstart", e => {
+    isDragging = true;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
 
-window.addEventListener("mouseup", () => {
-  isDragging = false;
-});
+  marquee.addEventListener("touchmove", e => {
+    if (!isDragging) return;
 
-/* TOUCH */
+    const delta = e.touches[0].clientY - startY;
+    startY = e.touches[0].clientY;
 
-marquee.addEventListener("touchstart", e => {
+    y += delta;
 
-  isDragging = true;
-  startY = e.touches[0].clientY;
+    track.style.transform =
+      `translate3d(0, ${y}px, 0)`;
+  }, { passive: true });
 
-}, { passive: true });
-
-marquee.addEventListener("touchmove", e => {
-
-  if (!isDragging) return;
-
-  const delta =
-    e.touches[0].clientY - startY;
-
-  startY = e.touches[0].clientY;
-
-  y += delta;
-
-  track.style.transform =
-    `translate3d(0, ${y}px, 0)`;
-
-}, { passive: true });
-
-marquee.addEventListener("touchend", () => {
-
-  isDragging = false;
-
-});
-
-
+  marquee.addEventListener("touchend", () => {
+    isDragging = false;
+  });
 }
-
 
 </script>
 
