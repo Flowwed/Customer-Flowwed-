@@ -247,7 +247,6 @@ section {
 
 }
 
-
 /* ====== HERO ====== */
 .story-hero {
 
@@ -259,34 +258,35 @@ section {
 
   position: relative;
 
-  height: auto;
-
   overflow: hidden;
 
   border-radius: 28px;
+
+  display: flex;
+  flex-direction: column;
 }
 
-/* VIEWPORT */
-.story-marquee {
-  width: 100%;
-  height: 100%;
 
-  position: relative;
+/* ===== VIEWPORT ===== */
+.story-marquee {
+
+  width: 100%;
+
+  position: sticky;
+  top: 40px;
+
+  height: calc(100vh - 80px);
 
   overflow: hidden;
 
   touch-action: pan-y;
 
-}
-
-.story-marquee {
   transition: transform .2s ease;
 }
 
 .story-marquee:hover {
   transform: scale(1.01);
 }
-
 
 /* ===== MOVING COLUMN ===== */
 .story-track {
