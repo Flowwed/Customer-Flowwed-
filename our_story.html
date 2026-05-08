@@ -17,25 +17,6 @@
       line-height: 1.6;
     }
 
-
-.story-layout {
-
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-
-  gap: 40px;
-
-  width: 100%;
-
-  max-width: 1500px;
-
-  margin: 0 auto;
-
-  position: relative;
-}
-
-
     header{
       text-align:center;
       padding:50px 10px;
@@ -247,46 +228,48 @@ section {
 
 }
 
+
 /* ====== HERO ====== */
 .story-hero {
+  position: absolute;
+
+  top: 485px;
+  right: 70px;
 
   width: 340px;
 
-  flex-shrink: 0;
-
-  align-self: stretch;
-
-  position: relative;
+  height: 300px;
+  min-height: 700px;
+  max-height: 1400px;
 
   overflow: hidden;
 
   border-radius: 28px;
 
-  display: flex;
-  flex-direction: column;
+  z-index: 10;
 }
 
-
-/* ===== VIEWPORT ===== */
+/* VIEWPORT */
 .story-marquee {
-
   width: 100%;
+  height: 100%;
 
-  position: sticky;
-  top: 40px;
-
-  height: calc(100vh - 80px);
+  position: relative;
 
   overflow: hidden;
 
   touch-action: pan-y;
 
+}
+
+.story-marquee {
   transition: transform .2s ease;
 }
 
 .story-marquee:hover {
   transform: scale(1.01);
 }
+
 
 /* ===== MOVING COLUMN ===== */
 .story-track {
@@ -1066,60 +1049,59 @@ footer,
   </div>
 </nav>
 
+
+
 <div class="page-shell">
 
   <!-- HEADER -->
   <header>
     <h1 id="coupleName" data-hidden></h1>
-
-    <div
-      id="eventDate"
-      style="margin-top:8px; font-size:18px; opacity:0.9; font-weight:500;"
-      data-hidden>
-    </div>
+<div id="eventDate" style="margin-top:8px; font-size:18px; opacity:0.9; font-weight:500;" data-hidden></div>
 
     <p id="storySubtitle" data-hidden style="font-size:18px;">
-      Once upon a time, there was us ❤️
-    </p>
+  Once upon a time, there was us ❤️
+</p>
 
-  </header>
+  
+</header>
 
   <!-- CONTENT -->
-  <div class="story-layout">
 
-    <section>
 
-      <div class="story-card">
-        <div id="how_we_met"></div>
-      </div>
-
-      <div class="story-card">
-        <div id="growing_together"></div>
-      </div>
-
-      <div class="story-card">
-        <div id="proposal"></div>
-      </div>
-
-      <div class="story-card">
-        <div id="new_chapter"></div>
-      </div>
-
-      <div class="story-card">
-        <div id="custom"></div>
-      </div>
-
-    </section>
-
-    <div class="story-hero">
-      <div class="story-marquee">
-        <div class="story-track" id="storyHeroImages"></div>
-      </div>
-    </div>
-
+<div class="story-hero">
+  <div class="story-marquee">
+    <div class="story-track" id="storyHeroImages"></div>
   </div>
-
 </div>
+
+
+  <section>
+
+
+<div class="story-card">
+  <div id="how_we_met"></div>
+</div>
+
+<div class="story-card">
+  <div id="growing_together"></div>
+</div>
+
+<div class="story-card">
+  <div id="proposal"></div>
+</div>
+
+<div class="story-card">
+  <div id="new_chapter"></div>
+</div>
+
+<div class="story-card">
+  <div id="custom"></div>
+</div>
+</section>
+
+
+ </div> 
+
   <!-- SCRIPT -->
   <script>
     const SUPABASE_URL = "https://octwwpatppbenqwkcqaw.supabase.co";
