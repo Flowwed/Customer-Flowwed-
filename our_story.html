@@ -1417,8 +1417,32 @@ async function initStorySlider() {
     })
   );
 
-  let y = 0;
-  const speed = 0.15;
+  const heroHeight = hero.clientHeight;
+
+const firstCard =
+  track.querySelector(".story-photo-card");
+
+const cardHeight =
+  firstCard.offsetHeight;
+
+const gap = 12;
+
+const totalCardHeight =
+  cardHeight + gap;
+
+const visibleCount =
+  Math.floor(heroHeight / totalCardHeight);
+
+const usedHeight =
+  visibleCount * totalCardHeight;
+
+const remaining =
+  heroHeight - usedHeight;
+
+let y = remaining / 2;
+
+
+  const speed = 0.25;
 
 const marquee = track.closest(".story-marquee");
 
