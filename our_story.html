@@ -1473,69 +1473,6 @@ async function initStorySlider(){
     isDragging = false;
   });
 }
-/* ---------- INERTIA ---------- */
-
-const startInertia = () => {
-
-  const friction = 0.95;
-
-  const step = () => {
-
-    velocity *= friction;
-
-    if (Math.abs(velocity) < 0.01) {
-
-      velocity = 0.35;
-
-      start();
-
-      return;
-    }
-
-    y += velocity;
-
-    track.style.transform =
-      `translate3d(0, ${y}px, 0)`;
-
-    requestAnimationFrame(step);
-  };
-
-  requestAnimationFrame(step);
-};
-
-  /* ---------- EVENTS ---------- */
-
-  marquee.addEventListener("mouseenter", stop);
-
-  marquee.addEventListener("mouseleave", start);
-
-  marquee.addEventListener("mousedown", e => {
-    startDrag(e.clientY);
-  });
-
-  window.addEventListener("mousemove", e => {
-    moveDrag(e.clientY);
-  });
-
-  window.addEventListener("mouseup", endDrag);
-
-  marquee.addEventListener(
-    "touchstart",
-    e => startDrag(e.touches[0].clientY),
-    { passive: true }
-  );
-
-  marquee.addEventListener(
-    "touchmove",
-    e => moveDrag(e.touches[0].clientY),
-    { passive: true }
-  );
-
-  marquee.addEventListener("touchend", endDrag);
-
-  // START
-  start();
-}
 
 </script>
 
