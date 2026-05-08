@@ -1389,7 +1389,7 @@ async function initStorySlider(){
   // duplicate content (infinite)
   track.innerHTML += track.innerHTML;
 
-  const marquee = track.closest(".story-hero");
+  const marquee = track.closest(".story-marquee");
   if (!marquee) return;
 
   let x = 0;
@@ -1401,7 +1401,7 @@ async function initStorySlider(){
   const render = () => {
 
     x -= velocity;
-track.style.translate = `0 ${x}px`;
+track.style.transform = `translateY(${x}px)`;
 
     // infinite loop
 if (Math.abs(x) >= track.scrollHeight / 2) {
