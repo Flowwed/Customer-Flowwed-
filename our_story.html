@@ -247,7 +247,6 @@ section {
   height: max-content;
 }
 
-
 /* PAUSE ON HOVER */
 .story-marquee:hover .story-track {
   animation-play-state: paused;
@@ -653,6 +652,86 @@ border-radius: 26px;
   cursor: zoom-out;
 }
 
+/* =========================
+   📱 ORGANIC MOBILE STORY
+   ========================= */
+@media (max-width: 768px) {
+
+  /* общий воздух */
+  body {
+    line-height: 1.45;
+  }
+
+  header {
+    padding: 28px 14px;
+  }
+
+  header h1 {
+    font-size: 26px;
+  }
+
+  #storySubtitle {
+    font-size: 15px !important;
+  }
+
+
+  .story-card {
+    padding: 24px 18px;
+    margin-top: 26px;
+    border-radius: 22px;
+  }
+
+  .story-card h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .story-card p {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  /* HERO картинки — не бегущая строка, а нативный свайп */
+
+
+  .story-marquee {
+    overflow: visible !important;
+  }
+
+.story-track {
+  display: flex !important;
+  gap: 12px;
+
+  width: max-content;
+
+  overflow: visible;
+
+  animation: marquee 38s linear infinite;  /* как desktop */
+}
+
+  .story-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .story-track img {
+    flex: 0 0 42vw;
+    height: 28vw;
+
+    object-fit: cover;
+    border-radius: 14px;
+
+    scroll-snap-align: start;
+
+    box-shadow:
+      0 10px 18px rgba(0,0,0,0.15),
+      0 4px 8px rgba(0,0,0,0.08);
+  }
+
+  .story-hero::before,
+  .story-hero::after {
+    display: none !important;
+  }
+}
 
 
 /* =========================
@@ -1316,7 +1395,7 @@ async function initStorySlider(){
   const render = () => {
 
     x -= velocity;
-track.style.transform = `translateY(${x}px)`;
+track.style.translate = `0 ${x}px`;
 
     // infinite loop
 if (Math.abs(x) >= track.scrollHeight / 2) {
