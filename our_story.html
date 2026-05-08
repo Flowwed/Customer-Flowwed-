@@ -233,7 +233,7 @@ section {
 .story-hero {
   position: absolute;
 
-  top: 485px;
+  top: 385px;
   right: 70px;
 
   width: 340px;
@@ -1653,10 +1653,21 @@ const section =
 
 if (!section) return;
 
-const rect = section.getBoundingClientRect();
+const sectionHeight = section.scrollHeight;
 
-const height = rect.height + 120;
+const cards = document.querySelectorAll(".story-card");
 
+let extra = 0;
+
+cards.forEach(card => {
+  const styles = getComputedStyle(card);
+
+  extra +=
+    parseFloat(styles.marginTop || 0) +
+    parseFloat(styles.marginBottom || 0);
+});
+
+const height = sectionHeight + extra - 120;
 
 
   hero.style.top =
