@@ -231,7 +231,7 @@ section {
 
 /* ====== HERO ====== */
 .story-hero {
-  position: absolute;
+  position: fixed;
 
   top: 385px;
   right: 70px;
@@ -1470,6 +1470,11 @@ let currentY = 0;
 
 
 function animate() {
+
+if (document.hidden) {
+  requestAnimationFrame(animate);
+  return;
+}
 
 
   if (!isDragging) {
