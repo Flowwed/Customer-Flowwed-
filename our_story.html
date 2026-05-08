@@ -1445,30 +1445,35 @@ const endDrag = () => {
   startInertia();
 };
 
-  /* ---------- INERTIA ---------- */
+/* ---------- INERTIA ---------- */
 
-  const startInertia = () => {
+const startInertia = () => {
 
-    const friction = 0.95;
+  const friction = 0.95;
 
-    const step = () => {
+  const step = () => {
 
-      velocity *= friction;
+    velocity *= friction;
 
-      if (Math.abs(velocity) < 0.01) {
+    if (Math.abs(velocity) < 0.01) {
 
-        velocity = 0.35;
+      velocity = 0.35;
 
-        return;
-      }
+      start();
 
-      x += velocity;
+      return;
+    }
 
-      requestAnimationFrame(step);
-    };
+    y += velocity;
+
+    track.style.transform =
+      `translate3d(0, ${y}px, 0)`;
 
     requestAnimationFrame(step);
   };
+
+  requestAnimationFrame(step);
+};
 
   /* ---------- EVENTS ---------- */
 
