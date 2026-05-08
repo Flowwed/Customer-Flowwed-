@@ -326,6 +326,54 @@ html,body{
   border-radius:28px;
 }
 
+/* =========================
+   LIGHTBOX ARROWS
+   ========================= */
+
+.lightbox-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+
+  width:64px;
+  height:64px;
+
+  border:none;
+  border-radius:50%;
+
+  background:rgba(255,255,255,.14);
+
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+
+  color:white;
+
+  font-size:42px;
+  line-height:1;
+
+  cursor:pointer;
+
+  z-index:10000;
+
+  transition:
+    transform .25s ease,
+    background .25s ease;
+}
+
+.lightbox-arrow:hover{
+  transform:translateY(-50%) scale(1.08);
+  background:rgba(255,255,255,.22);
+}
+
+.lightbox-arrow.left{
+  left:38px;
+}
+
+.lightbox-arrow.right{
+  right:38px;
+}
+
+
 .lightbox-figure{
   display:inline-flex;          /* ⬅️ не растягивается */
   flex-direction:column;
@@ -1174,11 +1222,21 @@ body.special-mode #pagination {
 </div>
 
 <div class="image-lightbox" id="lightbox">
+
+  <button class="lightbox-arrow left">‹</button>
+
   <figure class="lightbox-figure">
+
     <img id="lightbox-img">
+
     <figcaption class="lightbox-caption"></figcaption>
+
   </figure>
+
+  <button class="lightbox-arrow right">›</button>
+
 </div>
+
 
 <audio id="bgMusic" loop preload="metadata"></audio>
 
@@ -1532,6 +1590,15 @@ const lightbox = document.getElementById("lightbox");
 const lbImg = document.getElementById("lightbox-img");
 const lbCaption = lightbox.querySelector(".lightbox-caption");
 
+const leftArrow =
+  lightbox.querySelector(".lightbox-arrow.left");
+
+const rightArrow =
+  lightbox.querySelector(".lightbox-arrow.right");
+
+let currentImageIndex = 0;
+
+
 const ribbonTrack = document.getElementById("ribbon");
 ribbonTrack.addEventListener("pointerdown", function (e) {
   const img = e.target.closest("img");
@@ -1565,6 +1632,66 @@ lightbox.classList.add("active");
 
 });
 
+function showImage(index){
+
+  const images = [
+    ...document.querySelectorAll("#grid .photo img")
+  ];
+
+  if (!images.length) return;
+
+  if (index < 0) {
+    index = images.length - 1;
+  }
+
+  if (index >= images.length) {
+    index = 0;
+  }
+
+  currentImageIndex = index;
+
+  const img = images[index];
+
+  lbImg.src = img.src;
+
+  const raw =
+    img.dataset.caption || img.alt || "";
+
+  const clean = raw
+    .replace(/[\r\n]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (clean) {
+    lbCaption.textContent = clean;
+    lbCaption.style.display = "block";
+  } else {
+    lbCaption.textContent = "";
+    lbCaption.style.display = "none";
+  }
+
+  lbImg.onload = () => {
+    const w = lbImg.getBoundingClientRect().width;
+    lbCaption.style.width = w + "px";
+  };
+}
+
+
+/* =========================
+   LEFT / RIGHT ARROWS
+   ========================= */
+
+leftArrow.addEventListener("click", e => {
+  e.stopPropagation();
+  showImage(currentImageIndex - 1);
+});
+
+rightArrow.addEventListener("click", e => {
+  e.stopPropagation();
+  showImage(currentImageIndex + 1);
+});
+
+
 function closeLightbox(e){
   if (e) e.stopPropagation();
 
@@ -1597,6 +1724,13 @@ if (gridEl) {
 
 
     const img = photo.querySelector("img");
+
+const images = [
+  ...document.querySelectorAll("#grid .photo img")
+];
+
+currentImageIndex = images.indexOf(img);
+
     if (!img) return;
 
 // 🔥 ВОТ СЮДА
@@ -1608,27 +1742,10 @@ if (gridEl) {
     ribbonPaused = true;
     lightboxOpen = true;
 
-lbImg.src = img.src;
-
-const raw = img.dataset.caption || img.alt || "";
-const clean = raw.replace(/[\r\n]+/g, " ").replace(/\s+/g, " ").trim();
-
-if (clean) {
-  lbCaption.textContent = clean;
-  lbCaption.style.display = "block";
-} else {
-  lbCaption.textContent = "";
-  lbCaption.style.display = "none";
-}
-
-lbImg.onload = () => {
-  const w = lbImg.getBoundingClientRect().width;
-  lbCaption.style.width = w + "px";
-};
+showImage(currentImageIndex);
 
 lightbox.classList.add("active");
-  });
-}
+
 </script>
 
 
