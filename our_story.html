@@ -1640,7 +1640,7 @@ function updateStoryHeroHeight() {
   const hero = document.querySelector(".story-hero");
   const header = document.querySelector("header");
 
-  if (!hero || !header || !footer) return;
+  if (!hero || !header) return;
 
   const headerBottom =
     header.getBoundingClientRect().bottom + window.scrollY;
