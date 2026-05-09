@@ -68,25 +68,18 @@ section{
 
 .story-card {
 
-  position: relative;
-
-  width: 78%;
-
-  margin-right: 30px;
-
   padding: 42px 46px;
 
   max-height: 220px;
-
-  overflow: hidden;
-
-  border-radius: 30px;
+  overflow-y: auto;
 
   background: linear-gradient(
     180deg,
     #ffffff 0%,
     #fff6f7 100%
   );
+
+  border-radius: 30px;
 
   box-shadow:
     0 28px 60px rgba(0, 0, 0, 0.18),
@@ -95,32 +88,24 @@ section{
   transition:
     transform 0.35s ease,
     box-shadow 0.35s ease;
+
+  margin-right: 30px;
 }
 
-/* 🔥 scroll внутри существующего div */
-.story-card > div {
+/* stagger effect */
+.story-card:nth-of-type(even) {
 
-  max-height: 220px;
-
-  overflow-y: auto;
-
-  padding-right: 10px;
-
-  box-sizing: border-box;
+  width: 64%;
+  margin-left: auto;
 }
 
-/* scrollbar */
-.story-card > div::-webkit-scrollbar{
-  width: 6px;
+.story-card {
+
+  width: 78%;
 }
 
-.story-card > div::-webkit-scrollbar-track{
-  background: transparent;
-}
-
-.story-card > div::-webkit-scrollbar-thumb{
-  background: rgba(165,33,38,.18);
-  border-radius: 999px;
+.story-card {
+  padding-right: 20px;
 }
 
 /* =================================
@@ -1117,7 +1102,6 @@ section p:last-child {
 
 
 <div class="story-card">
-<div class="story-card-inner">
   <div id="how_we_met"></div>
 </div>
 
