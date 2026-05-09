@@ -104,7 +104,6 @@ section{
   width: 78%;
 }
 
-
 /* =================================
    TYPOGRAPHY
 ================================= */
@@ -718,14 +717,9 @@ section p:last-child {
   transform: scale(1);
 }
 
-.story-marquee {
-  cursor: grab;
+.story-hero img {
+  cursor: zoom-in;
 }
-
-.story-marquee.dragging {
-  cursor: grabbing;
-}
-
 
 .image-lightbox img {
   cursor: zoom-out;
@@ -1367,19 +1361,12 @@ document.addEventListener("click", (e) => {
   const img = e.target.closest(".story-hero img");
   if (!img) return;
 
-  // если был drag — не открываем zoom
-  if (moved) {
+const images = [
+  ...document.querySelectorAll(".story-hero img")
+];
 
-    moved = false;
+currentImageIndex = images.indexOf(img);
 
-    return;
-  }
-
-  const images = [
-    ...document.querySelectorAll(".story-hero img")
-  ];
-
-  currentImageIndex = images.indexOf(img);
 
   const card = img.closest(".story-photo-card");
 
@@ -1389,8 +1376,21 @@ document.addEventListener("click", (e) => {
 
   showImage(currentImageIndex);
 
+
   lightbox.classList.add("active");
 });
+
+// закрытие по клику вне фото
+lightbox.addEventListener("click", (e) => {
+
+  if (e.target === lightbox) {
+
+    lightbox.classList.remove("active");
+
+  }
+
+});
+
 
 function showImage(index) {
 
@@ -1517,33 +1517,14 @@ if (document.hidden) {
 
 /* ===== MANUAL SCROLL ===== */
 
-let moved = false;
-let dragDistance = 0;
-
 marquee.addEventListener("mousedown", e => {
-
   isDragging = true;
-
-  moved = false;
-
-  dragDistance = 0;
-
-  marquee.classList.add("dragging");
-
   startY = e.clientY;
-
 });
-
 
 window.addEventListener("mousemove", e => {
 
   if (!isDragging) return;
-
-dragDistance += Math.abs(e.clientY - startY);
-
-if (dragDistance > 8) {
-  moved = true;
-}
 
   const delta = e.clientY - startY;
 
@@ -1556,15 +1537,8 @@ if (dragDistance > 8) {
 });
 
 window.addEventListener("mouseup", () => {
-
   isDragging = false;
-
-  marquee.classList.remove("dragging");
-
-
 });
-
-
 
 /* TOUCH */
 
