@@ -8,107 +8,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #fdeff1;
-      color:#732323;
-      line-height: 1.6;
-    }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #fdeff1;
+  color:#732323;
+  line-height: 1.6;
+}
 
-    header{
-      text-align:center;
-      padding:50px 10px;
-      background:linear-gradient(to bottom, #fff, #f8dede);
-      border-bottom:1px solid rgba(255,255,255,0.7);
-    }
+header{
+  text-align:center;
+  padding:50px 10px;
+  background:linear-gradient(to bottom, #fff, #f8dede);
+  border-bottom:1px solid rgba(255,255,255,0.7);
+}
 
-    h1,h2,h3{
-      color:#a52126;
-      margin-top:0;
-    }
+h1,h2,h3{
+  color:#a52126;
+  margin-top:0;
+}
+
+/* =================================
+   MAIN SECTION CONTAINER
+================================= */
 
 section{
-  max-width:1000px;
-  margin:auto;
-
-  padding:0 20px 40px; /* 🔥 убрали верх */
-
-  background:#ffffff;
-  border-radius:22px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.13);
-  margin-top:45px;
-}
-
-.story-card:first-child{
-  margin-top:10px;
-}
-
-
-    .photo{
-      width:100%;
-      max-height:420px;
-      border-radius:20px;
-      object-fit:cover;
-      margin-bottom:25px;
-    }
-
-
-/* заголовки внутри карточек */
-section h2 {
-  font-size: 28px;
-  margin-bottom: 18px;
-  color: #a52126;
-}
-
-/* текст */
-section p {
-  font-size: 16px;
-  line-height: 1.75;
-  color: #6f2a2a;
-  margin-bottom: 40px;
-}
-
-/* последнее описание — без лишнего отступа */
-section p:last-child {
-  margin-bottom: 10px;
-}
-
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-
-/* контейнер */
-section {
 
   width: 68%;
 
   min-width: 720px;
   max-width: 920px;
 
+  margin-top: 45px;
   margin-left: 100px;
   margin-right: auto;
 
-  padding: 20px;
+  padding: 10px 20px;
 
   box-sizing: border-box;
+
+  background:#ffffff;
+
+  border-radius:22px;
+
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.13);
+
+  /* 🔥 вместо margin-top у карточек */
+  display:flex;
+  flex-direction:column;
+  gap:50px;
 }
 
+/* =================================
+   STORY CARD
+================================= */
 
-/* ====== ОТДЕЛЬНАЯ КАРТОЧКА ====== */
 .story-card {
-  margin-top: 50px;
+
   padding: 42px 46px;
 
   max-height: 220px;
@@ -129,12 +87,73 @@ section {
   transition:
     transform 0.35s ease,
     box-shadow 0.35s ease;
-}
 
-
-.story-card {
   margin-right: 30px;
 }
+
+/* stagger effect */
+.story-card:nth-of-type(even) {
+
+  width: 64%;
+  margin-left: auto;
+}
+
+.story-card {
+
+  width: 78%;
+}
+
+/* =================================
+   TYPOGRAPHY
+================================= */
+
+section h2 {
+  font-size: 28px;
+  margin-bottom: 18px;
+  color: #a52126;
+}
+
+section p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #6f2a2a;
+
+  margin-bottom: 40px;
+}
+
+section p:last-child {
+  margin-bottom: 0;
+}
+
+/* =================================
+   IMAGE
+================================= */
+
+.photo{
+  width:100%;
+  max-height:420px;
+  border-radius:20px;
+  object-fit:cover;
+  margin-bottom:25px;
+}
+
+/* =================================
+   ANIMATION
+================================= */
+
+@keyframes fadeUp {
+
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 /* Apple-like scrollbar */
 .story-card::-webkit-scrollbar{
