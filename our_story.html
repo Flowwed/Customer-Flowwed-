@@ -1527,10 +1527,15 @@ if (document.hidden) {
 /* ===== MANUAL SCROLL ===== */
 
 let moved = false;
+let dragDistance = 0;
 
 marquee.addEventListener("mousedown", e => {
 
   isDragging = true;
+
+  moved = false;
+
+  dragDistance = 0;
 
   marquee.classList.add("dragging");
 
@@ -1538,11 +1543,16 @@ marquee.addEventListener("mousedown", e => {
 
 });
 
+
 window.addEventListener("mousemove", e => {
 
   if (!isDragging) return;
 
-moved = true;
+dragDistance += Math.abs(e.clientY - startY);
+
+if (dragDistance > 8) {
+  moved = true;
+}
 
   const delta = e.clientY - startY;
 
