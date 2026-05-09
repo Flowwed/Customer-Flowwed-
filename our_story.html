@@ -1364,18 +1364,22 @@ let currentImageIndex = 0;
 // клик по фото в hero
 document.addEventListener("click", (e) => {
 
-  if (moved) return;
-
-
   const img = e.target.closest(".story-hero img");
   if (!img) return;
 
-const images = [
-  ...document.querySelectorAll(".story-hero img")
-];
+  // если был drag — не открываем zoom
+  if (moved) {
 
-currentImageIndex = images.indexOf(img);
+    moved = false;
 
+    return;
+  }
+
+  const images = [
+    ...document.querySelectorAll(".story-hero img")
+  ];
+
+  currentImageIndex = images.indexOf(img);
 
   const card = img.closest(".story-photo-card");
 
@@ -1385,21 +1389,8 @@ currentImageIndex = images.indexOf(img);
 
   showImage(currentImageIndex);
 
-
   lightbox.classList.add("active");
 });
-
-// закрытие по клику вне фото
-lightbox.addEventListener("click", (e) => {
-
-  if (e.target === lightbox) {
-
-    lightbox.classList.remove("active");
-
-  }
-
-});
-
 
 function showImage(index) {
 
@@ -1570,9 +1561,6 @@ window.addEventListener("mouseup", () => {
 
   marquee.classList.remove("dragging");
 
-  setTimeout(() => {
-    moved = false;
-  }, 0);
 
 });
 
