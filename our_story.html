@@ -104,9 +104,6 @@ section{
   width: 78%;
 }
 
-.story-card {
-  padding-right: 20px;
-}
 
 /* =================================
    TYPOGRAPHY
@@ -721,9 +718,14 @@ section p:last-child {
   transform: scale(1);
 }
 
-.story-hero img {
-  cursor: zoom-in;
+.story-marquee {
+  cursor: grab;
 }
+
+.story-marquee.dragging {
+  cursor: grabbing;
+}
+
 
 .image-lightbox img {
   cursor: zoom-out;
@@ -1362,6 +1364,9 @@ let currentImageIndex = 0;
 // клик по фото в hero
 document.addEventListener("click", (e) => {
 
+  if (moved) return;
+
+
   const img = e.target.closest(".story-hero img");
   if (!img) return;
 
@@ -1521,14 +1526,23 @@ if (document.hidden) {
 
 /* ===== MANUAL SCROLL ===== */
 
+let moved = false;
+
 marquee.addEventListener("mousedown", e => {
+
   isDragging = true;
+
+  marquee.classList.add("dragging");
+
   startY = e.clientY;
+
 });
 
 window.addEventListener("mousemove", e => {
 
   if (!isDragging) return;
+
+moved = true;
 
   const delta = e.clientY - startY;
 
@@ -1541,8 +1555,18 @@ window.addEventListener("mousemove", e => {
 });
 
 window.addEventListener("mouseup", () => {
+
   isDragging = false;
+
+  marquee.classList.remove("dragging");
+
+  setTimeout(() => {
+    moved = false;
+  }, 0);
+
 });
+
+
 
 /* TOUCH */
 
