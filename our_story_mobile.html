@@ -496,6 +496,10 @@ transform-origin: center center;
     );
 }
 
+.story-body.at-end {
+  mask-image: none;
+}
+
 .story-body::-webkit-scrollbar {
   width: 4px;
 }
@@ -504,7 +508,6 @@ transform-origin: center center;
   background: rgba(120,30,50,.22);
   border-radius: 10px;
 }
-
 
 </style>
 </head>
@@ -739,6 +742,23 @@ function makeStoryCard(title, html) {
   body.className = "story-body";
 
   body.innerHTML = cleaned;
+
+requestAnimationFrame(() => {
+
+  function updateFade() {
+
+    const atEnd =
+      body.scrollTop + body.clientHeight >=
+      body.scrollHeight - 4;
+
+    body.classList.toggle("at-end", atEnd);
+  }
+
+  updateFade();
+
+  body.addEventListener("scroll", updateFade);
+});
+
 
   card.appendChild(h);
   card.appendChild(body);
