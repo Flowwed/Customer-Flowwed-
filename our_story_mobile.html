@@ -773,14 +773,16 @@ ribbon.addEventListener("touchend", () => {
 }, { passive: true });
 
 
-let drift = 0.12;
+let drift = 0.25;
 
 function autoDrift() {
 
   if (
     ribbon.scrollWidth <= ribbon.clientWidth
   ) {
+
     requestAnimationFrame(autoDrift);
+
     return;
   }
 
@@ -790,17 +792,23 @@ function autoDrift() {
     ribbon.scrollWidth - ribbon.clientWidth;
 
   if (ribbon.scrollLeft >= max) {
-    drift = -0.12;
+
+    drift = -0.35;
   }
 
   if (ribbon.scrollLeft <= 0) {
-    drift = 0.12;
+
+    drift = 0.35;
   }
 
   requestAnimationFrame(autoDrift);
 }
 
-requestAnimationFrame(autoDrift);
+setTimeout(() => {
+
+  requestAnimationFrame(autoDrift);
+
+}, 1200);
 
 return ribbon;
 }
