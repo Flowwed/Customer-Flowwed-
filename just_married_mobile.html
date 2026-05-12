@@ -58,11 +58,14 @@ html, body {
 
   min-height: 100dvh;
 
+  height: 100dvh;
+
+  overflow: hidden;
+
   padding: 14px;
 
   box-sizing: border-box;
 }
-
 
 .ribbon-track {
 
@@ -72,6 +75,13 @@ html, body {
   gap: 12px;
 
   width: 100%;
+
+will-change: transform;
+
+backface-visibility: hidden;
+
+transform: translate3d(0,0,0);
+
 }
 
 
@@ -390,7 +400,11 @@ async function loadMobileGallery() {
   }
 }
 
-loadMobileGallery();
+loadMobileGallery().then(() => {
+  initRibbonAnimation();
+});
+
+
 </script>
 
 <script>
@@ -513,6 +527,92 @@ musicBtn.addEventListener("click", async () => {
 
 loadBackgroundMusicForPage();
 </script>
+
+
+<script>
+
+function initRibbonAnimation() {
+
+  const track =
+    document.getElementById("ribbon");
+
+  if (!track) return;
+
+  if (track.children.length < 2) return;
+
+  // duplicate ribbon
+  const clone = track.cloneNode(true);
+
+  while (clone.firstChild) {
+    track.appendChild(clone.firstChild);
+  }
+
+  let y = 0;
+
+  const speed = 0.35;
+
+  let isDragging = false;
+
+  let startY = 0;
+
+  function getSingleHeight() {
+    return track.scrollHeight / 2;
+  }
+
+  function animate() {
+
+    if (!isDragging) {
+      y -= speed;
+    }
+
+    if (Math.abs(y) >= getSingleHeight()) {
+      y = 0;
+    }
+
+    track.style.transform =
+      `translate3d(0, ${y}px, 0)`;
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  // TOUCH DRAG
+
+  track.addEventListener("touchstart", e => {
+
+    isDragging = true;
+
+    startY = e.touches[0].clientY;
+
+  }, { passive: true });
+
+  track.addEventListener("touchmove", e => {
+
+    if (!isDragging) return;
+
+    const delta =
+      e.touches[0].clientY - startY;
+
+    startY = e.touches[0].clientY;
+
+    y += delta;
+
+    track.style.transform =
+      `translate3d(0, ${y}px, 0)`;
+
+  }, { passive: true });
+
+  track.addEventListener("touchend", () => {
+
+    isDragging = false;
+
+  });
+
+}
+
+</script>
+
 
 </body>
 </html>
