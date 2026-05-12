@@ -867,12 +867,6 @@ function initRibbonAnimation() {
 
   if (track.children.length < 2) return;
 
-  // duplicate ribbon
-  const clone = track.cloneNode(true);
-
-  while (clone.firstChild) {
-    track.appendChild(clone.firstChild);
-  }
 
   let y = 0;
 
@@ -883,9 +877,9 @@ function initRibbonAnimation() {
   let startY = 0;
 let velocity = 0;
 
-  function getSingleHeight() {
-    return track.scrollHeight / 2;
-  }
+function getSingleHeight() {
+  return track.scrollHeight;
+}
 
 function animate() {
 
@@ -909,10 +903,10 @@ function animate() {
     velocity *= 0.92;
   }
 
-  if (Math.abs(y) >= getSingleHeight()) {
+if (Math.abs(y) >= getSingleHeight() - window.innerHeight) {
 
-    y = 0;
-  }
+  y = 0;
+}
 
   track.style.transform =
     `translate3d(0, ${y}px, 0)`;
