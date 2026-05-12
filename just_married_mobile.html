@@ -53,46 +53,120 @@ html, body {
 }
 
 .ribbon-shell {
+
   width: 100%;
+
   min-height: 100dvh;
-  padding: 18px 14px 90px;
+
+  padding: 14px;
+
   box-sizing: border-box;
 }
 
+
 .ribbon-track {
+
   display: flex;
   flex-direction: column;
-  gap: 22px;
+
+  gap: 12px;
+
+  width: 100%;
 }
 
+
 .photo-card {
-  background: rgba(255,255,255,.78);
+
+  position: relative;
+
+  width: 100%;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+
   border-radius: 24px;
-  padding: 10px;
-  box-shadow: 0 18px 42px rgba(120,30,50,.18);
-  backdrop-filter: blur(12px);
+
+  background: #f7eeee;
 }
 
 .photo-card img {
+
   width: 100%;
-  aspect-ratio: 4 / 5;
 
-  object-fit: cover;
+  aspect-ratio: 1 / 1;
 
-  border-radius: 18px;
+  object-fit: contain;
+
+  flex-shrink: 0;
+
+  border-radius: 22px;
 
   display: block;
-}
 
+  background: #f7eeee;
+
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.14),
+    0 3px 8px rgba(0,0,0,0.08);
+}
 
 
 .caption {
-  margin-top: 10px;
-  padding: 0 4px 4px;
+
+  position: absolute;
+
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+
+  padding: 8px 14px 6px;
+
+  border-radius: 18px;
+
+  background: rgba(255,255,255,.18);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,.22);
+
+  color: white;
+
   font-size: 14px;
-  line-height: 1.45;
-  color: #5a1c1c;
+  line-height: 18px;
+
+  text-shadow:
+    0 2px 10px rgba(0,0,0,.45);
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.18);
+
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  height: 30px;
+
+  transition:
+    height .4s ease,
+    background .35s ease;
 }
+
+
+.photo-card:hover .caption {
+
+  -webkit-line-clamp: unset;
+
+  height: auto;
+
+  max-height: 240px;
+
+  background: rgba(255,255,255,.22);
+}
+
 
 .loading {
   position: fixed;
