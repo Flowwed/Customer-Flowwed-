@@ -772,9 +772,36 @@ ribbon.addEventListener("touchend", () => {
 }, { passive: true });
 
 
-  });
+let drift = 0.12;
 
-  return ribbon;
+function autoDrift() {
+
+  if (
+    ribbon.scrollWidth <= ribbon.clientWidth
+  ) {
+    requestAnimationFrame(autoDrift);
+    return;
+  }
+
+  ribbon.scrollLeft += drift;
+
+  const max =
+    ribbon.scrollWidth - ribbon.clientWidth;
+
+  if (ribbon.scrollLeft >= max) {
+    drift = -0.12;
+  }
+
+  if (ribbon.scrollLeft <= 0) {
+    drift = 0.12;
+  }
+
+  requestAnimationFrame(autoDrift);
+}
+
+requestAnimationFrame(autoDrift);
+
+return ribbon;
 }
 
 function renderMobileStory(content, photos) {
