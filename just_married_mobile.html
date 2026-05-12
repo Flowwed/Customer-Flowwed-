@@ -132,7 +132,46 @@ transform: translateZ(0);
   border-radius: 24px;
 
   background: #f7eeee;
+
+animation:
+  cardFloat 6s ease-in-out infinite;
+
 }
+
+
+@keyframes cardFloat {
+
+  0% {
+    transform:
+      translateY(0px)
+      rotate(0deg);
+  }
+
+  25% {
+    transform:
+      translateY(-3px)
+      rotate(-0.4deg);
+  }
+
+  50% {
+    transform:
+      translateY(-6px)
+      rotate(0.4deg);
+  }
+
+  75% {
+    transform:
+      translateY(-3px)
+      rotate(-0.3deg);
+  }
+
+  100% {
+    transform:
+      translateY(0px)
+      rotate(0deg);
+  }
+}
+
 
 .photo-card img {
 
@@ -562,6 +601,11 @@ async function loadBackgroundMusicForPage() {
 }
 
 const musicBtn = document.getElementById("musicBtn");
+
+let audioContext;
+let analyser;
+let dataArray;
+
 const bgMusic = document.getElementById("bgMusic");
 
 musicBtn.addEventListener("click", async () => {
@@ -569,6 +613,30 @@ musicBtn.addEventListener("click", async () => {
 
   if (bgMusic.paused) {
     await bgMusic.play().catch(() => {});
+
+if (!audioContext) {
+
+  audioContext =
+    new AudioContext();
+
+  const source =
+    audioContext.createMediaElementSource(bgMusic);
+
+  analyser =
+    audioContext.createAnalyser();
+
+  analyser.fftSize = 128;
+
+  dataArray =
+    new Uint8Array(analyser.frequencyBinCount);
+
+  source.connect(analyser);
+
+  analyser.connect(audioContext.destination);
+
+  startMusicMotion();
+}
+
     musicBtn.textContent = "⏸";
   } else {
     bgMusic.pause();
@@ -600,7 +668,7 @@ function initRibbonAnimation() {
 
   let y = 0;
 
-  const speed = 0.18;
+  const speed = 0.25;
 
   let isDragging = false;
 
@@ -672,6 +740,61 @@ velocity = delta * 0.45;
 
   });
 
+}
+
+</script>
+
+
+<script>
+
+function startMusicMotion() {
+
+  const cards =
+    document.querySelectorAll(".photo-card");
+
+  function animateMusic() {
+
+    if (!analyser) {
+      requestAnimationFrame(animateMusic);
+      return;
+    }
+
+    analyser.getByteFrequencyData(dataArray);
+
+    let avg = 0;
+
+    for (let i = 0; i < dataArray.length; i++) {
+      avg += dataArray[i];
+    }
+
+    avg /= dataArray.length;
+
+    const power = avg / 255;
+
+    cards.forEach((card, index) => {
+
+      const offset =
+        Math.sin(Date.now() * 0.001 + index) * 2;
+
+      const scale =
+        1 + power * 0.025;
+
+      const rotate =
+        Math.sin(Date.now() * 0.0007 + index)
+        * power * 1.5;
+
+      card.style.transform =
+        `
+        translateY(${offset}px)
+        scale(${scale})
+        rotate(${rotate}deg)
+        `;
+    });
+
+    requestAnimationFrame(animateMusic);
+  }
+
+  animateMusic();
 }
 
 </script>
