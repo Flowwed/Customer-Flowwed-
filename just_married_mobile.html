@@ -136,6 +136,10 @@ transform: translateZ(0);
 animation:
   cardFloat 6s ease-in-out infinite;
 
+--music-offset: 0px;
+--music-scale: 1;
+--music-rotate: 0deg;
+
 }
 
 
@@ -143,35 +147,39 @@ animation:
 
   0% {
     transform:
-      translateY(0px)
-      rotate(0deg);
+      translateY(calc(0px + var(--music-offset)))
+      scale(var(--music-scale))
+      rotate(calc(0deg + var(--music-rotate)));
   }
 
   25% {
     transform:
-      translateY(-3px)
-      rotate(-0.4deg);
+      translateY(calc(-3px + var(--music-offset)))
+      scale(var(--music-scale))
+      rotate(calc(-0.4deg + var(--music-rotate)));
   }
 
   50% {
     transform:
-      translateY(-6px)
-      rotate(0.4deg);
+      translateY(calc(-6px + var(--music-offset)))
+      scale(var(--music-scale))
+      rotate(calc(0.4deg + var(--music-rotate)));
   }
 
   75% {
     transform:
-      translateY(-3px)
-      rotate(-0.3deg);
+      translateY(calc(-3px + var(--music-offset)))
+      scale(var(--music-scale))
+      rotate(calc(-0.3deg + var(--music-rotate)));
   }
 
   100% {
     transform:
-      translateY(0px)
-      rotate(0deg);
+      translateY(calc(0px + var(--music-offset)))
+      scale(var(--music-scale))
+      rotate(calc(0deg + var(--music-rotate)));
   }
 }
-
 
 .photo-card img {
 
@@ -783,14 +791,20 @@ function startMusicMotion() {
         Math.sin(Date.now() * 0.0007 + index)
         * power * 1.5;
 
-      card.style.transform =
-        `
-        translateY(${offset}px)
-        scale(${scale})
-        rotate(${rotate}deg)
-        `;
-    });
+card.style.setProperty(
+  "--music-offset",
+  `${offset}px`
+);
 
+card.style.setProperty(
+  "--music-scale",
+  scale
+);
+
+card.style.setProperty(
+  "--music-rotate",
+  `${rotate}deg`
+);
     requestAnimationFrame(animateMusic);
   }
 
