@@ -773,9 +773,33 @@ ribbon.addEventListener("touchend", () => {
 }, { passive: true });
 
 
-let drift = 0.35;
+let drift = 0.25;
 
 let virtualScroll = 0;
+let isInteracting = false;
+
+
+ribbon.addEventListener("touchstart", () => {
+  isInteracting = true;
+});
+
+ribbon.addEventListener("touchend", () => {
+
+  virtualScroll = ribbon.scrollLeft;
+
+  setTimeout(() => {
+    isInteracting = false;
+  }, 120);
+
+});
+
+
+ribbon.addEventListener("scroll", () => {
+  if (isInteracting) {
+    virtualScroll = ribbon.scrollLeft;
+  }
+});
+
 
 function autoDrift() {
 
@@ -788,21 +812,24 @@ function autoDrift() {
     return;
   }
 
+if (!isInteracting) {
+
   virtualScroll += drift;
 
   ribbon.scrollLeft = virtualScroll;
+}
 
   const max =
     ribbon.scrollWidth - ribbon.clientWidth;
 
   if (virtualScroll >= max) {
 
-    drift = -0.35;
+    drift = -0.25;
   }
 
   if (virtualScroll <= 0) {
 
-    drift = 0.35;
+    drift = 0.25;
   }
 
   requestAnimationFrame(autoDrift);
