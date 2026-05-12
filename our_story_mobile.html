@@ -773,7 +773,7 @@ ribbon.addEventListener("touchend", () => {
 }, { passive: true });
 
 
-let drift = 2;
+let drift = 0.35;
 
 function autoDrift() {
 
@@ -793,12 +793,12 @@ ribbon.scrollLeft += drift;
 
   if (ribbon.scrollLeft >= max) {
 
-    drift = -2;
+    drift = -0.35;
   }
 
   if (ribbon.scrollLeft <= 0) {
 
-    drift = 2;
+    drift = 0.35;
   }
 
   requestAnimationFrame(autoDrift);
