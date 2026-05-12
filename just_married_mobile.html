@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Mobile Gallery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #fff7f8, #e7c3cb);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #732323;
+}
+
+.mobile-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 14px 16px;
+  background: rgba(255,245,248,.9);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+
+.back-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 9px 15px;
+  background: #a52126;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.music-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: white;
+  color: #a52126;
+  font-size: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+
+.ribbon-shell {
+  width: 100%;
+  min-height: 100dvh;
+  padding: 18px 14px 90px;
+  box-sizing: border-box;
+}
+
+.ribbon-track {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.photo-card {
+  background: rgba(255,255,255,.78);
+  border-radius: 24px;
+  padding: 10px;
+  box-shadow: 0 18px 42px rgba(120,30,50,.18);
+  backdrop-filter: blur(12px);
+}
+
+.photo-card img {
+  width: 100%;
+  display: block;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.caption {
+  margin-top: 10px;
+  padding: 0 4px 4px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #5a1c1c;
+}
+
+.loading {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(255,240,245,.8);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a52126;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.loading.hide {
+  display: none;
+}
+
+.empty {
+  text-align: center;
+  padding: 80px 24px;
+  font-size: 17px;
+  color: #8f1d1d;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,.72);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox-content {
+  width: 100%;
+}
+
+.lightbox img {
+  width: 100%;
+  max-height: 75dvh;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+.lightbox-caption {
+  margin-top: 12px;
+  background: rgba(255,255,255,.92);
+  color: #5a1c1c;
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 16px;
+  right: 18px;
+  color: white;
+  font-size: 34px;
+  font-weight: 700;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loading" class="loading">Loading...</div>
+
+<header class="mobile-header">
+  <button class="back-btn" onclick="goBack()">← Back</button>
+  <div class="title" id="pageTitle">Gallery</div>
+  <button class="music-btn" id="musicBtn">▶️</button>
+</header>
+
+<main class="ribbon-shell">
+  <div class="ribbon-track" id="ribbon"></div>
+  <div class="empty" id="emptyState" style="display:none;">
+    No photos yet.
+  </div>
+</main>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-close" id="closeLightbox">×</div>
+  <div class="lightbox-content">
+    <img id="lightboxImg" />
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<audio id="bgMusic" loop preload="metadata"></audio>
+
+<script>
+const SUPABASE_URL = "https://octwwpatppbenqwkcqaw.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdHd3cGF0cHBiZW5xd2tjcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NjYxMjYsImV4cCI6MjA3NDU0MjEyNn0.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI";
+</script>
+
+<script>
+function getToken() {
+  const params = new URLSearchParams(location.search);
+
+  const token =
+    params.get("t") ||
+    params.get("token") ||
+    sessionStorage.getItem("rsvpToken") ||
+    "";
+
+  if (token) {
+    sessionStorage.setItem("rsvpToken", token);
+  }
+
+  return token;
+}
+
+function buildLink(path) {
+  const token = getToken();
+  if (!token) return path;
+  return `${path}?token=${token}`;
+}
+
+function goBack() {
+  if (history.length > 1) {
+    history.back();
+  } else {
+    window.location.href = buildLink("home");
+  }
+}
+</script>
+
+<script>
+async function loadMobileGallery() {
+  const token = getToken();
+  const ribbon = document.getElementById("ribbon");
+  const loading = document.getElementById("loading");
+  const emptyState = document.getElementById("emptyState");
+
+  if (!token) {
+    loading.classList.add("hide");
+    emptyState.style.display = "block";
+    emptyState.textContent = "Missing token.";
+    return;
+  }
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_site_gallery`, {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": "application/json",
+        "x-edit-token": token
+      },
+      body: JSON.stringify({ p_token: token })
+    });
+
+    let rows = await res.json();
+
+    rows = rows
+      .filter(r => r.path && !r.is_deleted)
+      .filter(r => /^img\d+$/.test(r.slot))
+      .sort((a, b) => {
+        const na = Number(a.slot.replace("img", ""));
+        const nb = Number(b.slot.replace("img", ""));
+        return na - nb;
+      });
+
+    ribbon.innerHTML = "";
+
+    if (!rows.length) {
+      emptyState.style.display = "block";
+      loading.classList.add("hide");
+      return;
+    }
+
+    rows.forEach((r, index) => {
+      const card = document.createElement("div");
+      card.className = "photo-card";
+
+      const img = document.createElement("img");
+
+      img.src = r.path.startsWith("http")
+        ? r.path
+        : `${SUPABASE_URL}/storage/v1/object/public/galleries/${r.path}`;
+
+      img.alt = r.caption || "";
+      img.loading = "lazy";
+      img.decoding = "async";
+
+      img.addEventListener("click", () => {
+        openLightbox(img.src, r.caption || "");
+      });
+
+      card.appendChild(img);
+
+      if (r.caption && r.caption.trim()) {
+        const caption = document.createElement("div");
+        caption.className = "caption";
+        caption.textContent = r.caption.trim();
+        card.appendChild(caption);
+      }
+
+      ribbon.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error(err);
+    emptyState.style.display = "block";
+    emptyState.textContent = "Could not load photos.";
+  } finally {
+    loading.classList.add("hide");
+  }
+}
+
+loadMobileGallery();
+</script>
+
+<script>
+function openLightbox(src, caption) {
+  const lightbox = document.getElementById("lightbox");
+  const img = document.getElementById("lightboxImg");
+  const cap = document.getElementById("lightboxCaption");
+
+  img.src = src;
+
+  if (caption && caption.trim()) {
+    cap.textContent = caption.trim();
+    cap.style.display = "block";
+  } else {
+    cap.textContent = "";
+    cap.style.display = "none";
+  }
+
+  lightbox.classList.add("active");
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  const img = document.getElementById("lightboxImg");
+
+  lightbox.classList.remove("active");
+  img.src = "";
+}
+
+document.getElementById("closeLightbox").addEventListener("click", closeLightbox);
+
+document.getElementById("lightbox").addEventListener("click", e => {
+  if (e.target.id === "lightbox") closeLightbox();
+});
+
+window.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeLightbox();
+});
+</script>
+
+<script>
+async function loadCoupleName() {
+  const token = getToken();
+  if (!token) return;
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/sites?select=couple_name&edit_token=eq.${token}`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+    const rows = await res.json();
+
+    if (rows?.[0]?.couple_name) {
+      document.getElementById("pageTitle").textContent = rows[0].couple_name;
+      document.title = rows[0].couple_name;
+    }
+  } catch (err) {
+    console.log("Couple name load error", err);
+  }
+}
+
+loadCoupleName();
+</script>
+
+<script>
+async function loadBackgroundMusicForPage() {
+  const token = getToken();
+  if (!token) return;
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_site_page_music`, {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        p_token: token,
+        p_page_key: "just_married"
+      })
+    });
+
+    const rows = await res.json();
+    if (!rows.length || !rows[0].music_path) return;
+
+    const audio = document.getElementById("bgMusic");
+    audio.crossOrigin = "anonymous";
+
+    audio.src =
+      `${SUPABASE_URL}/storage/v1/object/public/music/${rows[0].music_path.trim()}`;
+
+    audio.load();
+
+  } catch (err) {
+    console.log("Music load error", err);
+  }
+}
+
+const musicBtn = document.getElementById("musicBtn");
+const bgMusic = document.getElementById("bgMusic");
+
+musicBtn.addEventListener("click", async () => {
+  if (!bgMusic.src) return;
+
+  if (bgMusic.paused) {
+    await bgMusic.play().catch(() => {});
+    musicBtn.textContent = "⏸";
+  } else {
+    bgMusic.pause();
+    musicBtn.textContent = "▶️";
+  }
+});
+
+loadBackgroundMusicForPage();
+</script>
+
+</body>
+</html>
