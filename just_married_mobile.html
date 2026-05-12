@@ -484,35 +484,84 @@ async function loadMobileGallery() {
       img.decoding = "async";
       img.fetchPriority = "low";
 
-      img.addEventListener("click", () => {
-        openLightbox(img.src, r.caption || "");
+      img.addEventListener("click", async () => {
+
+        // autoplay music
+        if (bgMusic.paused && bgMusic.src) {
+
+          await bgMusic.play().catch(() => {});
+
+          musicBtn.textContent = "⏸";
+
+          if (!audioContext) {
+
+            audioContext =
+              new AudioContext();
+
+            const source =
+              audioContext.createMediaElementSource(bgMusic);
+
+            analyser =
+              audioContext.createAnalyser();
+
+            analyser.fftSize = 128;
+
+            dataArray =
+              new Uint8Array(analyser.frequencyBinCount);
+
+            source.connect(analyser);
+
+            analyser.connect(audioContext.destination);
+
+            startMusicMotion();
+          }
+        }
+
+        openLightbox(
+          img.src,
+          r.caption || ""
+        );
+
       });
 
       card.appendChild(img);
 
       if (r.caption && r.caption.trim()) {
-        const caption = document.createElement("div");
+
+        const caption =
+          document.createElement("div");
+
         caption.className = "caption";
-        caption.textContent = r.caption.trim();
+
+        caption.textContent =
+          r.caption.trim();
+
         card.appendChild(caption);
       }
 
       ribbon.appendChild(card);
+
     });
 
   } catch (err) {
+
     console.error(err);
+
     emptyState.style.display = "block";
-    emptyState.textContent = "Could not load photos.";
+
+    emptyState.textContent =
+      "Could not load photos.";
+
   } finally {
+
     loading.classList.add("hide");
+
   }
 }
 
 loadMobileGallery().then(() => {
   initRibbonAnimation();
 });
-
 
 </script>
 
