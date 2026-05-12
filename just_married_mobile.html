@@ -611,8 +611,6 @@ galleryImages.push({
       const img = document.createElement("img");
 
       img.src = imageSrc;
-        ? r.path
-        : `${SUPABASE_URL}/storage/v1/object/public/galleries/${r.path}`;
 
       img.alt = r.caption || "";
       img.loading = "lazy";
