@@ -6,15 +6,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
+
 html, body {
+
   margin: 0;
   padding: 0;
+
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
-  background: linear-gradient(180deg, #fff7f8, #e7c3cb);
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  background:
+
+    radial-gradient(
+      circle at top,
+      rgba(255,255,255,.85),
+      transparent 38%
+    ),
+
+    radial-gradient(
+      circle at bottom,
+      rgba(255,220,228,.42),
+      transparent 42%
+    ),
+
+    linear-gradient(
+      180deg,
+      #fff7f8,
+      #efd5db,
+      #e7c3cb
+    );
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
   color: #732323;
 }
+
+
 
 .loading {
   position: fixed;
@@ -122,6 +155,14 @@ html, body {
   box-shadow:
     0 28px 70px rgba(120,30,50,.22),
     0 10px 24px rgba(0,0,0,.12);
+
+transform:
+  translateZ(0);
+
+will-change:
+  transform;
+
+
 }
 
 .hero-photo img {
@@ -163,11 +204,46 @@ html, body {
   padding: 24px 22px;
   max-width: 390px;
   border-radius: 30px;
-  background: linear-gradient(180deg, #ffffff 0%, #fff6f7 100%);
+background:
+
+linear-gradient(
+  180deg,
+  rgba(255,255,255,.82) 0%,
+  rgba(255,245,247,.72) 100%
+);
+
+
+backdrop-filter: blur(18px);
+
+-webkit-backdrop-filter: blur(18px);
+
+border:
+  1px solid rgba(255,255,255,.42);
+
   box-shadow:
     0 28px 60px rgba(0,0,0,.16),
     0 12px 24px rgba(0,0,0,.09);
+
+opacity: 0;
+
+transform:
+  translateY(26px);
+
+transition:
+  opacity .7s ease,
+  transform .7s ease;
+
+
 }
+
+.story-card.visible {
+
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
 
 .story-card h2 {
   margin: 0 0 12px;
@@ -197,6 +273,24 @@ html, body {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+
+opacity: 0;
+
+transform:
+  translateY(24px);
+
+transition:
+  opacity .8s ease,
+  transform .8s ease;
+
+}
+
+.photo-ribbon.visible {
+
+  opacity: 1;
+
+  transform:
+    translateY(0);
 }
 
 .photo-ribbon::-webkit-scrollbar {
@@ -214,6 +308,49 @@ html, body {
   box-shadow:
     0 18px 40px rgba(120,30,50,.18),
     0 6px 16px rgba(0,0,0,.1);
+animation:
+  cardFloat 7s ease-in-out infinite;
+
+transform-origin: center center;
+
+}
+
+@keyframes cardFloat {
+
+  0% {
+    transform:
+      translateY(0px)
+      rotate(0deg)
+      scale(1);
+  }
+
+  25% {
+    transform:
+      translateY(-3px)
+      rotate(-0.35deg)
+      scale(1.008);
+  }
+
+  50% {
+    transform:
+      translateY(-6px)
+      rotate(0.35deg)
+      scale(1.014);
+  }
+
+  75% {
+    transform:
+      translateY(-3px)
+      rotate(-0.25deg)
+      scale(1.008);
+  }
+
+  100% {
+    transform:
+      translateY(0px)
+      rotate(0deg)
+      scale(1);
+  }
 }
 
 .photo-card img {
@@ -603,6 +740,38 @@ function makePhotoRibbon(photos) {
     }
 
     ribbon.appendChild(card);
+
+let velocity = 0;
+
+ribbon.addEventListener("touchstart", () => {
+  velocity = 0;
+}, { passive: true });
+
+ribbon.addEventListener("touchmove", e => {
+  velocity =
+    e.touches[0].clientX;
+}, { passive: true });
+
+ribbon.addEventListener("touchend", () => {
+
+  let momentum = velocity * 0.015;
+
+  function glide() {
+
+    ribbon.scrollLeft -= momentum;
+
+    momentum *= 0.94;
+
+    if (Math.abs(momentum) > 0.2) {
+      requestAnimationFrame(glide);
+    }
+  }
+
+  requestAnimationFrame(glide);
+
+}, { passive: true });
+
+
   });
 
   return ribbon;
@@ -740,6 +909,31 @@ menuSheet.addEventListener("click", e => {
 
     renderMobileStory(content, storyPhotos);
 
+const observer =
+  new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting) {
+
+        entry.target.classList.add("visible");
+
+      }
+
+    });
+
+  }, {
+    threshold: 0.12
+  });
+
+document
+  .querySelectorAll(
+    ".story-card, .photo-ribbon"
+  )
+  .forEach(el => {
+    observer.observe(el);
+  });
+
   } catch (err) {
     console.error(err);
 
@@ -752,6 +946,25 @@ menuSheet.addEventListener("click", e => {
   }
 })();
 </script>
+
+<script>
+
+const heroPhoto =
+  document.getElementById("heroPhoto");
+
+window.addEventListener("scroll", () => {
+
+  if (!heroPhoto) return;
+
+  const y =
+    window.scrollY * 0.08;
+
+  heroPhoto.style.transform =
+    `translateY(${y}px)`;
+});
+
+</script>
+
 
 </body>
 </html>
