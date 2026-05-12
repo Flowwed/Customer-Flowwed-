@@ -786,7 +786,10 @@ function autoDrift() {
     return;
   }
 
-  ribbon.scrollLeft += drift;
+  ribbon.scrollTo({
+  left: ribbon.scrollLeft + drift,
+  behavior: "instant"
+});
 
   const max =
     ribbon.scrollWidth - ribbon.clientWidth;
