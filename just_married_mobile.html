@@ -339,13 +339,51 @@ text-shadow:
 }
 
 .lightbox-close {
+
   position: fixed;
-  top: 16px;
+
+  top: 18px;
   right: 18px;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.12);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,.18);
+
   color: white;
-  font-size: 34px;
-  font-weight: 700;
+
+  font-size: 22px;
+  font-weight: 300;
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.18);
+
+  z-index: 300;
+
+  transition:
+    transform .22s ease,
+    background .22s ease;
 }
+
+.lightbox-close:active {
+
+  transform: scale(.92);
+
+  background: rgba(255,255,255,.18);
+}
+
+
 </style>
 </head>
 
