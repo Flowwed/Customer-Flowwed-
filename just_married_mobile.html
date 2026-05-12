@@ -7,12 +7,31 @@
 
 <style>
 html, body {
+
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg, #fff7f8, #e7c3cb);
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+
+  background: linear-gradient(
+    180deg,
+    #fff7f8,
+    #e7c3cb
+  );
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
   color: #732323;
 }
+
+
 
 .mobile-header {
   position: sticky;
@@ -56,15 +75,22 @@ html, body {
 
   width: 100%;
 
-  min-height: 100dvh;
+  min-height: 100svh;
 
-  height: 100dvh;
+  height: 100svh;
 
   overflow: hidden;
 
   padding: 14px;
 
   box-sizing: border-box;
+
+-webkit-overflow-scrolling: touch;
+
+touch-action: pan-y;
+
+overscroll-behavior: none;
+
 }
 
 .ribbon-track {
@@ -81,6 +107,10 @@ will-change: transform;
 backface-visibility: hidden;
 
 transform: translate3d(0,0,0);
+
+contain: layout paint style;
+
+transform: translateZ(0);
 
 }
 
@@ -254,6 +284,26 @@ transform: translate3d(0,0,0);
 
 <body>
 
+<script>
+
+(function(){
+
+  const isDesktop =
+    window.innerWidth > 900;
+
+  if (!isDesktop) return;
+
+  const params =
+    window.location.search || "";
+
+  window.location.replace(
+    `just_married.html${params}`
+  );
+
+})();
+
+</script>
+
 <div id="loading" class="loading">Loading...</div>
 
 <header class="mobile-header">
@@ -374,6 +424,7 @@ async function loadMobileGallery() {
       img.alt = r.caption || "";
       img.loading = "lazy";
       img.decoding = "async";
+      img.fetchPriority = "low";
 
       img.addEventListener("click", () => {
         openLightbox(img.src, r.caption || "");
@@ -549,31 +600,42 @@ function initRibbonAnimation() {
 
   let y = 0;
 
-  const speed = 0.35;
+  const speed = 0.18;
 
   let isDragging = false;
 
   let startY = 0;
+let velocity = 0;
 
   function getSingleHeight() {
     return track.scrollHeight / 2;
   }
 
-  function animate() {
+function animate() {
 
-    if (!isDragging) {
-      y -= speed;
-    }
-
-    if (Math.abs(y) >= getSingleHeight()) {
-      y = 0;
-    }
-
-    track.style.transform =
-      `translate3d(0, ${y}px, 0)`;
-
+  if (document.hidden) {
     requestAnimationFrame(animate);
+    return;
   }
+
+  if (!isDragging) {
+    y -= speed;
+y += velocity;
+
+velocity *= 0.92;
+
+  }
+
+  if (Math.abs(y) >= getSingleHeight()) {
+    y = 0;
+  }
+
+  track.style.transform =
+    `translate3d(0, ${y}px, 0)`;
+
+  requestAnimationFrame(animate);
+}
+
 
   animate();
 
@@ -597,6 +659,7 @@ function initRibbonAnimation() {
     startY = e.touches[0].clientY;
 
     y += delta;
+velocity = delta * 0.45;
 
     track.style.transform =
       `translate3d(0, ${y}px, 0)`;

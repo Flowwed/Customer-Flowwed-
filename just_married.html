@@ -1143,6 +1143,27 @@ body.special-mode #pagination {
 
 <body>
 
+<script>
+
+(function(){
+
+  const isMobile =
+    window.innerWidth <= 900;
+
+  if (!isMobile) return;
+
+  const params =
+    window.location.search || "";
+
+  window.location.replace(
+    `just_married_mobile.html${params}`
+  );
+
+})();
+
+</script>
+
+
 <div id="loadingOverlay">
 
   <div class="loading-content">
