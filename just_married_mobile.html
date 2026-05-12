@@ -890,28 +890,39 @@ let velocity = 0;
 function animate() {
 
   if (document.hidden) {
-    requestAnimationFrame(animate);
+
+    setTimeout(() => {
+
+      requestAnimationFrame(animate);
+
+    }, 120);
+
     return;
   }
 
   if (!isDragging) {
+
     y -= speed;
-y += velocity;
 
-velocity *= 0.92;
+    y += velocity;
 
+    velocity *= 0.92;
   }
 
   if (Math.abs(y) >= getSingleHeight()) {
+
     y = 0;
   }
 
   track.style.transform =
     `translate3d(0, ${y}px, 0)`;
 
-  requestAnimationFrame(animate);
-}
+  setTimeout(() => {
 
+    requestAnimationFrame(animate);
+
+  }, 16);
+}
 
   animate();
 
