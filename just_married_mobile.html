@@ -594,12 +594,23 @@ async function loadMobileGallery() {
     }
 
     rows.forEach((r, index) => {
+
+const imageSrc = r.path.startsWith("http")
+  ? r.path
+  : `${SUPABASE_URL}/storage/v1/object/public/galleries/${r.path}`;
+
+galleryImages.push({
+  src: imageSrc,
+  caption: r.caption || ""
+});
+
+
       const card = document.createElement("div");
       card.className = "photo-card";
 
       const img = document.createElement("img");
 
-      img.src = r.path.startsWith("http")
+      img.src = imageSrc;
         ? r.path
         : `${SUPABASE_URL}/storage/v1/object/public/galleries/${r.path}`;
 
@@ -641,10 +652,12 @@ async function loadMobileGallery() {
           }
         }
 
-        openLightbox(
-          img.src,
-          r.caption || ""
-        );
+currentLightboxIndex = index;
+
+openLightbox(
+  img.src,
+  r.caption || ""
+);
 
       });
 
@@ -690,6 +703,11 @@ loadMobileGallery().then(() => {
 </script>
 
 <script>
+
+let currentLightboxIndex = 0;
+
+let galleryImages = [];
+
 function openLightbox(src, caption) {
   const lightbox = document.getElementById("lightbox");
   const img = document.getElementById("lightboxImg");
@@ -1000,6 +1018,56 @@ const scale =
 }
   animateMusic();
 }
+
+</script>
+
+
+<script>
+
+function showLightboxImage(index) {
+
+  if (!galleryImages.length) return;
+
+  if (index < 0) {
+    index = galleryImages.length - 1;
+  }
+
+  if (index >= galleryImages.length) {
+    index = 0;
+  }
+
+  currentLightboxIndex = index;
+
+  const item =
+    galleryImages[index];
+
+  openLightbox(
+    item.src,
+    item.caption
+  );
+}
+
+document
+  .querySelector(".lightbox-arrow.left")
+  ?.addEventListener("click", e => {
+
+    e.stopPropagation();
+
+    showLightboxImage(
+      currentLightboxIndex - 1
+    );
+});
+
+document
+  .querySelector(".lightbox-arrow.right")
+  ?.addEventListener("click", e => {
+
+    e.stopPropagation();
+
+    showLightboxImage(
+      currentLightboxIndex + 1
+    );
+});
 
 </script>
 
