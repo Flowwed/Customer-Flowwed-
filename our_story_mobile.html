@@ -502,14 +502,17 @@ transform-origin: center center;
 
 <main>
 
+    <h1 id="coupleName">Our Story</h1>
+    <div class="event-date" id="eventDate"></div>
+    <p class="subtitle">Once upon a time, there was us ❤️</p>
+
+
   <section class="hero">
     <div class="hero-photo" id="heroPhoto" style="display:none;">
       <img id="heroImg" />
     </div>
 
-    <h1 id="coupleName">Our Story</h1>
-    <div class="event-date" id="eventDate"></div>
-    <p class="subtitle">Once upon a time, there was us ❤️</p>
+
   </section>
 
   <section class="story-flow" id="storyFlow">
@@ -773,7 +776,7 @@ ribbon.addEventListener("touchend", () => {
 }, { passive: true });
 
 
-let drift = 0.25;
+let drift = 0.30;
 
 let virtualScroll = 0;
 let isInteracting = false;
@@ -824,12 +827,12 @@ if (!isInteracting) {
 
   if (virtualScroll >= max) {
 
-    drift = -0.25;
+    drift = -0.30;
   }
 
   if (virtualScroll <= 0) {
 
-    drift = 0.25;
+    drift = 0.30;
   }
 
   requestAnimationFrame(autoDrift);
