@@ -784,8 +784,12 @@ function animateMusic() {
     const offset =
       Math.sin(Date.now() * 0.001 + index) * 2;
 
-    const scale =
-      1 + power * 0.025;
+const pulse =
+  Math.sin(Date.now() * 0.002 + index) * 0.018;
+
+const scale =
+  1 + power * 0.025 + pulse;
+
 
     const rotate =
       Math.sin(Date.now() * 0.0007 + index)
