@@ -760,54 +760,56 @@ function startMusicMotion() {
   const cards =
     document.querySelectorAll(".photo-card");
 
-  function animateMusic() {
+function animateMusic() {
 
-    if (!analyser) {
-      requestAnimationFrame(animateMusic);
-      return;
-    }
-
-    analyser.getByteFrequencyData(dataArray);
-
-    let avg = 0;
-
-    for (let i = 0; i < dataArray.length; i++) {
-      avg += dataArray[i];
-    }
-
-    avg /= dataArray.length;
-
-    const power = avg / 255;
-
-    cards.forEach((card, index) => {
-
-      const offset =
-        Math.sin(Date.now() * 0.001 + index) * 2;
-
-      const scale =
-        1 + power * 0.025;
-
-      const rotate =
-        Math.sin(Date.now() * 0.0007 + index)
-        * power * 1.5;
-
-card.style.setProperty(
-  "--music-offset",
-  `${offset}px`
-);
-
-card.style.setProperty(
-  "--music-scale",
-  scale
-);
-
-card.style.setProperty(
-  "--music-rotate",
-  `${rotate}deg`
-);
+  if (!analyser) {
     requestAnimationFrame(animateMusic);
+    return;
   }
 
+  analyser.getByteFrequencyData(dataArray);
+
+  let avg = 0;
+
+  for (let i = 0; i < dataArray.length; i++) {
+    avg += dataArray[i];
+  }
+
+  avg /= dataArray.length;
+
+  const power = avg / 255;
+
+  cards.forEach((card, index) => {
+
+    const offset =
+      Math.sin(Date.now() * 0.001 + index) * 2;
+
+    const scale =
+      1 + power * 0.025;
+
+    const rotate =
+      Math.sin(Date.now() * 0.0007 + index)
+      * power * 1.5;
+
+    card.style.setProperty(
+      "--music-offset",
+      `${offset}px`
+    );
+
+    card.style.setProperty(
+      "--music-scale",
+      scale
+    );
+
+    card.style.setProperty(
+      "--music-rotate",
+      `${rotate}deg`
+    );
+
+  });
+
+  requestAnimationFrame(animateMusic);
+}
   animateMusic();
 }
 
