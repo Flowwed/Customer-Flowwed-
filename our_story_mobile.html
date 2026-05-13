@@ -832,13 +832,17 @@ function makeStoryCard(title, html) {
 }
 
 
-function makePhotoRibbon(photos) {
+function makePhotoRibbon(photos, offset = 0) {
   if (!photos.length) return null;
 
   const ribbon = document.createElement("div");
   ribbon.className = "photo-ribbon";
 
   photos.forEach((p, index) => {
+
+  const globalIndex = offset + index;
+
+
     const card = document.createElement("div");
     card.className = "photo-card";
 
@@ -848,8 +852,9 @@ function makePhotoRibbon(photos) {
     img.decoding = "async";
 
     img.addEventListener("click", () => {
-      currentImageIndex = index;
-      openLightbox(index);
+
+currentImageIndex = globalIndex;
+openLightbox(globalIndex);
     });
 
     card.appendChild(img);
@@ -996,32 +1001,70 @@ const fields = [
     document.getElementById("heroPhoto").style.display = "block";
   }
 
-  const chunks = [
-    photos.slice(0, 4),
-    photos.slice(4, 8),
-    photos.slice(8, 12),
-    photos.slice(12, 16),
-    photos.slice(16)
-  ];
+const cardsCount =
+  visibleCards.length || 1;
+
+const perRibbon =
+  Math.ceil(
+    photos.length / cardsCount
+  );
+
+const chunks = [];
+
+for (
+  let i = 0;
+  i < photos.length;
+  i += perRibbon
+) {
+
+  chunks.push(
+    photos.slice(i, i + perRibbon)
+  );
+}
+
+
+  let offset = 0;
 
   visibleCards.forEach((card, i) => {
+
     flow.appendChild(card);
 
-    const ribbon = makePhotoRibbon(chunks[i] || []);
-    if (ribbon) flow.appendChild(ribbon);
+    const chunk =
+      chunks[i] || [];
+
+    const ribbon =
+      makePhotoRibbon(
+        chunk,
+        offset
+      );
+
+    if (ribbon) {
+      flow.appendChild(ribbon);
+    }
+
+    offset += chunk.length;
   });
 
   if (!visibleCards.length) {
-    const ribbon = makePhotoRibbon(photos);
-    if (ribbon) flow.appendChild(ribbon);
+
+    const ribbon =
+      makePhotoRibbon(
+        photos,
+        0
+      );
+
+    if (ribbon) {
+      flow.appendChild(ribbon);
+    }
   }
 }
+
+
 </script>
 
 <script>
 function openLightbox(index) {
   if (!storyPhotos.length) return;
-
   if (index < 0) index = storyPhotos.length - 1;
   if (index >= storyPhotos.length) index = 0;
 
