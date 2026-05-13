@@ -729,42 +729,39 @@ function cleanHtml(html) {
 }
 
 function makeStoryCard(title, html) {
+
   const cleaned = cleanHtml(html);
   if (!cleaned) return null;
 
   const card = document.createElement("article");
   card.className = "story-card";
 
-  const h = document.createElement("h2");
-  h.textContent = title;
-
   const body = document.createElement("div");
   body.className = "story-body";
 
   body.innerHTML = cleaned;
 
-requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
 
-  function updateFade() {
+    function updateFade() {
 
-    const atEnd =
-      body.scrollTop + body.clientHeight >=
-      body.scrollHeight - 4;
+      const atEnd =
+        body.scrollTop + body.clientHeight >=
+        body.scrollHeight - 4;
 
-    body.classList.toggle("at-end", atEnd);
-  }
+      body.classList.toggle("at-end", atEnd);
+    }
 
-  updateFade();
+    updateFade();
 
-  body.addEventListener("scroll", updateFade);
-});
+    body.addEventListener("scroll", updateFade);
+  });
 
-
-  card.appendChild(h);
   card.appendChild(body);
 
   return card;
 }
+
 
 function makePhotoRibbon(photos) {
   if (!photos.length) return null;
@@ -907,13 +904,13 @@ function renderMobileStory(content, photos) {
 
   flow.innerHTML = "";
 
-  const fields = [
-    ["How We Met", content?.how_we_met],
-    ["Growing Together", content?.growing_together],
-    ["The Proposal", content?.proposal],
-    ["A New Chapter", content?.new_chapter],
-    ["Our Note", content?.custom]
-  ];
+const fields = [
+  [null, content?.how_we_met],
+  [null, content?.growing_together],
+  [null, content?.proposal],
+  [null, content?.new_chapter],
+  [null, content?.custom]
+];
 
   const visibleCards = fields
     .map(([title, html]) => makeStoryCard(title, html))
