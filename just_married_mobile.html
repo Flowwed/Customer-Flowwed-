@@ -302,20 +302,37 @@ text-shadow:
 }
 
 .lightbox {
+
   position: fixed;
   inset: 0;
+
   z-index: 200;
+
   background: rgba(0,0,0,.72);
-  display: none;
+
+  display: flex;
+
   align-items: center;
   justify-content: center;
+
   padding: 20px;
   box-sizing: border-box;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    opacity .24s ease;
+
 }
 
 .lightbox.active {
-  display: flex;
+
+  opacity: 1;
+
+  pointer-events: auto;
 }
+
 
 .lightbox-content {
   width: 100%;
@@ -706,22 +723,44 @@ let currentLightboxIndex = 0;
 
 let galleryImages = [];
 
-function openLightbox(src, caption) {
-  const lightbox = document.getElementById("lightbox");
-  const img = document.getElementById("lightboxImg");
-  const cap = document.getElementById("lightboxCaption");
+async function openLightbox(src, caption) {
+
+  const lightbox =
+    document.getElementById("lightbox");
+
+  const img =
+    document.getElementById("lightboxImg");
+
+  const cap =
+    document.getElementById("lightboxCaption");
+
+  const preload = new Image();
+
+  preload.src = src;
+
+  await preload.decode().catch(() => {});
 
   img.src = src;
 
   if (caption && caption.trim()) {
-    cap.textContent = caption.trim();
+
+    cap.textContent =
+      caption.trim();
+
     cap.style.display = "block";
+
   } else {
+
     cap.textContent = "";
+
     cap.style.display = "none";
   }
 
-  lightbox.classList.add("active");
+  requestAnimationFrame(() => {
+
+    lightbox.classList.add("active");
+
+  });
 }
 
 function closeLightbox() {
