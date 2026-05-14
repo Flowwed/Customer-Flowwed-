@@ -325,11 +325,30 @@
        ========================= */
 
 .burger{
+
   position:fixed;
+
   top:18px;
   left:14px;
+
+  width:34px;
+  height:34px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:28px;
+  line-height:1;
+
+  color:#9b111e;
+
+  cursor:pointer;
+
   z-index:1300;
 }
+
+
   `;
 
   document.head.appendChild(
