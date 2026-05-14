@@ -229,7 +229,7 @@
       border-bottom:
         1px solid rgba(0,0,0,.06);
 
-      color:#111 !important;
+      color:#9b111e !important;
 
       font-size:15px !important;
       font-weight:500;
@@ -264,7 +264,7 @@
 
       font-weight:600;
 
-      color:#000 !important;
+      color:#9b111e !important;
 
       border-bottom:none;
     }
