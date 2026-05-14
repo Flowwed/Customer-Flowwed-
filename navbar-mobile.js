@@ -341,7 +341,7 @@
   font-size:28px;
   line-height:1;
 
-  color:#9b111e;
+  color:#fff;
 
   cursor:pointer;
 
