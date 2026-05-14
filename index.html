@@ -26,7 +26,7 @@ html, body {
 
 body::before{
   content:"";
-  position:fixed;
+  position:absolute;
   inset:0;
   background: url("https://grainy-gradients.vercel.app/noise.svg");
   background-size:240px 240px;
@@ -256,32 +256,26 @@ visibility:visible;
 }
 
 .hero-steps span{
-  flex: 1;
-  text-align: center;
-  padding: 6px 10px;
-  font-family: "Benzin", sans-serif;   /* ← ВОТ ЭТО */
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .04em;
-  white-space: nowrap;
+  flex:1;
+  text-align:center;
+  padding:6px 10px;
 
-  color: #fff;
+  font-family:"Benzin", sans-serif;
+  font-size:11px;
+  font-weight:600;
 
-  background: rgba(255,255,255,0.22);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  letter-spacing:.04em;
+  white-space:nowrap;
 
-  border-radius: 999px;
+  color:#fff;
+
+  background:rgba(255,255,255,0.16);
+
+  border-radius:999px;
 
   box-shadow:
     0 6px 14px rgba(0,0,0,0.25);
-
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity .9s ease, transform .9s ease;
 }
-
-
 
 .hero-steps span{
   cursor: pointer;   /* ← рука */
