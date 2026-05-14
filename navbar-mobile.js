@@ -421,6 +421,22 @@
         closeMenu
       );
 
+
+item.addEventListener(
+  "click",
+  () => {
+
+    const path =
+      item.dataset.path;
+
+    if (!path) return;
+
+    window.location.href =
+      path;
+  }
+);
+
+
     });
 
 })();
