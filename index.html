@@ -457,18 +457,34 @@ font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   }
 
   .hero-header{
-    height:9vh;
-    min-height:80px;
+    height:auto;
+    min-height:150px;
+
+    padding-top:12px;
+    padding-bottom:18px;
   }
 
   .hero-overlay{
+    position:relative;
+
     padding:16px 12px 10px;
+
+    justify-content:flex-start;
   }
 
   .hero-names{
     font-size:20px;
+
+    margin-top:18px;
     margin-bottom:4px;
-    margin-top:10px;
+
+    line-height:1.3;
+  }
+
+  .hero-date{
+    margin-top:8px;
+
+    line-height:1.4;
   }
 
   .video{
@@ -486,7 +502,6 @@ font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   }
 
 }
-
 /* =========================================
    DESKTOP MENU
    ========================================= */
@@ -509,52 +524,6 @@ font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 }
 
 
-@media (max-width: 768px) {
-
-  .wedding-nav {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
-
-  .nav-left {
-    margin-left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .nav-center {
-    width: 100%;
-    justify-content: center;
-  }
-
-  header {
-    padding-top: 28px;
-  }
-
-}
-
-
-#eventDate {
-  text-align: center;
-  line-height: 1.4;
-}
-
-@media (max-width: 768px) {
-
-  .wedding-nav {
-    min-height: 120px;
-  }
-
-  header {
-    padding-top: 40px;
-  }
-
-}
 
 
 
@@ -776,14 +745,7 @@ const reserveRes = await fetch(
 
 (async()=>{
 const couplePromise = loadSiteData();
- await wait(1500);
-
- await type(TEASER, false);
-
-  await wait(700);
-  await back(TEASER.length);
-  await wait(400);
-
+await wait(300);
 const siteData = await couplePromise; // дождались результата
 
 console.log("TOKEN:", getToken());
