@@ -418,24 +418,23 @@
 
       item.addEventListener(
         "click",
-        closeMenu
+        () => {
+
+          closeMenu();
+
+          const path =
+            item.dataset.path;
+
+          if (!path) return;
+
+          const params =
+            window.location.search;
+
+          window.location.href =
+            path + params;
+
+        }
       );
-
-
-item.addEventListener(
-  "click",
-  () => {
-
-    const path =
-      item.dataset.path;
-
-    if (!path) return;
-
-    window.location.href =
-      path;
-  }
-);
-
 
     });
 
