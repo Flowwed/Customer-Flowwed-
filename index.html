@@ -446,194 +446,67 @@ font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   display: none;
 }
 
+/* =========================================
+   MOBILE
+   ========================================= */
 
 @media (max-width: 768px){
+
   .burger{
-    display: block;
+    display:block;
   }
 
-
-
-  /* =========================
-     MOBILE MENU — GLASS DROPDOWN
-     ========================= */
-
-  .hero-steps{
-    position: fixed;
-    top: 64px;
-    right: 18px;
-
-    width: 220px;
-    max-width: calc(100vw - 36px);
-
-    padding: 14px 18px 22px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
-    background:
-      linear-gradient(
-        to bottom,
-        rgba(255,255,255,.92),
-        rgba(255,245,248,.88)
-      );
-
-    backdrop-filter: blur(22px) saturate(160%);
-    -webkit-backdrop-filter: blur(22px) saturate(160%);
-
-    border-radius: 18px 18px 28px 28px;
-
-    box-shadow:
-      0 32px 90px rgba(120,30,50,.35),
-      inset 0 1px 0 rgba(255,255,255,.65);
-
-    /* hidden state */
-    opacity: 0;
-    transform: translateY(-14px) scale(.97);
-    pointer-events: none;
-
-    transition:
-      opacity .32s ease,
-      transform .38s cubic-bezier(.22,1,.36,1);
-
-    z-index: 1200;
-  }
-
-  .hero-steps.show{
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-  }
-
-  /* menu items — iOS style */
-  .hero-steps span{
-    background: none;
-    box-shadow: none;
-
-    color: #732323;
-    font-size: 15px;
-    font-weight: 500;
-
-    padding: 6px 0;
-    text-align: left;
-  }
-
-  /* close button (✕) */
-  .menu-close{
-    display: block;
-    position: absolute;
-    top: 12px;
-    right: 14px;
-
-    font-size: 20px;
-    color: #732323;
-    cursor: pointer;
-  }
-}
-
-@media (max-width: 768px){
-  .menu-close{
-    position: absolute;
-    top: 10px;
-    right: 12px;
-
-    width: 28px;
-    height: 28px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 18px;
-    line-height: 1;
-    font-weight: 500;
-
-    color: #732323;
-
-    border-radius: 50%;
-
-    background: rgba(255,255,255,.92);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-
-    box-shadow:
-      0 6px 14px rgba(0,0,0,.18),
-      inset 0 1px 0 rgba(255,255,255,.85);
-
-    z-index: 1300;
-
-    cursor: pointer;
-
-    transition:
-      transform .15s ease,
-      background .15s ease,
-      box-shadow .15s ease;
-  }
-
-  .menu-close:active{
-    transform: scale(.92);
-    background: rgba(255,255,255,1);
-    box-shadow:
-      0 4px 10px rgba(0,0,0,.22),
-      inset 0 1px 0 rgba(255,255,255,.9);
-  }
-}
-
-
-
-@media (max-width: 768px){
   .hero-header{
-    height: 9vh;        /* было 20vh → стало в ~2 раза меньше */
-    min-height: 80px;   /* было 150px */
+    height:9vh;
+    min-height:80px;
   }
 
   .hero-overlay{
-    padding: 16px 12px 10px;
+    padding:16px 12px 10px;
   }
 
   .hero-names{
-    font-size: 20px;
-    margin-bottom: 4px;
+    font-size:20px;
+    margin-bottom:4px;
+    margin-top:10px;
   }
-}
 
-/* DESKTOP — меню всегда видно */
-@media (min-width: 769px){
-  .hero-steps span{
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (max-width: 768px){
   .video{
-    grid-area: video;
+    grid-area:video;
 
-    width: 100%;
-    max-width: 320px;
+    width:100%;
+    max-width:320px;
 
-    margin: 24px auto 0;
+    margin:24px auto 0;
 
-    transform: none !important;
-    position: static;
+    transform:none !important;
+    position:static;
 
-    opacity: 1;
-  }
-}
-
-@media (max-width: 768px){
-
-  .hero-names{
-    margin-top: 10px;   /* ← сдвиг вниз */
+    opacity:1;
   }
 
 }
+
+/* =========================================
+   DESKTOP MENU
+   ========================================= */
+
+@media (min-width: 769px){
+
+  .hero-steps span{
+    opacity:1;
+    transform:none;
+  }
+
+}
+
+/* =========================================
+   HIDE ITEM
+   ========================================= */
 
 .hero-steps span[data-path="/wed_party"]{
-  display: none;
+  display:none;
 }
-
 </style>
 </head>
 
@@ -1186,6 +1059,8 @@ window.addEventListener("pageshow", (e) => {
 </script>
 
 <script src="/navbar.js"></script>
+
+<script src="/navbar-mobile.js"></script>
 
 </body>
 </html>
