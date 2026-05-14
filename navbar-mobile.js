@@ -328,26 +328,25 @@
 
   position:fixed;
 
-  top:14px;
-  left:12px;
+  top:12px;
+  left:10px;
 
-  width:46px;
-  height:46px;
+  width:52px;
+  height:52px;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  font-size:36px;
+  font-size:38px;
   line-height:1;
 
-  color:#fff;
+  color:#9b111e;
 
   cursor:pointer;
 
-  z-index:1300;
+  z-index:1500;
 }
-
   `;
 
   document.head.appendChild(
