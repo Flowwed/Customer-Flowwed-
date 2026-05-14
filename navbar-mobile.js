@@ -288,7 +288,7 @@
       position:absolute;
 
       top:14px;
-      right:14px;
+      left:14px;
 
       width:28px;
       height:28px;
@@ -324,10 +324,12 @@
        BURGER
        ========================= */
 
-    .burger{
-      z-index:1300;
-    }
-
+.burger{
+  position:fixed;
+  top:18px;
+  left:14px;
+  z-index:1300;
+}
   `;
 
   document.head.appendChild(
