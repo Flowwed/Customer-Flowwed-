@@ -32,6 +32,57 @@
   if (!burger || !menu) return;
 
   // =========================
+  // ADD HOME BUTTON
+  // =========================
+
+  if (
+    !menu.querySelector(
+      '[data-path="/"]'
+    )
+  ) {
+
+    const home =
+      document.createElement(
+        "span"
+      );
+
+    home.textContent =
+      "HOME";
+
+    home.dataset.path =
+      "/";
+
+    menu.insertBefore(
+      home,
+      menu.children[1]
+    );
+
+  }
+
+  // =========================
+  // ACTIVE PAGE
+  // =========================
+
+  const current =
+    location.pathname;
+
+  menu
+    .querySelectorAll("span")
+    .forEach(item => {
+
+      if (
+        item.dataset.path === current
+      ) {
+
+        item.classList.add(
+          "active"
+        );
+
+      }
+
+    });
+
+  // =========================
   // BACKDROP
   // =========================
 
@@ -55,11 +106,11 @@
   style.textContent = `
 
     /* =========================
-       HIDE DESKTOP MENU
+       MENU VISIBLE
        ========================= */
 
     .hero-steps{
-      visibility: visible !important;
+      visibility:visible !important;
     }
 
     /* =========================
@@ -67,6 +118,7 @@
        ========================= */
 
     .mobile-menu-backdrop{
+
       position:fixed;
       inset:0;
 
@@ -85,7 +137,7 @@
       pointer-events:none;
 
       transition:
-        opacity .24s ease;
+        opacity .22s ease;
     }
 
     .mobile-menu-backdrop.show{
@@ -104,10 +156,10 @@
       top:72px;
       left:50%;
 
-      width:min(92vw, 360px);
+      width:min(86vw, 320px);
 
       padding:
-        18px 20px 20px;
+        52px 18px 16px;
 
       box-sizing:border-box;
 
@@ -117,8 +169,8 @@
 
       transform:
         translateX(-50%)
-        translateY(-12px)
-        scale(.96);
+        translateY(-6px)
+        scale(.985);
 
       opacity:0;
       pointer-events:none;
@@ -168,9 +220,9 @@
       display:flex;
       align-items:center;
 
-      min-height:54px;
+      min-height:44px;
 
-      padding:0 4px;
+      padding:0 2px 0 10px;
 
       box-sizing:border-box;
 
@@ -179,7 +231,7 @@
 
       color:#111 !important;
 
-      font-size:16px !important;
+      font-size:15px !important;
       font-weight:500;
 
       letter-spacing:-0.01em;
@@ -189,10 +241,42 @@
 
       transform:none !important;
       opacity:1 !important;
+
+      border-radius:14px;
+
+      transition:
+        background .16s ease,
+        color .16s ease;
     }
 
     .hero-steps span:last-child{
       border-bottom:none;
+    }
+
+    /* =========================
+       ACTIVE PAGE
+       ========================= */
+
+    .hero-steps span.active{
+
+      background:
+        rgba(0,0,0,.06);
+
+      font-weight:600;
+
+      color:#000 !important;
+
+      border-bottom:none;
+    }
+
+    /* =========================
+       TAP
+       ========================= */
+
+    .hero-steps span:active{
+
+      background:
+        rgba(0,0,0,.08);
     }
 
     /* =========================
@@ -206,8 +290,8 @@
       top:14px;
       right:14px;
 
-      width:30px;
-      height:30px;
+      width:28px;
+      height:28px;
 
       display:flex;
       align-items:center;
@@ -220,12 +304,20 @@
 
       color:#111;
 
-      font-size:18px;
+      font-size:17px;
+      line-height:1;
 
       box-shadow:
         0 4px 12px rgba(0,0,0,.12);
 
       cursor:pointer;
+
+      z-index:2;
+    }
+
+    .menu-close:active{
+
+      transform:scale(.94);
     }
 
     /* =========================
@@ -301,7 +393,6 @@
       closeMenu
     );
 
-  // close on menu click
   menu
     .querySelectorAll("span")
     .forEach(item => {
