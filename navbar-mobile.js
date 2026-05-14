@@ -180,14 +180,14 @@
       border-radius:32px;
 
       background:
-        rgba(255,255,255,.72);
+        rgba(255,255,255,.94);
 
       backdrop-filter:
-        blur(26px)
+        blur(14px)
         saturate(180%);
 
       -webkit-backdrop-filter:
-        blur(26px)
+        blur(14px)
         saturate(180%);
 
       box-shadow:
@@ -328,17 +328,17 @@
 
   position:fixed;
 
-  top:18px;
-  left:14px;
+  top:14px;
+  left:12px;
 
-  width:34px;
-  height:34px;
+  width:46px;
+  height:46px;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  font-size:28px;
+  font-size:36px;
   line-height:1;
 
   color:#fff;
@@ -347,7 +347,6 @@
 
   z-index:1300;
 }
-
 
   `;
 
