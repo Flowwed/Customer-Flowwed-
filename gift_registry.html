@@ -557,75 +557,26 @@ progress {
 
 
 <nav class="wedding-nav">
-
-  <div class="burger" id="burger">
-    ☰
+  <div class="nav-left">
+    <button class="back-btn" onclick="goBack()">← Back</button>
   </div>
 
-  <div
-    class="nav-center"
-    style="visibility:hidden;"
-  >
+  <div class="nav-center" style="visibility:hidden;">
+    <a data-page="home">Home</a>
+    <a data-page="our_story.html">Our Story</a>
+    <a data-page="just_married.html">Gallery</a>
+    <a data-page="venue_map.html">Travel & Event</a>
+    <a data-page="gift_registry.html">Gift Registry</a>
+    <a data-page="web-updates.html">Updates</a>
+    <!-- <a data-page="wed_party.html">Wedding Party</a> -->
+    <!--  <a data-page="photo_gallery.html">Photo Gallery</a> -->
 
-    <a data-page="home">
-      Home
-    </a>
+    <!-- <a data-page="travel_info.html">Travel Info</a> -->
 
-    <a data-page="our_story.html">
-      Our Story
-    </a>
-
-    <a data-page="just_married.html">
-      Gallery
-    </a>
-
-    <a data-page="venue_map.html">
-      Travel & Event
-    </a>
-
-    <a data-page="gift_registry.html">
-      Gift Registry
-    </a>
-
-    <a data-page="web-updates.html">
-      Updates
-    </a>
 
   </div>
-
-  <div class="hero-steps">
-
-    <span data-path="/">
-      HOME
-    </span>
-
-    <span data-path="/our_story_mobile.html">
-      Our Story
-    </span>
-
-    <span data-path="/just_married_mobile.html">
-      Gallery
-    </span>
-
-    <span data-path="/venue_map.html">
-      Travel & Event
-    </span>
-
-    <span data-path="/gift_registry.html">
-      Gift Registry
-    </span>
-
-    <span data-path="/web-updates.html">
-      Updates
-    </span>
-
-    <div class="menu-close">
-      ×
-    </div>
-
-  </div>
-
 </nav>
+
 
 <header>
   <h1 id="coupleName">Gift Registry</h1>
@@ -1493,7 +1444,7 @@ fetch("/footer.html")
 
 <script src="/navbar.js"></script>
 
-<script src="/navbar-mobile.js"></script>
+
 
 
 </body>
