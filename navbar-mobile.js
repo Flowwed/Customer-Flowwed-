@@ -105,13 +105,6 @@
 
   style.textContent = `
 
-    /* =========================
-       MENU VISIBLE
-       ========================= */
-
-    .hero-steps{
-      visibility:visible !important;
-    }
 
     /* =========================
        BACKDROP
@@ -152,6 +145,8 @@
     .hero-steps{
 
       position:fixed !important;
+
+      display:none;
 
       top:72px;
       left:50%;
@@ -201,7 +196,7 @@
     }
 
     .hero-steps.show{
-
+      display:flex;
       opacity:1;
       pointer-events:auto;
 
