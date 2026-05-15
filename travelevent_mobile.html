@@ -194,9 +194,6 @@
 }
 
 
-.nav-center a[data-page="wed_party.html"]{
-  display: none;
-}
 
 #loadingOverlay{
   position:fixed;
@@ -564,6 +561,16 @@ function getToken() {
 
 
 <script src="/navbar-mobile.js"></script>
+
+<div id="footer-mount"></div>
+
+<script>
+fetch("/footer.html")
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById("footer-mount").innerHTML = html;
+  });
+</script>
 
 
 
