@@ -649,8 +649,6 @@ menuClose.addEventListener("click", () => {
 const TEASER = "Dear friends....";
 
 const TYPE = 30;
-const DEL = 35;
-const CUR = 520;
 
 let text="";
 
@@ -713,13 +711,6 @@ async function type(s, isFull = false){
 
   }
 }
-async function back(n){
-  for (let i = 0; i < n; i++) {
-    text = text.slice(0, -1);
-    render();
-    await wait(DEL);
-  }
-}
 
 async function loadSiteData() {
   try {
@@ -769,7 +760,7 @@ const reserveRes = await fetch(
 
 (async()=>{
 const couplePromise = loadSiteData();
-await wait(300);
+await wait(40);
 const siteData = await couplePromise; // дождались результата
 
 console.log("TOKEN:", getToken());
