@@ -31,7 +31,6 @@ html, body {
   color: #732323;
 }
 
-
 .mobile-header {
 
   position: fixed;
@@ -42,7 +41,9 @@ html, body {
 
   z-index: 1400;
 
-  padding: 14px 16px;
+  height: 72px;
+
+  padding: 0 16px;
 
   background: rgba(255,245,248,.9);
 
@@ -54,8 +55,12 @@ html, body {
     0 8px 24px rgba(0,0,0,.08);
 }
 
-
 .title {
+
+  position: absolute;
+
+  left: 50%;
+  transform: translateX(-50%);
 
   font-size: 22px;
   font-weight: 800;
@@ -63,12 +68,25 @@ html, body {
   white-space: nowrap;
 }
 
+
+.burger{
+
+  position:absolute;
+
+  left:16px;
+  top:50%;
+
+  transform:translateY(-50%);
+}
+
+
 .music-btn {
 position:absolute;
 right:16px;
 
-  margin-left:auto;
+top:50%;
 
+transform:translateY(-50%);
   border: none;
   border-radius: 999px;
   padding: 11px 15px;
