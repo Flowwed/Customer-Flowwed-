@@ -1,11 +1,50 @@
+<style>
+
+@media (max-width: 768px){
+
+  .site-footer{
+    grid-template-columns:1fr;
+    gap:18px;
+    text-align:center;
+    padding:28px 16px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  /* mobile:
+     icons first
+     Flowweds below */
+
+  .footer-social{
+    order:1;
+    justify-content:center;
+  }
+
+  .footer-center{
+    order:2;
+    text-align:center;
+  }
+
+}
+
+</style>
+
 <footer class="site-footer">
-  <div class="footer-left">
-    <a href="mailto:contact@flowweds.com">contact@flowweds.com</a>
+
+  <!-- desktop: left
+       mobile: below icons -->
+
+  <div class="footer-center">
+    © FloWWeds
   </div>
 
-  <div class="footer-center">© FloWWeds</div>
+  <!-- desktop: center
+       mobile: top -->
 
   <div class="footer-social">
+
     <a href="sms:?&body=Check%20this%20out%20https://flowweds.netlify.app">
       <img src="images/icon-sms.svg" alt="SMS">
     </a>
@@ -33,5 +72,7 @@
     <a href="https://wa.me/?text=Check%20this%20out%20https://flowweds.netlify.app" target="_blank">
       <img src="images/icon-whatsapp.svg" alt="WhatsApp">
     </a>
+
   </div>
+
 </footer>
