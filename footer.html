@@ -52,25 +52,28 @@ font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 @media (max-width: 768px){
 
   .site-footer{
-    grid-template-columns:1fr;
+
+    display:flex;
+    flex-direction:column;
+
     gap:18px;
+
     text-align:center;
+
     padding:28px 16px;
   }
 
-  .footer-left{
-    margin:0;
-    justify-self:center;
+  .footer-social{
     order:1;
+    justify-content:center;
   }
 
-  .footer-social{
-    justify-self:center;
+  .footer-center{
     order:2;
+    text-align:center;
   }
 
 }
-
 </style>
 
 <footer class="site-footer">
