@@ -110,34 +110,30 @@
        BACKDROP
        ========================= */
 
-    .mobile-menu-backdrop{
+.mobile-menu-backdrop{
 
-      position:fixed;
-      inset:0;
+  display:none;
 
-      z-index:1190;
+  position:fixed;
+  inset:0;
 
-      background:
-        rgba(0,0,0,.14);
+  z-index:1190;
 
-      backdrop-filter:
-        blur(10px);
+  background:rgba(0,0,0,.14);
 
-      -webkit-backdrop-filter:
-        blur(10px);
+  opacity:0;
 
-      opacity:0;
-      pointer-events:none;
+  transition:opacity .22s ease;
+}
 
-      transition:
-        opacity .22s ease;
-    }
+.mobile-menu-backdrop.show{
 
-    .mobile-menu-backdrop.show{
-      opacity:1;
-      pointer-events:auto;
-    }
+  display:block;
 
+  opacity:1;
+
+  pointer-events:auto;
+}
     /* =========================
        MENU PANEL
        ========================= */
@@ -177,13 +173,6 @@
       background:
         rgba(255,255,255,.94);
 
-      backdrop-filter:
-        blur(14px)
-        saturate(180%);
-
-      -webkit-backdrop-filter:
-        blur(14px)
-        saturate(180%);
 
       box-shadow:
         0 12px 40px rgba(0,0,0,.16),
