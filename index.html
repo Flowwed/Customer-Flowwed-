@@ -997,16 +997,26 @@ if (!Array.isArray(rows)) {
 }
 
 
-
 document.querySelectorAll('.hero-steps span').forEach(btn => {
   btn.addEventListener('click', () => {
     if (!tk) return;
 
-    const path = btn.dataset.path;
+    let path = btn.dataset.path;
     if (!path) return;
 
-    const url = `${path}?t=${encodeURIComponent(tk)}`;
-    location.href = url;
+    if (window.innerWidth > 768) {
+      const desktopMap = {
+        "our_story_mobile.html": "our_story.html",
+        "just_married_mobile.html": "just_married.html",
+        "travelevent_mobile.html": "venue_map.html",
+        "gift_registry_mobile.html": "gift_registry.html",
+        "web_updates_mobile.html": "web-updates.html"
+      };
+
+      path = desktopMap[path] || path;
+    }
+
+    location.href = `${path}?t=${encodeURIComponent(tk)}`;
   });
 });
 
