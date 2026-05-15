@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Updates</title>
+<link rel="stylesheet" href="/footer.css">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #fdeff1;
+      color:#732323;
+      line-height: 1.6;
+    }
+
+    header{
+      text-align:center;
+      padding:50px 10px;
+      background:linear-gradient(to bottom, #fff, #f8dede);
+      border-bottom:1px solid rgba(255,255,255,0.7);
+    }
+
+    h1,h2,h3{
+      color:#a52126;
+      margin-top:0;
+    }
+
+    section{
+      max-width:1000px;
+      margin:auto;
+      padding:40px 20px;
+      background:#ffffff;
+      border-radius:22px;
+      box-shadow:0 6px 16px rgba(0,0,0,0.13);
+      margin-top:45px;
+    }
+
+    .photo{
+      width:100%;
+      max-height:420px;
+      border-radius:20px;
+      object-fit:cover;
+      margin-bottom:25px;
+    }
+
+/* ====== STORY CARDS ====== */
+
+section {
+  max-width: 1100px;
+  margin: 20px auto;        /* 👈 было 60px → стало компактно */
+  padding: 30px 30px;       /* 👈 было 60px → стало аккуратно */
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fff7f8 100%
+  );
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.18),
+    0 12px 24px rgba(0, 0, 0, 0.10);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+/* заголовки внутри карточек */
+section h2 {
+  font-size: 32px;
+  margin-bottom: 18px;
+  color: #a52126;
+}
+
+/* текст */
+section p {
+  font-size: 18px;
+  line-height: 1.75;
+  color: #6f2a2a;
+  margin-bottom: 40px;
+}
+
+/* последнее описание — без лишнего отступа */
+section p:last-child {
+  margin-bottom: 0;
+}
+
+section {
+  animation: fadeUp 0.9s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+/* контейнер */
+section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  
+}
+
+/* ====== ОТДЕЛЬНАЯ КАРТОЧКА ====== */
+.story-card {
+  margin-top: 20px;
+  padding: 50px 60px;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fff6f7 100%
+  );
+
+  border-radius: 30px;
+
+  box-shadow:
+    0 28px 60px rgba(0, 0, 0, 0.18),
+    0 12px 24px rgba(0, 0, 0, 0.10);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* эффект парения */
+.story-card:hover {
+  transform: none;
+  box-shadow:
+    0 45px 90px rgba(0, 0, 0, 0.22),
+    0 18px 36px rgba(0, 0, 0, 0.14);
+}
+
+/* заголовок */
+.story-card h2 {
+  font-size: 28px;
+font-weight: 650;
+  margin-bottom: 18px;
+  color: #a52126;
+}
+
+/* текст */
+.story-card p {
+  font-size: 18px;
+  line-height: 1.75;
+  color: #6f2a2a;
+}
+
+.updates-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+
+  padding-top: 16px;     /* 👆 сверху меньше */
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 16px;   /* 👇 НИЗ СИЛЬНО МЕНЬШЕ */
+
+  background: #fff;
+}
+
+.updates-grid img {
+  width: 100%;
+  max-height:420px;                 /* 🔥 важно */
+  object-fit: cover;
+  border-radius: 28px;
+}
+
+/* ===== TEXTAREA-LIKE MODE FOR STORY ===== */
+.story-card p {
+  margin: 0;               /* ❗ убираем ВСЕ отступы */
+  padding: 0;
+  line-height: 1.35;       /* как textarea */
+}
+
+/* Quill иногда вставляет пустые <p><br></p> */
+.story-card p:empty {
+  display: none;
+}
+
+/* если внутри Quill есть <br> */
+.story-card br {
+  display: block;
+  content: "";
+  margin-top: 0;
+}
+
+[data-visible] {
+  visibility: visible;
+}
+
+
+@media (max-width: 900px) {
+
+  section {
+    padding: 20px !important;
+  }
+
+  .story-card {
+    padding: 24px !important;
+  }
+
+  .updates-grid {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .story-hero img {
+    height: 260px;
+  }
+
+}
+
+
+@media (max-width: 900px) {
+
+  .story-hero {
+    margin: 16px 16px 24px;   /* такие же поля как у section */
+    border-radius: 24px;
+  }
+
+  .story-hero img {
+    width: 100%;
+    height: 200px;            /* не vh, фикс */
+    object-fit: cover;
+  }
+
+}
+
+
+#how_we_met {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+
+.story-card h2 {
+  display: none;
+}
+
+
+
+/* =========================
+   GLASS LOADING OVERLAY
+   ========================= */
+
+#loadingOverlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,240,245,.65),
+      rgba(255,220,230,.55)
+    );
+
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  z-index: 999999;
+
+  opacity: 1;
+  transition: opacity .45s ease;
+}
+
+#loadingOverlay.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* spinner */
+.loader {
+  width: 56px;
+  height: 56px;
+
+  border-radius: 50%;
+  border: 4px solid rgba(165,33,38,.15);
+  border-top: 4px solid #a52126;
+
+  animation: spin .9s linear infinite;
+
+  box-shadow:
+    0 0 30px rgba(165,33,38,.35);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-text {
+  margin-top: 16px;
+
+  color: #a52126;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  letter-spacing: 0.02em;
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+
+<div class="burger" id="burger">
+  ☰
+</div>
+
+<div class="hero-steps">
+
+    <span data-path="/">HOME</span>
+
+
+  <span data-path="our_story_mobile.html">
+    Our Story
+  </span>
+
+  <span data-path="just_married_mobile.html">
+    Gallery
+  </span>
+
+  <span data-path="travelevent_mobile.html">
+    Travel & Event
+  </span>
+
+  <span data-path="gift_registry_mobile.html">
+    Gift Registry
+  </span>
+
+  <span data-path="web_updates_mobile.html">
+    Updates
+  </span>
+
+  <div class="menu-close">
+    ×
+  </div>
+
+</div>
+
+
+<div id="loadingOverlay">
+
+  <div class="loading-content">
+
+    <div class="loader"></div>
+
+    <div class="loading-text">
+      Loading...
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="page-shell">
+
+  <!-- HEADER -->
+  <header>
+    <h1 id="coupleName" data-hidden></h1>
+<div id="eventDate" style="margin-top:8px; font-size:18px; opacity:0.9; font-weight:500;" data-hidden></div>
+    <p id="storySubtitle" data-hidden style="font-size:18px;">
+  What’s new, what’s next 🔔
+</p>
+
+  
+</header>
+
+  <!-- CONTENT -->
+
+<section>
+  <div class="story-card">
+    <h2>Latest from Us ✨</h2>
+    <div id="how_we_met"></div>
+  </div>
+</section>
+
+
+ </div> 
+
+  <!-- SCRIPT -->
+  <script>
+    const SUPABASE_URL = "https://octwwpatppbenqwkcqaw.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdHd3cGF0cHBiZW5xd2tjcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NjYxMjYsImV4cCI6MjA3NDU0MjEyNn0.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI";
+
+const SUPABASE_BUCKET = "galleries";
+
+function buildPublicUrl(bucket, path) {
+  if (!path) return "";
+  const trimmed = path.replace(/^\/+/, "");
+  const parts = trimmed.split("/");
+
+  if (parts.length === 1) {
+    return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${encodeURIComponent(trimmed)}`;
+  }
+
+  const folder = parts.slice(0, -1).join("/");
+  const filename = encodeURIComponent(parts.at(-1));
+  return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${folder}/${filename}`;
+}
+
+
+
+    function cap(s){
+      return s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
+    }
+
+async function loadCoupleName(token){
+
+  if(!token) return;
+
+  sessionStorage.setItem("rsvpToken", token);
+
+  try{
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date&edit_token=eq.${encodeURIComponent(token)}`,
+      {
+        headers:{
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+    const arr = await res.json();
+console.log("RESULT:", arr);
+    if(!arr || !arr.length) return;
+
+    const fullName = arr[0].couple_name;
+
+const weddingDate = arr[0].wedding_date;
+
+if (weddingDate) {
+  const d = new Date(weddingDate);
+
+  const formatted = d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+
+  const dateEl = document.getElementById("eventDate");
+  if (dateEl) {
+    dateEl.textContent = formatted;
+    dateEl.removeAttribute("data-hidden");
+  }
+}
+
+    if(!fullName) return;
+
+    const nameEl = document.getElementById("coupleName");
+    nameEl.textContent = fullName;
+    nameEl.removeAttribute("data-hidden");
+
+    const subtitleEl = document.getElementById("storySubtitle");
+    if (subtitleEl) subtitleEl.removeAttribute("data-hidden");
+
+    document.title = `Updates — ${fullName}`;
+
+  }catch(e){
+    console.log("loadCoupleName error", e);
+  }
+}
+
+const params = new URLSearchParams(location.search);
+const token =
+  params.get("t") ||
+  params.get("token") ||
+  sessionStorage.getItem("rsvpToken") ||
+  "";
+
+(async () => {
+
+  if (token) {
+    sessionStorage.setItem("rsvpToken", token);
+
+    await loadCoupleName(token);
+    await loadStoryContent();
+  }
+
+  const overlay = document.getElementById("loadingOverlay");
+
+  if (overlay) {
+
+    overlay.classList.add("hide");
+
+    setTimeout(() => {
+      overlay.remove();
+    }, 350);
+
+  }
+
+})();
+
+</script>
+
+
+<script>
+async function loadStoryContent() {
+  const params = new URLSearchParams(location.search);
+  const token =
+    params.get("t") ||
+    params.get("token") ||
+    sessionStorage.getItem("rsvpToken") ||
+    "";
+
+  if (!token) return;
+
+  try {
+    const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/our_story_page?select=wed_updates&edit_token=eq.${token}`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+const data = await res.json();
+if (!data || !data.length) return;
+
+const row = data[0];
+const el = document.getElementById("how_we_met");
+
+if (el && Array.isArray(row.wed_updates)) {
+  let html = "";
+
+  row.wed_updates.forEach(u => {
+    const date = new Date(u.created_at).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+
+html += `
+  <div style="margin-bottom:20px;">
+    <p><strong>${date}</strong></p>
+    ${u.content}
+  </div>
+`;  
+
+});
+
+  el.innerHTML = html;
+}
+  } catch (e) {
+    console.error("loadStoryContent error", e);
+  }
+}
+
+
+</script>
+
+
+<script>
+function getToken() {
+  const params = new URLSearchParams(location.search);
+  const token =
+    params.get("t") ||
+    params.get("token") ||
+    sessionStorage.getItem("rsvpToken") ||
+    "";
+
+  if (token) sessionStorage.setItem("rsvpToken", token);
+  return token;
+}
+
+function buildLink(path) {
+  const token = getToken();
+
+  if (path === "home") {
+    return `https://flowwed.netlify.app/index.html?t=${token}`;
+  }
+
+  if (!token) return path;
+  return `${path}?t=${token}`;
+}
+
+document.querySelectorAll("[data-page]").forEach(link => {
+  const page = link.dataset.page;
+  link.href = buildLink(page);
+});
+
+function goBack() {
+  history.length > 1 ? history.back() : window.location.href = buildLink("home");
+}
+</script>
+
+<script>
+
+(function setActiveNav() {
+  let current = location.pathname.split("/").pop();
+
+  // Netlify: /photo_gallery → photo_gallery
+  // Local: photo_gallery.html → photo_gallery
+  current = current.replace(".html", "");
+
+  document.querySelectorAll(".nav-center a").forEach(link => {
+    let page = link.dataset.page || "";
+
+    // приводим data-page к такому же виду
+    page = page.replace(".html", "");
+
+    if (page === current) {
+      link.classList.add("active");
+    }
+  });
+})();
+
+</script>
+
+
+<div id="footer-mount"></div>
+
+<script>
+fetch("/footer.html")
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById("footer-mount").innerHTML = html;
+  });
+</script>
+
+
+<script src="/navbar-mobile.js"></script>
+
+</body>
+</html>
