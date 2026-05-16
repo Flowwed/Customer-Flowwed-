@@ -1626,6 +1626,8 @@ ribbonTrack.addEventListener("pointerdown", function (e) {
   const img = e.target.closest("img");
   if (!img) return;
 
+  startExperience();
+
   e.preventDefault();
   e.stopPropagation();
 
@@ -2054,7 +2056,7 @@ function finishLoading(){
   const pagination = document.getElementById("pagination");
   pagination.innerHTML = "";
 
-  if (pagesWithPhotos > 0) {
+  if (pagesWithPhotos > 1) {
     pagination.classList.add("visible");
 
     for (let i = 1; i <= pagesWithPhotos; i++) {
@@ -2148,8 +2150,8 @@ const album = document.querySelector(".album");
 
     "__default__": [
       "Welcome to how it was 💍",
-      "Hope you enjoyed our little chaos. 🎶",
-      "Tap <span class='play-highlight play-trigger'>▶️</span> or any photo to replay the moment ✨",  
+      "Hope you'll enjoy our little chaos. 🎶",
+      "Tap <span class='play-highlight play-trigger'>▶️</span> or any photo to begin ✨",  
       "Thank you for being with us 🤍",
     ]
   };
