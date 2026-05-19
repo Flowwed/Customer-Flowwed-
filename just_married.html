@@ -1640,7 +1640,10 @@ const images = [
   )
 ];
 
-currentImageIndex = Number(img.dataset.index);
+currentImageIndex = [...images].findIndex(i =>
+  i.src === img.src
+);
+
 
 showImage(currentImageIndex);
 
@@ -1764,7 +1767,9 @@ const images = [
   ...document.querySelectorAll("#grid .photo img")
 ];
 
-currentImageIndex = Number(img.dataset.index);
+currentImageIndex = [...images].findIndex(i =>
+  i.src === img.src
+);
 
     if (!img) return;
 
