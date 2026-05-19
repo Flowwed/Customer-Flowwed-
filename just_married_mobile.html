@@ -123,6 +123,17 @@ overscroll-behavior: none;
 
 }
 
+.ribbon-mover {
+
+  will-change: transform;
+
+  transform: translate3d(0,0,0);
+
+}
+
+
+
+
 .ribbon-track {
 
   display: flex;
@@ -554,11 +565,20 @@ text-shadow:
 
 
 <main class="ribbon-shell">
-  <div class="ribbon-track" id="ribbon"></div>
+
+  <div class="ribbon-mover" id="ribbonMover">
+
+    <div class="ribbon-track" id="ribbon"></div>
+
+  </div>
+
   <div class="empty" id="emptyState" style="display:none;">
     No photos yet.
   </div>
+
 </main>
+
+
 
 <div class="lightbox" id="lightbox">
   <div class="lightbox-close" id="closeLightbox">×</div>
@@ -957,8 +977,13 @@ loadBackgroundMusicForPage();
 
 function initRibbonAnimation() {
 
-  const track =
-    document.getElementById("ribbon");
+const mover =
+  document.getElementById("ribbonMover");
+
+const track =
+  document.getElementById("ribbon");
+
+
 
   if (!track) return;
 
@@ -1005,14 +1030,12 @@ if (Math.abs(y) >= getSingleHeight() - window.innerHeight) {
   y = 0;
 }
 
-  track.style.transform =
+  mover.style.transform =
     `translate3d(0, ${y}px, 0)`;
 
-  setTimeout(() => {
 
-    requestAnimationFrame(animate);
+requestAnimationFrame(animate);
 
-  }, 16);
 }
 
   animate();
@@ -1039,7 +1062,7 @@ if (Math.abs(y) >= getSingleHeight() - window.innerHeight) {
     y += delta;
 velocity = delta * 0.45;
 
-    track.style.transform =
+    mover.style.transform =
       `translate3d(0, ${y}px, 0)`;
 
   }, { passive: true });
