@@ -6,10 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
+
 html, body {
 
   margin: 0;
   padding: 0;
+
+  overflow: hidden;
+  height: 100%;
 
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
@@ -30,6 +34,7 @@ html, body {
 
   color: #732323;
 }
+
 
 .mobile-header {
 
@@ -99,29 +104,25 @@ transform:translateY(-50%);
     0 4px 12px rgba(0,0,0,.12);
 }
 
-
 .ribbon-shell {
-
-padding: 92px 14px 14px;
 
   width: 100%;
 
-  min-height: 100svh;
-
-  height: 100svh;
+  height: calc(100svh - 72px);
 
   overflow: hidden;
 
+  padding: 14px;
 
   box-sizing: border-box;
 
--webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 
-touch-action: pan-y;
-
-overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
 
 }
+
+
 
 .ribbon-mover {
 
@@ -992,16 +993,19 @@ const track =
 
   let y = 0;
 
-  const speed = 0.33;
+  const speed = 0.60;
 
   let isDragging = false;
 
   let startY = 0;
 let velocity = 0;
 
+
 function getSingleHeight() {
   return track.scrollHeight;
 }
+
+
 
 function animate() {
 
@@ -1025,20 +1029,36 @@ function animate() {
     velocity *= 0.92;
   }
 
-if (Math.abs(y) >= getSingleHeight() - window.innerHeight) {
 
+if (Math.abs(velocity) < 0.02) {
+  velocity = 0;
+}
+
+limit = Math.max(
+  0,
+  getSingleHeight() - window.innerHeight
+);
+
+if (y < -limit) {
+  y = -limit;
+}
+
+if (y > 0) {
   y = 0;
 }
 
-  mover.style.transform =
-    `translate3d(0, ${y}px, 0)`;
+mover.style.transform =
+  `translate3d(0, ${y}px, 0)`;
 
 
 requestAnimationFrame(animate);
 
+
 }
 
   animate();
+
+
 
   // TOUCH DRAG
 
