@@ -1078,39 +1078,51 @@ let musicMotionStarted = false;
 const bgMusic = document.getElementById("bgMusic");
 
 musicBtn.addEventListener("click", async () => {
+
   if (!bgMusic.src) return;
 
   if (bgMusic.paused) {
+
     await bgMusic.play().catch(() => {});
 
-if (!audioContext) {
+    if (!audioContext) {
 
-  audioContext =
-    new AudioContext();
+      audioContext =
+        new AudioContext();
 
-  const source =
-    audioContext.createMediaElementSource(bgMusic);
+      const source =
+        audioContext.createMediaElementSource(bgMusic);
 
-  analyser =
-    audioContext.createAnalyser();
+      analyser =
+        audioContext.createAnalyser();
 
-  analyser.fftSize = 128;
+      analyser.fftSize = 128;
 
-  dataArray =
-    new Uint8Array(analyser.frequencyBinCount);
+      dataArray =
+        new Uint8Array(analyser.frequencyBinCount);
 
-  source.connect(analyser);
+      source.connect(analyser);
 
-  analyser.connect(audioContext.destination);
+      analyser.connect(audioContext.destination);
+    }
 
-if (!musicMotionStarted) {
+    if (!musicMotionStarted) {
 
-  musicMotionStarted = true;
+      musicMotionStarted = true;
 
-  startMusicMotion();
-}
+      startMusicMotion();
+    }
 
+    musicBtn.textContent = "⏸";
 
+  } else {
+
+    bgMusic.pause();
+
+    musicBtn.textContent = "▶️";
+  }
+
+});
     musicBtn.textContent = "⏸";
   } else {
     bgMusic.pause();
