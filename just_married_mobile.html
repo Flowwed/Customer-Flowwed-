@@ -547,6 +547,12 @@ text-shadow:
 }
 
 
+.ribbon-track-wrap {
+
+  position: relative;
+
+}
+
 
 </style>
 </head>
@@ -627,7 +633,15 @@ text-shadow:
 
   <div class="ribbon-mover" id="ribbonMover">
 
-    <div class="ribbon-track" id="ribbon"></div>
+    <div class="ribbon-track-wrap">
+
+  <div class="ribbon-track" id="ribbon"></div>
+
+  <div class="ribbon-track" id="ribbonClone"></div>
+
+</div>
+
+
 
   </div>
 
@@ -705,7 +719,11 @@ function goBack() {
 <script>
 async function loadMobileGallery() {
   const token = getToken();
+
   const ribbon = document.getElementById("ribbon");
+const ribbonClone =
+  document.getElementById("ribbonClone");
+
   const loading = document.getElementById("loading");
   const emptyState = document.getElementById("emptyState");
 
@@ -740,6 +758,8 @@ async function loadMobileGallery() {
       });
 
     ribbon.innerHTML = "";
+
+ribbonClone.innerHTML = "";
 
     if (!rows.length) {
       emptyState.style.display = "block";
@@ -832,6 +852,9 @@ openLightbox(
 
     });
 
+    ribbonClone.innerHTML =
+      ribbon.innerHTML;
+
   } catch (err) {
 
     console.error(err);
@@ -847,7 +870,6 @@ openLightbox(
 
   }
 }
-
 loadMobileGallery().then(() => {
   initRibbonAnimation();
 });
@@ -1072,7 +1094,8 @@ const mover =
 const track =
   document.getElementById("ribbon");
 
-
+const clone =
+  document.getElementById("ribbonClone");
 
   if (!track) return;
 
@@ -1129,17 +1152,15 @@ function animate() {
   const totalHeight =
     track.scrollHeight;
 
-if (virtualOffset < 0) {
-  virtualOffset += totalHeight;
-}
+  const loopOffset =
+    ((virtualOffset % totalHeight) + totalHeight)
+    % totalHeight;
 
-const loopOffset =
-  ((virtualOffset % totalHeight) + totalHeight)
-  % totalHeight;
-
-
-  mover.style.transform =
+  track.style.transform =
     `translate3d(0, ${-loopOffset}px, 0)`;
+
+  clone.style.transform =
+    `translate3d(0, ${totalHeight - loopOffset}px, 0)`;
 
   if (performance.now() - lastVisibilityUpdate > 180) {
 
@@ -1173,12 +1194,9 @@ animate();
 
     startY = e.touches[0].clientY;
 
-virtualOffset -= delta;
+    virtualOffset -= delta;
 
-velocity = delta * 0.22;
-
-    mover.style.transform =
-      `translate3d(0, ${y}px, 0)`;
+    velocity = delta * 0.22;
 
   }, { passive: true });
 
@@ -1189,7 +1207,6 @@ velocity = delta * 0.22;
   });
 
 }
-
 </script>
 
 
