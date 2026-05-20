@@ -800,7 +800,7 @@ galleryImages.push({
         // autoplay music
         if (bgMusic.paused && bgMusic.src) {
 
-          await bgMusic.play().catch(() => {});
+          bgMusic.play().catch(() => {});
 
           musicBtn.textContent = "⏸";
 
@@ -1069,7 +1069,7 @@ musicBtn.addEventListener("click", async () => {
   if (!bgMusic.src) return;
 
   if (bgMusic.paused) {
-    await bgMusic.play().catch(() => {});
+    bgMusic.play().catch(() => {});
 
 if (!audioContext) {
 
