@@ -1083,6 +1083,8 @@ const track =
 
   const speed = 0.60;
 
+let virtualOffset = 0;
+
 let recycleThreshold = 0;
 
   let isDragging = false;
@@ -1113,60 +1115,38 @@ function animate() {
 
   if (!isDragging) {
 
-    y -= speed;
+    virtualOffset += speed;
 
-    y += velocity;
+    virtualOffset -= velocity;
 
     velocity *= 0.92;
   }
 
-
-if (Math.abs(velocity) < 0.02) {
-  velocity = 0;
-}
-
-
-const firstCard =
-  track.firstElementChild;
-
-
-if (firstCard && !isDragging) {
-
-  recycleThreshold =
-    firstCard.offsetHeight + 12;
-
-  if (y <= -recycleThreshold) {
-
-    track.appendChild(firstCard);
-
-    y += recycleThreshold;
+  if (Math.abs(velocity) < 0.02) {
+    velocity = 0;
   }
-}
 
-if (y > 0) {
-  y = 0;
-}
+  const totalHeight =
+    track.scrollHeight;
 
+  const loopOffset =
+    virtualOffset % totalHeight;
 
-mover.style.transform =
-  `translate3d(0, ${y}px, 0)`;
+  mover.style.transform =
+    `translate3d(0, ${-loopOffset}px, 0)`;
 
-if (performance.now() - lastVisibilityUpdate > 180) {
+  if (performance.now() - lastVisibilityUpdate > 180) {
 
-  updateVisibleCardAnimations();
+    updateVisibleCardAnimations();
 
-  lastVisibilityUpdate = performance.now();
-}
+    lastVisibilityUpdate = performance.now();
+  }
 
-
-requestAnimationFrame(animate);
-
+  requestAnimationFrame(animate);
 
 }
 
-  animate();
-
-
+animate();
 
   // TOUCH DRAG
 
