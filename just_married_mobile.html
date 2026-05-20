@@ -558,10 +558,14 @@ padding-top: 18px;
   will-change: transform;
 
 
-
-
 }
 
+
+body.lightbox-open .mobile-header {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 
 </style>
 </head>
@@ -974,6 +978,7 @@ async function openLightbox(src, caption) {
   requestAnimationFrame(() => {
 
     lightbox.classList.add("active");
+document.body.classList.add("lightbox-open");
 
   });
 }
@@ -983,6 +988,9 @@ function closeLightbox() {
   const img = document.getElementById("lightboxImg");
 
   lightbox.classList.remove("active");
+
+document.body.classList.remove("lightbox-open");
+
   img.src = "";
 }
 
