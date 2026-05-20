@@ -174,12 +174,17 @@ transform: translateZ(0);
 
   background: #f7eeee;
 
-animation:
-  cardFloat 6s ease-in-out infinite;
 
 --music-offset: 0px;
 --music-scale: 1;
 --music-rotate: 0deg;
+
+}
+
+.photo-card.floating {
+
+  animation:
+    cardFloat 6s ease-in-out infinite;
 
 }
 
@@ -847,6 +852,36 @@ loadMobileGallery().then(() => {
   initRibbonAnimation();
 });
 
+function updateVisibleCardAnimations() {
+
+  const cards =
+    document.querySelectorAll(".photo-card");
+
+  const vh =
+    window.innerHeight;
+
+  cards.forEach(card => {
+
+    const rect =
+      card.getBoundingClientRect();
+
+    const visible =
+      rect.bottom > -200 &&
+      rect.top < vh + 200;
+
+    if (visible) {
+
+      card.classList.add("floating");
+
+    } else {
+
+      card.classList.remove("floating");
+    }
+
+  });
+}
+
+
 </script>
 
 <script>
@@ -1103,6 +1138,7 @@ if (y > 0) {
 mover.style.transform =
   `translate3d(0, ${y}px, 0)`;
 
+updateVisibleCardAnimations();
 
 requestAnimationFrame(animate);
 
