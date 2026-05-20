@@ -546,25 +546,16 @@ text-shadow:
 
 }
 
+
 .ribbon-track-wrap {
 
   position: relative;
 
-  width: 100%;
+  display: flex;
+  flex-direction: column;
 
-  height: 100%;
+  will-change: transform;
 
-  overflow: hidden;
-}
-
-.ribbon-track {
-
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
 }
 
 
@@ -869,6 +860,23 @@ openLightbox(
     ribbonClone.innerHTML =
       ribbon.innerHTML;
 
+await Promise.all(
+  [...ribbonClone.querySelectorAll("img")].map(img => {
+
+    if (img.complete) {
+      return Promise.resolve();
+    }
+
+    return new Promise(resolve => {
+      img.onload = resolve;
+      img.onerror = resolve;
+    });
+
+  })
+);
+
+
+
   } catch (err) {
 
     console.error(err);
@@ -1170,11 +1178,8 @@ function animate() {
     ((virtualOffset % totalHeight) + totalHeight)
     % totalHeight;
 
-  track.style.transform =
-    `translate3d(0, ${-loopOffset}px, 0)`;
-
-  clone.style.transform =
-    `translate3d(0, ${totalHeight - loopOffset}px, 0)`;
+mover.style.transform =
+  `translate3d(0, ${-loopOffset}px, 0)`;
 
   if (performance.now() - lastVisibilityUpdate > 180) {
 
