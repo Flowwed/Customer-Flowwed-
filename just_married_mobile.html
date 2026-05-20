@@ -1129,8 +1129,14 @@ function animate() {
   const totalHeight =
     track.scrollHeight;
 
-  const loopOffset =
-    virtualOffset % totalHeight;
+if (virtualOffset < 0) {
+  virtualOffset += totalHeight;
+}
+
+const loopOffset =
+  ((virtualOffset % totalHeight) + totalHeight)
+  % totalHeight;
+
 
   mover.style.transform =
     `translate3d(0, ${-loopOffset}px, 0)`;
