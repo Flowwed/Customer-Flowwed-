@@ -60,18 +60,6 @@ html, body {
 
 }
 
-
-.mobile-header.hidden {
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  transition: opacity .25s ease;
-
-}
-
-
 .title {
 
   position: absolute;
@@ -983,55 +971,29 @@ async function openLightbox(src, caption) {
     cap.style.display = "none";
   }
 
-requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
 
-  lightbox.classList.add("active");
+    lightbox.classList.add("active");
 
-  document
-    .querySelector(".mobile-header")
-    .classList.add("hidden");
-
-});
-
+  });
 }
 
 function closeLightbox() {
-
-  const lightbox =
-    document.getElementById("lightbox");
-
-  const img =
-    document.getElementById("lightboxImg");
+  const lightbox = document.getElementById("lightbox");
+  const img = document.getElementById("lightboxImg");
 
   lightbox.classList.remove("active");
-
   img.src = "";
-
-  document
-    .querySelector(".mobile-header")
-    .classList.remove("hidden");
 }
 
-document
-  .getElementById("closeLightbox")
-  .addEventListener("click", closeLightbox);
+document.getElementById("closeLightbox").addEventListener("click", closeLightbox);
 
-document
-  .getElementById("lightbox")
-  .addEventListener("click", e => {
-
-    if (e.target.id === "lightbox") {
-      closeLightbox();
-    }
-
+document.getElementById("lightbox").addEventListener("click", e => {
+  if (e.target.id === "lightbox") closeLightbox();
 });
 
 window.addEventListener("keydown", e => {
-
-  if (e.key === "Escape") {
-    closeLightbox();
-  }
-
+  if (e.key === "Escape") closeLightbox();
 });
 </script>
 
