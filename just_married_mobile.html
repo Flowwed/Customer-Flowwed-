@@ -1167,8 +1167,9 @@ animate();
 
     startY = e.touches[0].clientY;
 
-    y += delta;
-velocity = delta * 0.45;
+virtualOffset -= delta;
+
+velocity = delta * 0.22;
 
     mover.style.transform =
       `translate3d(0, ${y}px, 0)`;
