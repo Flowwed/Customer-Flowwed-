@@ -491,6 +491,53 @@ text-shadow:
 }
 
 
+@media (orientation: landscape) {
+
+  .lightbox {
+
+    padding: 0;
+
+    background: black;
+
+  }
+
+  .lightbox-content {
+
+    width: 100vw;
+
+    height: 100svh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+  }
+
+  .lightbox img {
+
+    width: 100vw;
+
+    height: 100svh;
+
+    object-fit: contain;
+
+    border-radius: 0;
+
+    max-height: none;
+
+  }
+
+  .lightbox-caption {
+
+    display: none !important;
+
+  }
+
+}
+
+
 
 </style>
 </head>
