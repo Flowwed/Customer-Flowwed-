@@ -12,9 +12,7 @@ html, body {
   margin: 0;
   padding: 0;
 
-overflow-x: hidden;
-  overflow-y: auto;
-
+  overflow: hidden;
   height: 100%;
 
   padding-top: env(safe-area-inset-top);
@@ -43,7 +41,7 @@ overflow-x: hidden;
 
   top: 0;
 
-  z-index: 200;
+  z-index: 99999;
 
   padding: 12px 18px;
 
@@ -112,7 +110,7 @@ transform:translateY(-50%);
 
   height: calc(100svh - 72px);
 
-  overflow: visible;
+  overflow: hidden;
 
   padding: 40px 14px 14px;
 
@@ -125,11 +123,15 @@ transform:translateY(-50%);
 }
 
 
-.ribbon-mover {
-  will-change: auto;
 
-  transform: none;
+.ribbon-mover {
+
+  will-change: transform;
+
+  transform: translate3d(0,0,0);
+
 }
+
 
 .ribbon-track {
 
@@ -335,7 +337,7 @@ text-shadow:
   position: fixed;
   inset: 0;
 
-  z-index: 99999;
+  z-index: 200;
 
   background: rgba(0,0,0,.72);
 
