@@ -12,7 +12,9 @@ html, body {
   margin: 0;
   padding: 0;
 
-  overflow: hidden;
+overflow-x: hidden;
+  overflow-y: auto;
+
   height: 100%;
 
   padding-top: env(safe-area-inset-top);
@@ -110,7 +112,7 @@ transform:translateY(-50%);
 
   height: calc(100svh - 72px);
 
-  overflow: hidden;
+  overflow: visible;
 
   padding: 40px 14px 14px;
 
@@ -1301,6 +1303,7 @@ requestAnimationFrame(animateMusic);
 
 animateMusic();
 
+}
 
 </script>
 
