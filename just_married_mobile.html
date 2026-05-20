@@ -1094,6 +1094,7 @@ function getSingleHeight() {
 }
 
 
+let lastVisibilityUpdate = 0;
 
 function animate() {
 
@@ -1138,7 +1139,13 @@ if (y > 0) {
 mover.style.transform =
   `translate3d(0, ${y}px, 0)`;
 
-updateVisibleCardAnimations();
+if (performance.now() - lastVisibilityUpdate > 180) {
+
+  updateVisibleCardAnimations();
+
+  lastVisibilityUpdate = performance.now();
+}
+
 
 requestAnimationFrame(animate);
 
