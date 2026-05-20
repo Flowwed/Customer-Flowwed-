@@ -1213,43 +1213,47 @@ function animateMusic() {
 
   const power = avg / 255;
 
-  cards.forEach((card, index) => {
+cards.forEach((card, index) => {
 
-    const offset =
-      Math.sin(Date.now() * 0.001 + index) * 2;
+  if (!card.classList.contains("floating")) {
+    return;
+  }
 
-const pulse =
-  Math.sin(Date.now() * 0.002 + index) * 0.018;
+  const offset =
+    Math.sin(Date.now() * 0.001 + index) * 2;
 
-const scale =
-  1 + power * 0.025 + pulse;
+  const pulse =
+    Math.sin(Date.now() * 0.002 + index) * 0.018;
 
+  const scale =
+    1 + power * 0.025 + pulse;
 
-    const rotate =
-      Math.sin(Date.now() * 0.0007 + index)
-      * power * 1.5;
+  const rotate =
+    Math.sin(Date.now() * 0.0007 + index)
+    * power * 1.5;
 
-    card.style.setProperty(
-      "--music-offset",
-      `${offset}px`
-    );
+  card.style.setProperty(
+    "--music-offset",
+    `${offset}px`
+  );
 
-    card.style.setProperty(
-      "--music-scale",
-      scale
-    );
+  card.style.setProperty(
+    "--music-scale",
+    scale
+  );
 
-    card.style.setProperty(
-      "--music-rotate",
-      `${rotate}deg`
-    );
+  card.style.setProperty(
+    "--music-rotate",
+    `${rotate}deg`
+  );
 
-  });
+});
 
-  requestAnimationFrame(animateMusic);
+requestAnimationFrame(animateMusic);
+
 }
-  animateMusic();
-}
+
+animateMusic();
 
 </script>
 
