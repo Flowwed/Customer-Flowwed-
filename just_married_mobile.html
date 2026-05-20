@@ -493,23 +493,14 @@ text-shadow:
 
 @media (orientation: landscape) {
 
-.mobile-header {
+ .mobile-header {
+    display: none !important;
+  }
 
-  min-height: 44px;
-
-  padding: 4px 12px;
-
-}
-
-
-.ribbon-shell {
-
-  height: 100svh;
-
-  padding-top: 6px;
-
-}
-
+  .ribbon-shell {
+    height: 100svh;
+    padding-top: 0;
+  }
 
   .lightbox {
 
@@ -1284,31 +1275,6 @@ document
 <script src="/navbar-mobile.js"></script> 
 
 
-<script>
-
-window.addEventListener("orientationchange", () => {
-
-  document.body.style.display = "none";
-
-  setTimeout(() => {
-
-    document.body.style.display = "";
-
-    const viewport =
-      document.querySelector(
-        'meta[name="viewport"]'
-      );
-
-    viewport.setAttribute(
-      "content",
-      "width=device-width, initial-scale=1.0"
-    );
-
-  }, 120);
-
-});
-
-</script>
 
 
 </body>
