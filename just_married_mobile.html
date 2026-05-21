@@ -650,7 +650,6 @@ body.lightbox-open .mobile-header {
 
   <div class="ribbon-track" id="ribbon"></div>
 
-  <div class="ribbon-track" id="ribbonClone"></div>
 
 </div>
 
@@ -1130,8 +1129,6 @@ const mover =
 const track =
   document.getElementById("ribbon");
 
-const clone =
-  document.getElementById("ribbonClone");
 
   if (!track) return;
 
@@ -1187,12 +1184,16 @@ const start = performance.now();
     velocity = 0;
   }
 
-  const totalHeight =
-    track.scrollHeight;
 
-  const loopOffset =
-    ((virtualOffset % totalHeight) + totalHeight)
-    % totalHeight;
+
+const totalHeight = track.scrollHeight;
+
+if (virtualOffset >= totalHeight) {
+  virtualOffset = 0;
+}
+
+const loopOffset = virtualOffset;
+
 
 mover.style.transform =
   `translate3d(0, ${-loopOffset}px, 0)`;
