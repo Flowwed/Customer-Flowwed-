@@ -865,23 +865,10 @@ openLightbox(
 
     });
 
-    ribbonClone.innerHTML =
-      ribbon.innerHTML;
+// ribbonClone.innerHTML =
+ // ribbon.innerHTML;
 
-await Promise.all(
-  [...ribbonClone.querySelectorAll("img")].map(img => {
 
-    if (img.complete) {
-      return Promise.resolve();
-    }
-
-    return new Promise(resolve => {
-      img.onload = resolve;
-      img.onerror = resolve;
-    });
-
-  })
-);
 
 
 
