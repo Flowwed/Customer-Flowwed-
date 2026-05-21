@@ -733,8 +733,8 @@ async function loadMobileGallery() {
   const token = getToken();
 
   const ribbon = document.getElementById("ribbon");
-const ribbonClone =
-  document.getElementById("ribbonClone");
+
+const ribbonClone = null;
 
   const loading = document.getElementById("loading");
   const emptyState = document.getElementById("emptyState");
@@ -771,7 +771,6 @@ const ribbonClone =
 
     ribbon.innerHTML = "";
 
-ribbonClone.innerHTML = "";
 
     if (!rows.length) {
       emptyState.style.display = "block";
@@ -863,12 +862,6 @@ openLightbox(
       ribbon.appendChild(card);
 
     });
-
-// ribbonClone.innerHTML =
- // ribbon.innerHTML;
-
-
-
 
 
   } catch (err) {
