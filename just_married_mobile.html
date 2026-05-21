@@ -1122,6 +1122,21 @@ loadBackgroundMusicForPage();
 
 function initRibbonAnimation() {
 
+
+const debugBox = document.createElement("div");
+
+debugBox.style.position = "fixed";
+debugBox.style.bottom = "10px";
+debugBox.style.left = "10px";
+debugBox.style.zIndex = "99999";
+debugBox.style.background = "rgba(0,0,0,.7)";
+debugBox.style.color = "white";
+debugBox.style.padding = "8px 12px";
+debugBox.style.borderRadius = "12px";
+debugBox.style.fontSize = "12px";
+
+document.body.appendChild(debugBox);
+
 const mover =
   document.getElementById("ribbonMover");
 
@@ -1158,6 +1173,8 @@ function getSingleHeight() {
 let lastVisibilityUpdate = 0;
 
 function animate() {
+
+const start = performance.now();
 
   if (document.hidden) {
 
@@ -1200,7 +1217,14 @@ mover.style.transform =
     lastVisibilityUpdate = performance.now();
   }
 
-  requestAnimationFrame(animate);
+const frame =
+  performance.now() - start;
+
+debugBox.textContent =
+  "frame: " + frame.toFixed(1);
+
+requestAnimationFrame(animate);
+
 
 }
 
