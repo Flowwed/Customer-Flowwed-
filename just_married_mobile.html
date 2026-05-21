@@ -1234,7 +1234,13 @@ animate();
 
     startY = e.touches[0].clientY;
 
-    virtualOffset -= delta;
+virtualOffset -= delta;
+
+if (virtualOffset < 0) {
+  virtualOffset = 0;
+}
+
+
 
     velocity = delta * 0.22;
 
