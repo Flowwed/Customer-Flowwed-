@@ -112,7 +112,7 @@ transform:translateY(-50%);
 
   overflow: hidden;
 
-  padding: 40px 14px 14px;
+  padding: 12px 14px 0px;
 
   box-sizing: border-box;
 
@@ -1179,7 +1179,11 @@ const start = performance.now();
 
 
 
-const totalHeight = track.scrollHeight;
+const totalHeight =
+  track.scrollHeight -
+  window.innerHeight;
+
+
 
 if (virtualOffset >= totalHeight) {
   virtualOffset = 0;
