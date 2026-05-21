@@ -1102,18 +1102,6 @@ loadBackgroundMusicForPage();
 function initRibbonAnimation() {
 
 
-const debugBox = document.createElement("div");
-
-debugBox.style.position = "fixed";
-debugBox.style.bottom = "10px";
-debugBox.style.left = "10px";
-debugBox.style.zIndex = "99999";
-debugBox.style.background = "rgba(0,0,0,.7)";
-debugBox.style.color = "white";
-debugBox.style.padding = "8px 12px";
-debugBox.style.borderRadius = "12px";
-debugBox.style.fontSize = "12px";
-
 document.body.appendChild(debugBox);
 
 const mover =
@@ -1202,11 +1190,6 @@ mover.style.transform =
     lastVisibilityUpdate = performance.now();
   }
 
-const frame =
-  performance.now() - start;
-
-debugBox.textContent =
-  "frame: " + frame.toFixed(1);
 
 requestAnimationFrame(animate);
 
@@ -1258,73 +1241,78 @@ if (virtualOffset < 0) {
 
 <script>
 
+let musicMotionStarted = false;
+
 function startMusicMotion() {
+
+  if (musicMotionStarted) return;
+
+  musicMotionStarted = true;
 
   const cards =
     document.querySelectorAll(".photo-card");
 
-function animateMusic() {
+  function animateMusic() {
 
-  if (!analyser) {
+    if (!analyser) {
+      requestAnimationFrame(animateMusic);
+      return;
+    }
+
+    analyser.getByteFrequencyData(dataArray);
+
+    let avg = 0;
+
+    for (let i = 0; i < dataArray.length; i++) {
+      avg += dataArray[i];
+    }
+
+    avg /= dataArray.length;
+
+    const power = avg / 255;
+
+    cards.forEach((card, index) => {
+
+      if (!card.classList.contains("floating")) {
+        return;
+      }
+
+      const offset =
+        Math.sin(Date.now() * 0.001 + index) * 2;
+
+      const pulse =
+        Math.sin(Date.now() * 0.002 + index) * 0.018;
+
+      const scale =
+        1 + power * 0.025 + pulse;
+
+      const rotate =
+        Math.sin(Date.now() * 0.0007 + index)
+        * power * 1.5;
+
+      card.style.setProperty(
+        "--music-offset",
+        `${offset}px`
+      );
+
+      card.style.setProperty(
+        "--music-scale",
+        scale
+      );
+
+      card.style.setProperty(
+        "--music-rotate",
+        `${rotate}deg`
+      );
+
+    });
+
     requestAnimationFrame(animateMusic);
-    return;
   }
 
-  analyser.getByteFrequencyData(dataArray);
-
-  let avg = 0;
-
-  for (let i = 0; i < dataArray.length; i++) {
-    avg += dataArray[i];
-  }
-
-  avg /= dataArray.length;
-
-  const power = avg / 255;
-
-cards.forEach((card, index) => {
-
-  if (!card.classList.contains("floating")) {
-    return;
-  }
-
-  const offset =
-    Math.sin(Date.now() * 0.001 + index) * 2;
-
-  const pulse =
-    Math.sin(Date.now() * 0.002 + index) * 0.018;
-
-  const scale =
-    1 + power * 0.025 + pulse;
-
-  const rotate =
-    Math.sin(Date.now() * 0.0007 + index)
-    * power * 1.5;
-
-  card.style.setProperty(
-    "--music-offset",
-    `${offset}px`
-  );
-
-  card.style.setProperty(
-    "--music-scale",
-    scale
-  );
-
-  card.style.setProperty(
-    "--music-rotate",
-    `${rotate}deg`
-  );
-
-});
-
-requestAnimationFrame(animateMusic);
-
+  animateMusic();
 }
 
-animateMusic();
-
-}
 
 </script>
 
