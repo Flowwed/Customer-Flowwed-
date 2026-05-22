@@ -651,7 +651,34 @@ padding-top: 18px;
 
   white-space: normal;
 
+overflow: hidden;
+
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;
+
+max-height: 52px;
+
+transition:
+  max-height .35s ease,
+  background .35s ease;
+
+
 }
+
+.lightbox-caption.expanded {
+
+  -webkit-line-clamp: unset;
+
+  max-height: 240px;
+
+  overflow-y: auto;
+
+  background:
+    rgba(255,255,255,.22);
+
+}
+
 .lightbox-caption:empty {
   display: none !important;
 }
@@ -1042,6 +1069,7 @@ async function openLightbox(src, caption) {
 
   const cap =
     document.getElementById("lightboxCaption");
+cap.classList.remove("expanded");
 
   const preload = new Image();
 
@@ -1094,7 +1122,15 @@ window.addEventListener("keydown", e => {
   if (e.key === "Escape") closeLightbox();
 });
 
+document
+  .getElementById("lightboxCaption")
+  ?.addEventListener("click", e => {
 
+    e.stopPropagation();
+
+    e.currentTarget.classList.toggle("expanded");
+
+});
 
 </script>
 
