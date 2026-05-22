@@ -1121,6 +1121,27 @@ let dataArray;
 
 const bgMusic = document.getElementById("bgMusic");
 
+document.addEventListener(
+  "visibilitychange",
+  async () => {
+
+    if (
+      document.visibilityState === "visible" &&
+      audioContext &&
+      audioContext.state === "suspended"
+    ) {
+
+      try {
+
+        await audioContext.resume();
+
+      } catch (e) {}
+
+    }
+
+});
+
+
 musicBtn.addEventListener("click", async () => {
 
   if (!bgMusic.src) return;
