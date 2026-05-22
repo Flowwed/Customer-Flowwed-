@@ -949,28 +949,7 @@ galleryImages.push({
 
           musicBtn.textContent = "⏸";
 
-          if (!audioContext) {
-
-            audioContext =
-              new AudioContext();
-
-            const source =
-              audioContext.createMediaElementSource(bgMusic);
-
-            analyser =
-              audioContext.createAnalyser();
-
-            analyser.fftSize = 128;
-
-            dataArray =
-              new Uint8Array(analyser.frequencyBinCount);
-
-            source.connect(analyser);
-
-            analyser.connect(audioContext.destination);
-
-            startMusicMotion();
-          }
+          await initAudioSystem();
         }
 
 currentLightboxIndex = index;
@@ -1204,8 +1183,37 @@ const musicBtn = document.getElementById("musicBtn");
 let audioContext;
 let analyser;
 let dataArray;
+let audioInitialized = false;
 
 const bgMusic = document.getElementById("bgMusic");
+
+async function initAudioSystem() {
+
+  if (audioInitialized) return;
+
+  audioInitialized = true;
+
+  audioContext =
+    new AudioContext();
+
+  const source =
+    audioContext.createMediaElementSource(bgMusic);
+
+  analyser =
+    audioContext.createAnalyser();
+
+  analyser.fftSize = 128;
+
+  dataArray =
+    new Uint8Array(analyser.frequencyBinCount);
+
+  source.connect(analyser);
+
+  analyser.connect(audioContext.destination);
+
+  startMusicMotion();
+}
+
 
 document.addEventListener(
   "visibilitychange",
@@ -1230,6 +1238,10 @@ document.addEventListener(
 
 musicBtn.addEventListener("click", async () => {
 
+if (musicBtn.dataset.locked === "1") return;
+
+musicBtn.dataset.locked = "1";
+
   if (!bgMusic.src) return;
 
   if (bgMusic.paused) {
@@ -1240,28 +1252,7 @@ musicBtn.addEventListener("click", async () => {
 
     musicBtn.classList.add("playing");
 
-    if (!audioContext) {
-
-      audioContext =
-        new AudioContext();
-
-      const source =
-        audioContext.createMediaElementSource(bgMusic);
-
-      analyser =
-        audioContext.createAnalyser();
-
-      analyser.fftSize = 128;
-
-      dataArray =
-        new Uint8Array(analyser.frequencyBinCount);
-
-      source.connect(analyser);
-
-      analyser.connect(audioContext.destination);
-
-      startMusicMotion();
-    }
+await initAudioSystem();
 
   } else {
 
@@ -1271,6 +1262,10 @@ musicBtn.addEventListener("click", async () => {
 
     musicBtn.classList.remove("playing");
   }
+
+ setTimeout(() => {
+    musicBtn.dataset.locked = "0";
+  }, 220);
 
 });
 
