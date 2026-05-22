@@ -1020,6 +1020,14 @@ document.getElementById("lightbox").addEventListener("click", e => {
 window.addEventListener("keydown", e => {
   if (e.key === "Escape") closeLightbox();
 });
+
+
+window.addEventListener("orientationchange", () => {
+
+  closeLightbox();
+
+});
+
 </script>
 
 <script>
