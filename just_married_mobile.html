@@ -605,6 +605,16 @@ body.lightbox-open .mobile-header {
   pointer-events: none;
 }
 
+
+.lightbox img.reset-zoom {
+
+  transform: scale(1) !important;
+
+  zoom: 1 !important;
+
+}
+
+
 </style>
 </head>
 
@@ -1033,31 +1043,25 @@ window.addEventListener("keydown", e => {
 
 window.addEventListener("orientationchange", () => {
 
-  setTimeout(() => {
+  const img =
+    document.getElementById("lightboxImg");
 
-    const lightbox =
-      document.getElementById("lightbox");
+  if (!img) return;
 
-    if (
-      !lightbox.classList.contains("active")
-    ) return;
+  img.classList.add("reset-zoom");
 
-    const img =
-      document.getElementById("lightboxImg");
-
-    const src = img.src;
-
-    img.src = "";
+  requestAnimationFrame(() => {
 
     requestAnimationFrame(() => {
 
-      img.src = src;
+      img.classList.remove("reset-zoom");
 
     });
 
-  }, 250);
+  });
 
 });
+
 </script>
 
 <script>
