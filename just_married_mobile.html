@@ -1033,20 +1033,31 @@ window.addEventListener("keydown", e => {
 
 window.addEventListener("orientationchange", () => {
 
-  const img =
-    document.getElementById("lightboxImg");
+  setTimeout(() => {
 
-  if (!img) return;
+    const lightbox =
+      document.getElementById("lightbox");
 
-  img.style.width = "";
-  img.style.height = "";
-  img.style.maxWidth = "";
-  img.style.maxHeight = "";
-  img.style.transform = "scale(1)";
-  img.style.transformOrigin = "center center";
+    if (
+      !lightbox.classList.contains("active")
+    ) return;
+
+    const img =
+      document.getElementById("lightboxImg");
+
+    const src = img.src;
+
+    img.src = "";
+
+    requestAnimationFrame(() => {
+
+      img.src = src;
+
+    });
+
+  }, 250);
 
 });
-
 </script>
 
 <script>
