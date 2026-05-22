@@ -573,7 +573,10 @@ padding-top: 18px;
 
   height: calc(100svh - 32px);
 
-  padding: 16px 0;
+  padding:
+    calc(env(safe-area-inset-top) + 16px)
+    0
+    16px;
 
   display: flex;
 
@@ -584,7 +587,6 @@ padding-top: 18px;
   box-sizing: border-box;
 
 }
-
 
   .lightbox img {
 
