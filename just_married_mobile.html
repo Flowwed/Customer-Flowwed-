@@ -84,25 +84,46 @@ html, body {
 }
 
 .music-btn {
-position:absolute;
-right:16px;
-
-top:50%;
-
-transform:translateY(-50%);
   border: none;
   border-radius: 999px;
   padding: 11px 15px;
-
-  background: white;
-
+  background: #fff5f8;
   color: #a52126;
-
   font-size: 18px;
+  box-shadow:
+    0 0 0 0 rgba(255, 135, 170, .45),
+    0 4px 12px rgba(0,0,0,.12);
+  animation: musicPulse 1.8s ease-in-out infinite;
+}
 
+.music-btn.playing {
+  background: #eefaf0;
+  color: #227a3a;
+  animation: none;
   box-shadow:
     0 4px 12px rgba(0,0,0,.12);
 }
+
+@keyframes musicPulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(255, 135, 170, .45),
+      0 4px 12px rgba(0,0,0,.12);
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 10px rgba(255, 135, 170, 0),
+      0 4px 12px rgba(0,0,0,.12);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(255, 135, 170, 0),
+      0 4px 12px rgba(0,0,0,.12);
+  }
+}
+
 
 .ribbon-shell {
 
@@ -1058,42 +1079,53 @@ let dataArray;
 const bgMusic = document.getElementById("bgMusic");
 
 musicBtn.addEventListener("click", async () => {
+
   if (!bgMusic.src) return;
 
   if (bgMusic.paused) {
+
     await bgMusic.play().catch(() => {});
 
-if (!audioContext) {
-
-  audioContext =
-    new AudioContext();
-
-  const source =
-    audioContext.createMediaElementSource(bgMusic);
-
-  analyser =
-    audioContext.createAnalyser();
-
-  analyser.fftSize = 128;
-
-  dataArray =
-    new Uint8Array(analyser.frequencyBinCount);
-
-  source.connect(analyser);
-
-  analyser.connect(audioContext.destination);
-
-  startMusicMotion();
-}
-
     musicBtn.textContent = "⏸";
+
+    musicBtn.classList.add("playing");
+
+    if (!audioContext) {
+
+      audioContext =
+        new AudioContext();
+
+      const source =
+        audioContext.createMediaElementSource(bgMusic);
+
+      analyser =
+        audioContext.createAnalyser();
+
+      analyser.fftSize = 128;
+
+      dataArray =
+        new Uint8Array(analyser.frequencyBinCount);
+
+      source.connect(analyser);
+
+      analyser.connect(audioContext.destination);
+
+      startMusicMotion();
+    }
+
   } else {
+
     bgMusic.pause();
+
     musicBtn.textContent = "▶️";
+
+    musicBtn.classList.remove("playing");
   }
+
 });
 
 loadBackgroundMusicForPage();
+
 </script>
 
 
