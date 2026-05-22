@@ -1021,12 +1021,40 @@ window.addEventListener("keydown", e => {
   if (e.key === "Escape") closeLightbox();
 });
 
+document.getElementById("closeLightbox").addEventListener("click", closeLightbox);
+
+document.getElementById("lightbox").addEventListener("click", e => {
+  if (e.target.id === "lightbox") closeLightbox();
+});
+
+window.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeLightbox();
+});
 
 window.addEventListener("orientationchange", () => {
 
-  closeLightbox();
+  const img =
+    document.getElementById("lightboxImg");
+
+  if (!img) return;
+
+  img.style.width = "";
+  img.style.height = "";
+  img.style.maxWidth = "";
+  img.style.maxHeight = "";
+  img.style.transform = "scale(1)";
+  img.style.transformOrigin = "center center";
 
 });
+
+</script>
+
+<script>
+async function loadCoupleName() {
+  const token = getToken();
+  if (!token) return;
+
+
 
 </script>
 
