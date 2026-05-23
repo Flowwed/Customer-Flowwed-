@@ -1251,7 +1251,7 @@ musicBtn.dataset.locked = "1";
 
     await bgMusic.play().catch(() => {});
 
-    musicBtn.textContent = "⏸";
+    musicBtn.textContent = "🎶";
 
     musicBtn.classList.add("playing");
 
@@ -1261,7 +1261,7 @@ await initAudioSystem();
 
     bgMusic.pause();
 
-    musicBtn.textContent = "▶️";
+    musicBtn.textContent = "🎵";
 
     musicBtn.classList.remove("playing");
   }
