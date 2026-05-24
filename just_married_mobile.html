@@ -9,12 +9,13 @@
   name="viewport"
   content="
     width=device-width,
-    initial-scale=1.0,
-    maximum-scale=1.0,
+    initial-scale=1,
+    maximum-scale=1,
+    minimum-scale=1,
+    viewport-fit=cover,
     user-scalable=no
   "
 />
-
 
 <style>
 
@@ -1654,10 +1655,23 @@ document
     );
 });
 
+
+document.addEventListener(
+  "touchmove",
+  e => {
+
+    if (e.scale !== 1) {
+      e.preventDefault();
+    }
+
+  },
+  { passive: false }
+);
+
+
 </script>
 
 <script src="/navbar-mobile.js"></script> 
-
 
 
 
