@@ -434,7 +434,9 @@ backface-visibility: hidden;
 
   backface-visibility: hidden;
 
+  touch-action: manipulation;
 }
+
 
 .lightbox-caption {
   margin-top: 12px;
@@ -1128,19 +1130,21 @@ const lightboxImg =
 
 let currentScale = 1;
 
-lightboxImg.addEventListener("pointerup", e => {
+lightboxImg.addEventListener(
+  "click",
+  e => {
 
-  e.stopPropagation();
+    e.stopPropagation();
 
-  currentScale =
-    currentScale === 1
-      ? 2.2
-      : 1;
+    currentScale =
+      currentScale === 1
+        ? 2.2
+        : 1;
 
-  lightboxImg.style.transform =
-    `scale(${currentScale})`;
-});
-
+    lightboxImg.style.transform =
+      `scale(${currentScale})`;
+  }
+);
 
 </script>
 
