@@ -1060,17 +1060,17 @@ async function openLightbox(src, caption) {
     document.getElementById("lightboxCaption");
 cap.classList.remove("expanded");
 
-  const preload = new Image();
-
-  preload.src = src;
-
-  await preload.decode().catch(() => {});
 
 img.src = src;
 
 currentScale = 1;
 
 img.style.transform = "scale(1)";
+
+lightbox.classList.add("active");
+
+document.body.classList.add("lightbox-open");
+
 
   if (caption && caption.trim()) {
 
@@ -1086,12 +1086,6 @@ img.style.transform = "scale(1)";
     cap.style.display = "none";
   }
 
-  requestAnimationFrame(() => {
-
-    lightbox.classList.add("active");
-document.body.classList.add("lightbox-open");
-
-  });
 }
 
 function closeLightbox() {
