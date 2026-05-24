@@ -1214,6 +1214,13 @@ document.addEventListener(
   "visibilitychange",
   async () => {
 
+    if (document.visibilityState === "hidden") {
+
+      bgMusic.pause();
+
+      return;
+    }
+
     if (
       document.visibilityState === "visible" &&
       audioContext &&
@@ -1224,11 +1231,20 @@ document.addEventListener(
 
         await audioContext.resume();
 
+        if (
+          musicBtn.classList.contains("playing")
+        ) {
+
+          await bgMusic.play();
+
+        }
+
       } catch (e) {}
 
     }
 
 });
+
 
 
 musicBtn.addEventListener("click", async () => {
