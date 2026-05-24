@@ -426,6 +426,14 @@ backface-visibility: hidden;
 
   cursor: zoom-in;
 
+  display: block;
+
+  will-change: transform;
+
+  transform-origin: center center;
+
+  backface-visibility: hidden;
+
 }
 
 .lightbox-caption {
@@ -1115,23 +1123,25 @@ document
 
 });
 
-document
-  .getElementById("lightboxImg")
-   ?.addEventListener("touchend", e => {
+const lightboxImg =
+  document.getElementById("lightboxImg");
+
+lightboxImg.addEventListener(
+  "pointerup",
+  e => {
 
     e.stopPropagation();
-
-    const img = e.currentTarget;
 
     lightboxZoomed =
       !lightboxZoomed;
 
-    img.style.transform =
+    lightboxImg.style.transform =
       lightboxZoomed
         ? "scale(1.3)"
         : "scale(1)";
+  }
+);
 
-});
 
 </script>
 
