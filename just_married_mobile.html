@@ -1355,6 +1355,13 @@ velocity *= 0.92;
     velocity = 0;
   }
 
+const limit =
+  Math.max(
+    0,
+    track.scrollHeight -
+    (window.innerHeight - 130)
+  );
+
 
 
 const limit =
