@@ -1064,9 +1064,9 @@ cap.classList.remove("expanded");
 
   await preload.decode().catch(() => {});
 
-  img.src = src;
+img.src = src;
 
-lightboxZoomed = false;
+currentScale = 1;
 
 img.style.transform = "scale(1)";
 
@@ -1126,22 +1126,25 @@ document
 const lightboxImg =
   document.getElementById("lightboxImg");
 
-lightboxImg.addEventListener(
-  "pointerup",
-  e => {
+let currentScale = 1;
 
-    e.stopPropagation();
+lightboxImg.addEventListener("pointerup", e => {
 
-    lightboxZoomed =
-      !lightboxZoomed;
+  e.stopPropagation();
 
-    lightboxImg.style.transform =
-      lightboxZoomed
-        ? "scale(1.3)"
-        : "scale(1)";
+  if (currentScale === 1) {
+    currentScale = 2.2;
+
+  } else if (currentScale === 2.2) {
+    currentScale = 3.5;
+
+  } else {
+    currentScale = 1;
   }
-);
 
+  lightboxImg.style.transform =
+    `scale(${currentScale})`;
+});
 
 </script>
 
