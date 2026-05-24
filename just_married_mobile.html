@@ -938,14 +938,35 @@ galleryImages.push({
       img.addEventListener("click", async () => {
 
         // autoplay music
-        if (bgMusic.paused && bgMusic.src) {
+try {
 
-          await bgMusic.play().catch(() => {});
+  if (bgMusic.src) {
 
-          musicBtn.textContent = "🎶";
+    await initAudioSystem();
 
-          await initAudioSystem();
-        }
+    if (
+      audioContext &&
+      audioContext.state === "suspended"
+    ) {
+      await audioContext.resume();
+    }
+
+    if (bgMusic.paused) {
+
+      await bgMusic.play();
+
+      musicBtn.textContent = "🎶";
+
+      musicBtn.classList.add("playing");
+    }
+  }
+
+} catch(err) {
+
+  console.log("Audio play blocked:", err);
+
+}
+
 
         currentLightboxIndex = index;
 
@@ -1188,8 +1209,12 @@ async function initAudioSystem() {
 
   audioInitialized = true;
 
-  audioContext =
-    new AudioContext();
+audioContext =
+  new (window.AudioContext || window.webkitAudioContext)();
+
+await audioContext.resume();
+
+
 
   const source =
     audioContext.createMediaElementSource(bgMusic);
