@@ -422,7 +422,13 @@ backface-visibility: hidden;
 
   border-radius: 20px;
 
+  transition: transform .28s ease;
+
+  transform: scale(1);
+
+  transform-origin: center center;
 }
+
 
 
 .lightbox-caption {
@@ -1062,6 +1068,7 @@ async function openLightbox(src, caption) {
   const img =
     document.getElementById("lightboxImg");
 
+
   const cap =
     document.getElementById("lightboxCaption");
 cap.classList.remove("expanded");
@@ -1124,6 +1131,33 @@ document
     e.stopPropagation();
 
     e.currentTarget.classList.toggle("expanded");
+
+});
+
+document
+  .getElementById("lightboxImg")
+  ?.addEventListener("click", e => {
+
+    e.stopPropagation();
+
+    const img =
+      e.currentTarget;
+
+    const zoomed =
+      img.dataset.zoomed === "1";
+
+    if (zoomed) {
+
+      img.style.transform = "scale(1)";
+
+      img.dataset.zoomed = "0";
+
+    } else {
+
+      img.style.transform = "scale(1.2)";
+
+      img.dataset.zoomed = "1";
+    }
 
 });
 
