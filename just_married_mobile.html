@@ -422,19 +422,6 @@ backface-visibility: hidden;
 
   border-radius: 20px;
 
-  transition: transform .28s ease;
-
-  cursor: zoom-in;
-
-  display: block;
-
-  will-change: transform;
-
-  transform-origin: center center;
-
-  backface-visibility: hidden;
-
-  touch-action: manipulation;
 }
 
 
@@ -944,9 +931,9 @@ galleryImages.push({
       img.src = imageSrc;
 
       img.alt = r.caption || "";
-      img.loading = "eager";
-      
-      img.fetchPriority = "high";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.fetchPriority = "low";
 
       img.addEventListener("click", async () => {
 
@@ -1046,11 +1033,7 @@ let currentLightboxIndex = 0;
 
 let galleryImages = [];
 
-let lightboxZoomed = false;
-
 async function openLightbox(src, caption) {
-
-window.ribbonPaused = true;
 
   const lightbox =
     document.getElementById("lightbox");
@@ -1062,17 +1045,13 @@ window.ribbonPaused = true;
     document.getElementById("lightboxCaption");
 cap.classList.remove("expanded");
 
+  const preload = new Image();
 
-img.src = src;
+  preload.src = src;
 
-currentScale = 1;
+  await preload.decode().catch(() => {});
 
-img.style.transform = "scale(1)";
-
-lightbox.classList.add("active");
-
-document.body.classList.add("lightbox-open");
-
+  img.src = src;
 
   if (caption && caption.trim()) {
 
@@ -1088,6 +1067,12 @@ document.body.classList.add("lightbox-open");
     cap.style.display = "none";
   }
 
+  requestAnimationFrame(() => {
+
+    lightbox.classList.add("active");
+document.body.classList.add("lightbox-open");
+
+  });
 }
 
 function closeLightbox() {
@@ -1095,7 +1080,6 @@ function closeLightbox() {
   const img = document.getElementById("lightboxImg");
 
   lightbox.classList.remove("active");
-window.ribbonPaused = false;
 
 document.body.classList.remove("lightbox-open");
 
@@ -1121,27 +1105,6 @@ document
     e.currentTarget.classList.toggle("expanded");
 
 });
-
-const lightboxImg =
-  document.getElementById("lightboxImg");
-
-let currentScale = 1;
-
-lightboxImg.addEventListener(
-  "click",
-  e => {
-
-    e.stopPropagation();
-
-    currentScale =
-      currentScale === 1
-        ? 2.2
-        : 1;
-
-    lightboxImg.style.transform =
-      `scale(${currentScale})`;
-  }
-);
 
 </script>
 
@@ -1347,9 +1310,9 @@ const track =
 
   const speed = 0.42;
 
-let virtualOffset = 0;
+let y = 0;
 
-let recycleThreshold = 0;
+let direction = -1;
 
   let isDragging = false;
 
@@ -1381,13 +1344,11 @@ const start = performance.now();
 
   if (!isDragging) {
 
-if (!window.ribbonPaused) {
-  virtualOffset += speed;
-}
+y += speed * direction;
 
-    virtualOffset -= velocity;
+y += velocity;
 
-    velocity *= 0.92;
+velocity *= 0.92;
   }
 
   if (Math.abs(velocity) < 0.02) {
@@ -1396,21 +1357,34 @@ if (!window.ribbonPaused) {
 
 
 
-const totalHeight =
-  track.scrollHeight -
-  window.innerHeight;
+const limit =
+  Math.max(
+    0,
+    track.scrollHeight -
+    (window.innerHeight - 130)
+  );
 
+if (y < -limit) {
 
+  y = -limit;
 
-if (virtualOffset >= totalHeight) {
-  virtualOffset = 0;
+  direction = 1;
+
+  velocity = 0;
 }
 
-const loopOffset = virtualOffset;
+if (y > 0) {
 
+  y = 0;
+
+  direction = -1;
+
+  velocity = 0;
+}
 
 mover.style.transform =
-  `translate3d(0, ${-loopOffset}px, 0)`;
+  `translate3d(0, ${y}px, 0)`;
+
 
   if (performance.now() - lastVisibilityUpdate > 180) {
 
@@ -1446,15 +1420,12 @@ animate();
 
     startY = e.touches[0].clientY;
 
-virtualOffset -= delta;
-
-if (virtualOffset < 0) {
-  virtualOffset = 0;
-}
 
 
+y += delta;
 
-    velocity = delta * 0.22;
+velocity = delta * 0.18;
+
 
   }, { passive: true });
 
