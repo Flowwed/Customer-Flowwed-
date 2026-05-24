@@ -1050,6 +1050,8 @@ let lightboxZoomed = false;
 
 async function openLightbox(src, caption) {
 
+window.ribbonPaused = true;
+
   const lightbox =
     document.getElementById("lightbox");
 
@@ -1093,6 +1095,7 @@ function closeLightbox() {
   const img = document.getElementById("lightboxImg");
 
   lightbox.classList.remove("active");
+window.ribbonPaused = false;
 
 document.body.classList.remove("lightbox-open");
 
@@ -1378,7 +1381,9 @@ const start = performance.now();
 
   if (!isDragging) {
 
-    virtualOffset += speed;
+if (!window.ribbonPaused) {
+  virtualOffset += speed;
+}
 
     virtualOffset -= velocity;
 
