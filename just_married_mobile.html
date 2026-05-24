@@ -9,12 +9,12 @@
   name="viewport"
   content="
     width=device-width,
-    initial-scale=1,
-    maximum-scale=1.3,
-    minimum-scale=1,
-    viewport-fit=cover
+    initial-scale=1.0,
+    maximum-scale=1.0,
+    user-scalable=no
   "
 />
+
 
 <style>
 
@@ -407,14 +407,26 @@ backface-visibility: hidden;
   pointer-events: auto;
 }
 
-
 .lightbox-content {
+
   width: 100%;
+
+  overflow: auto;
+
+  touch-action: pinch-zoom;
+
+  -webkit-overflow-scrolling: touch;
+
 }
+
 
 .lightbox img {
 
   width: 100%;
+
+  min-width: 100%;
+
+  max-width: 130%;
 
   max-height: 88dvh;
 
@@ -423,7 +435,6 @@ backface-visibility: hidden;
   border-radius: 20px;
 
 }
-
 
 .lightbox-caption {
   margin-top: 12px;
