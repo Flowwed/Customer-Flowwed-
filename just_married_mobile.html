@@ -1132,19 +1132,15 @@ lightboxImg.addEventListener("pointerup", e => {
 
   e.stopPropagation();
 
-  if (currentScale === 1) {
-    currentScale = 2.2;
-
-  } else if (currentScale === 2.2) {
-    currentScale = 3.5;
-
-  } else {
-    currentScale = 1;
-  }
+  currentScale =
+    currentScale === 1
+      ? 2.2
+      : 1;
 
   lightboxImg.style.transform =
     `scale(${currentScale})`;
 });
+
 
 </script>
 
