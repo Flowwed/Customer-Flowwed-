@@ -1144,6 +1144,22 @@ const lightboxImg =
   document.getElementById("lightboxImg");
 
 lightboxImg.addEventListener(
+  "gesturestart",
+  e => e.preventDefault()
+);
+
+lightboxImg.addEventListener(
+  "gesturechange",
+  e => e.preventDefault()
+);
+
+lightboxImg.addEventListener(
+  "gestureend",
+  e => e.preventDefault()
+);
+
+
+lightboxImg.addEventListener(
   "touchstart",
   e => {
 
