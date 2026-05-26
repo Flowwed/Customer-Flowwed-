@@ -1166,33 +1166,101 @@ document
 
 });
 
-document
-  .getElementById("lightboxImg")
-  ?.addEventListener("click", e => {
 
-    e.stopPropagation();
 
-    const img =
-      e.currentTarget;
+const lightboxImg =
+  document.getElementById("lightboxImg");
 
-    const zoomed =
-      img.dataset.zoomed === "1";
+let currentScale = 1;
 
-    if (zoomed) {
+const MIN_SCALE = 1;
 
-      img.style.transform = "scale(1)";
+const MAX_SCALE = 1.65;
 
-      img.dataset.zoomed = "0";
+function applyZoom() {
 
-    } else {
+  currentScale = Math.max(
+    MIN_SCALE,
+    Math.min(MAX_SCALE, currentScale)
+  );
 
-      img.style.transform = "scale(1.2)";
+  lightboxImg.style.transform =
+    `scale(${currentScale})`;
+}
 
-      img.dataset.zoomed = "1";
-    }
+lightboxImg?.addEventListener("click", e => {
+
+  e.stopPropagation();
+
+  if (currentScale > 1) {
+
+    currentScale = 1;
+
+  } else {
+
+    currentScale = 1.35;
+  }
+
+  applyZoom();
 
 });
 
+lightboxImg?.addEventListener(
+  "wheel",
+  e => {
+
+    e.preventDefault();
+
+    currentScale +=
+      e.deltaY * -0.001;
+
+    applyZoom();
+
+  },
+  { passive: false }
+);
+
+lightboxImg?.addEventListener(
+  "touchstart",
+  e => {
+
+    if (e.touches.length === 2) {
+
+      lightboxImg.dataset.pinching = "1";
+
+    }
+
+  },
+  { passive: true }
+);
+
+lightboxImg?.addEventListener(
+  "touchmove",
+  e => {
+
+    if (
+      e.touches.length !== 2 ||
+      lightboxImg.dataset.pinching !== "1"
+    ) {
+      return;
+    }
+
+    e.preventDefault();
+
+  },
+  { passive: false }
+);
+
+lightboxImg?.addEventListener(
+  "touchend",
+  () => {
+
+    lightboxImg.dataset.pinching = "0";
+
+    applyZoom();
+
+  }
+);
 </script>
 
 <script>
