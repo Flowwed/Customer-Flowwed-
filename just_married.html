@@ -1480,11 +1480,6 @@ waitForReady(() => {
 
   introFinished = true;
 
-  // ⛔ floating выключен:
-  // intro balloons остаются навсегда
-  if (!window.randomHintsEnabled) {
-    return;
-  }
 
   // ✅ floating включен:
   // работаем как раньше
@@ -2294,12 +2289,6 @@ introFinished = true;
 
 function spawnGroup(){
 
-  if (
-    introFinished &&
-    !window.randomHintsEnabled
-  ) {
-    return;
-  }
 
   if (groupActive) return;
 
@@ -2347,13 +2336,6 @@ function spawnOne(){
 
 
 if (!text) {
-
-  // 🔥 если ещё идёт intro — НЕ останавливаемся
-  if (!introDone) {
-    setTimeout(spawnOne, APPEAR_GAP);
-    return;
-  }
-
   scheduleHold();
   return;
 }
@@ -2406,8 +2388,6 @@ if (isIntro) {
 
 function clearGroup(){
 
-// ⛔ если ещё не нажали play — НИЧЕГО НЕ ЧИСТИМ
-if (!started) return;
 
   // 🔒 СПЕЦ-РЕЖИМ: НИКОГДА НЕ ОЧИЩАЕМ BALLOONS
   if (window.__SPECIAL_MODE__) {
