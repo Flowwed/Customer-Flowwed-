@@ -845,6 +845,7 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 <script>
 function getToken() {
+
   const params = new URLSearchParams(location.search);
 
   const token =
@@ -855,6 +856,16 @@ function getToken() {
 
   if (token) {
     sessionStorage.setItem("rsvpToken", token);
+  }
+
+  if (!token) {
+
+    alert(
+      "TOKEN LOST\n\n" +
+      "URL:\n" +
+      location.href
+    );
+
   }
 
   return token;
@@ -874,7 +885,6 @@ function goBack() {
   }
 }
 </script>
-
 <script>
 async function loadMobileGallery() {
   const token = getToken();
