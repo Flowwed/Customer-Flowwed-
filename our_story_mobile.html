@@ -600,15 +600,6 @@ transform-origin: center center;
 
 }
 
-
-html {
-    background: blue !important;
-}
-
-body {
-    background: green !important;
-}
-
 </style>
 </head>
 
@@ -1282,7 +1273,6 @@ zoomImg.addEventListener("touchmove", e => {
 
 </script>
 
-
 <script>
 (async () => {
   try {
@@ -1293,31 +1283,6 @@ zoomImg.addEventListener("touchmove", e => {
     const content = await loadStoryContent();
 
     renderMobileStory(content, storyPhotos);
-
-const observer =
-  new IntersectionObserver(entries => {
-
-    entries.forEach(entry => {
-
-      if (entry.isIntersecting) {
-
-        entry.target.classList.add("visible");
-
-      }
-
-    });
-
-  }, {
-    threshold: 0.12
-  });
-
-document
-  .querySelectorAll(
-    ".story-card, .photo-ribbon"
-  )
-  .forEach(el => {
-    observer.observe(el);
-  });
 
   } catch (err) {
     console.error(err);
@@ -1331,7 +1296,6 @@ document
   }
 })();
 </script>
-
 <script>
 
 const heroPhoto =
