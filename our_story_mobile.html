@@ -1141,6 +1141,61 @@ document
 
 });
 
+let startDistance = 0;
+let startScale = 1;
+
+const zoomImg =
+  document.getElementById("lightboxImg");
+
+function getDistance(touches) {
+
+  const dx =
+    touches[0].clientX -
+    touches[1].clientX;
+
+  const dy =
+    touches[0].clientY -
+    touches[1].clientY;
+
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+zoomImg.addEventListener("touchstart", e => {
+
+  if (e.touches.length === 2) {
+
+    startDistance =
+      getDistance(e.touches);
+
+    startScale =
+      currentScale;
+  }
+
+}, { passive:false });
+
+zoomImg.addEventListener("touchmove", e => {
+
+  if (e.touches.length !== 2) return;
+
+  e.preventDefault();
+
+  const newDistance =
+    getDistance(e.touches);
+
+  let scale =
+    startScale *
+    (newDistance / startDistance);
+
+  scale = Math.max(1, Math.min(2, scale));
+
+  currentScale = scale;
+
+  zoomImg.style.transform =
+    `scale(${scale})`;
+
+}, { passive:false });
+
+
 </script>
 
 
