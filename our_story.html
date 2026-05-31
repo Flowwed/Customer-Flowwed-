@@ -1275,6 +1275,12 @@ console.log("ALL STORY ROWS:", rows);
 
   let first = true;
 
+rows.sort((a, b) => {
+  const na = parseInt(a.slot.replace("img", "")) || 0;
+  const nb = parseInt(b.slot.replace("img", "")) || 0;
+  return na - nb;
+});
+
 rows.forEach(r => {
 
   if (!r.path) return;
