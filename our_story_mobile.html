@@ -1069,6 +1069,15 @@ function openLightbox(index) {
 
   const item = storyPhotos[index];
 
+const zoomImg =
+  document.getElementById("lightboxImg");
+
+currentScale = 1;
+
+zoomImg.style.transform = "scale(1)";
+
+zoomImg.dataset.zoomed = "0";
+
   document.getElementById("lightboxImg").src = item.src;
 
   const cap = document.getElementById("lightboxCaption");
