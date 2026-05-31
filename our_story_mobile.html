@@ -7,37 +7,34 @@
 
 <style>
 
-html, body {
-
+html {
   margin: 0;
   padding: 0;
-
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-
-min-height: 100vh;
-overflow-x: hidden;
+  overflow-x: hidden;
 
   background:
-
     radial-gradient(
       circle at top,
       rgba(255,255,255,.85),
       transparent 38%
     ),
-
     radial-gradient(
       circle at bottom,
       rgba(255,220,228,.42),
       transparent 42%
     ),
-
     linear-gradient(
       180deg,
       #fff7f8,
       #efd5db,
       #e7c3cb
     );
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 
   font-family:
     Inter,
@@ -49,7 +46,6 @@ overflow-x: hidden;
 
   color: #732323;
 }
-
 
 
 .loading {
@@ -671,6 +667,20 @@ transform-origin: center center;
 
 </main>
 
+
+
+<div class="image-lightbox" id="lightbox">
+  <div class="lightbox-close" id="closeLightbox">×</div>
+
+  <button class="lightbox-arrow left" id="prevBtn">‹</button>
+
+  <div class="lightbox-content">
+    <img id="lightboxImg" />
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
+  <button class="lightbox-arrow right" id="nextBtn">›</button>
+</div>
 
 <script>
 const SUPABASE_URL = "https://octwwpatppbenqwkcqaw.supabase.co";
