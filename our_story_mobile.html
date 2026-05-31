@@ -89,8 +89,6 @@ overflow-x: hidden;
   text-align: center;
 }
 
-
-
 .hero-photo {
   width: 100%;
   max-width: 390px;
@@ -101,9 +99,15 @@ overflow-x: hidden;
   box-shadow:
     0 28px 70px rgba(120,30,50,.22),
     0 10px 24px rgba(0,0,0,.12);
+
+transform:
+  translateZ(0);
+
+will-change:
+  transform;
+
+
 }
-
-
 
 .hero-photo img {
   width: 100%;
@@ -658,14 +662,8 @@ transform-origin: center center;
 
 </section>
 
-<main>
+<main></main>
 
-
-  <section class="story-flow" id="storyFlow">
-    <div class="empty" id="emptyState" style="display:none;">No story yet.</div>
-  </section>
-
-</main>
 
 <div class="image-lightbox" id="lightbox">
   <div class="lightbox-close" id="closeLightbox">×</div>
@@ -1319,6 +1317,23 @@ document
 })();
 </script>
 
+<script>
+
+const heroPhoto =
+  document.getElementById("heroPhoto");
+
+window.addEventListener("scroll", () => {
+
+  if (!heroPhoto) return;
+
+  const y =
+    window.scrollY * 0.08;
+
+  heroPhoto.style.transform =
+    `translateY(${y}px)`;
+});
+
+</script>
 
 <script src="/navbar-mobile.js"></script>
 
