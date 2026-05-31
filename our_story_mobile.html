@@ -256,6 +256,11 @@ transform-origin: center center;
 
 }
 
+.photo-card.portrait {
+  flex: 0 0 62vw;
+  max-width: 260px;
+}
+
 @keyframes cardFloat {
 
   0% {
@@ -519,26 +524,6 @@ aspect-ratio: 1 / 1;
   border-radius: 10px;
 }
 
-.photo-card.portrait {
-  flex: 0 0 62vw;
-  max-width: 260px;
-}
-
-.photo-card.landscape {
-  flex: 0 0 85vw;
-  max-width: 360px;
-}
-
-.photo-card.square {
-  flex: 0 0 78vw;
-  max-width: 330px;
-}
-
-.photo-card img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
 
 </style>
 </head>
@@ -847,18 +832,9 @@ img.onload = () => {
 
     card.classList.add("portrait");
 
-  } else if (img.naturalWidth > img.naturalHeight) {
-
-    card.classList.add("landscape");
-
-  } else {
-
-    card.classList.add("square");
-
   }
 
 };
-
     img.addEventListener("click", () => {
 
 currentImageIndex = globalIndex;
