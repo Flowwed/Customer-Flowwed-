@@ -12,8 +12,8 @@ html, body {
   margin: 0;
   padding: 0;
 
-/* padding-top: env(safe-area-inset-top); */
-/* padding-bottom: env(safe-area-inset-bottom); */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 
   background:
 
@@ -538,27 +538,63 @@ transform-origin: center center;
   border-radius: 10px;
 }
 
-html {
-  background: red !important;
-}
+@media (orientation: landscape) {
 
-body {
-  background: lime !important;
-}
+  .image-lightbox {
 
-html,
-body {
-  min-height: 100%;
-  height: auto !important;
-}
+    padding: 0;
 
-html,
-body {
-  overflow-x: hidden;
-}
+    background: black;
 
-body {
-  min-height: 100vh;
+  }
+
+  .lightbox-content {
+
+    position: relative;
+
+    width: fit-content;
+
+    max-width: 100vw;
+
+    max-height: 100svh;
+
+    margin: 0 auto;
+
+    padding:
+      calc(env(safe-area-inset-top) + 16px)
+      0
+      16px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+  }
+
+  .lightbox-content img {
+
+    width: 100vw;
+
+    height: calc(100svh - 32px);
+
+    object-fit: contain;
+
+    border-radius: 0;
+
+    max-height: none;
+
+  }
+
+  .lightbox-caption {
+
+    display: none !important;
+
+  }
+
 }
 
 </style>
@@ -606,7 +642,6 @@ body {
 
 </header>
 
-
 <section class="hero">
 
   <h1 id="coupleName">Our Story</h1>
@@ -621,10 +656,12 @@ body {
     <img id="heroImg" />
   </div>
 
+
 </section>
 
-
 <main>
+
+
   <section class="story-flow" id="storyFlow">
     <div class="empty" id="emptyState" style="display:none;">No story yet.</div>
   </section>
@@ -1065,7 +1102,6 @@ for (
       flow.appendChild(ribbon);
     }
 
-
     offset += chunk.length;
   });
 
@@ -1302,7 +1338,7 @@ window.addEventListener("scroll", () => {
 
 </script>
 
-<!-- <script src="/navbar-mobile.js"></script> -->
+<script src="/navbar-mobile.js"></script>
 
 
 </body>
