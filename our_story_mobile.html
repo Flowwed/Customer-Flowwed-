@@ -1025,7 +1025,7 @@ for (
 
   visibleCards.forEach((card, i) => {
 
-    flow.appendChild(card);
+    // flow.appendChild(card);
 
     const chunk =
       chunks[i] || [];
@@ -1036,9 +1036,10 @@ for (
         offset
       );
 
-// if (ribbon) {
-//   flow.appendChild(ribbon);
-// }
+    if (ribbon) {
+      flow.appendChild(ribbon);
+    }
+
 
     offset += chunk.length;
   });
