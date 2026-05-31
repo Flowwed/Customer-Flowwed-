@@ -373,7 +373,16 @@ transform-origin: center center;
   max-height: 75svh;
   object-fit: contain;
   border-radius: 22px;
+
+  transition: transform .28s ease;
+
+  transform: scale(1);
+
+  transform-origin: center center;
+
+  touch-action: none;
 }
+
 
 .lightbox-caption {
   margin-top: 12px;
@@ -1099,6 +1108,39 @@ document.getElementById("nextBtn").addEventListener("click", e => {
 window.addEventListener("keydown", e => {
   if (e.key === "Escape") closeLightbox();
 });
+
+let currentScale = 1;
+
+document
+  .getElementById("lightboxImg")
+  ?.addEventListener("click", e => {
+
+    e.stopPropagation();
+
+    const img = e.currentTarget;
+
+    const zoomed =
+      img.dataset.zoomed === "1";
+
+    if (zoomed) {
+
+      img.style.transform = "scale(1)";
+
+      img.dataset.zoomed = "0";
+
+      currentScale = 1;
+
+    } else {
+
+      img.style.transform = "scale(1.2)";
+
+      img.dataset.zoomed = "1";
+
+      currentScale = 1.2;
+    }
+
+});
+
 </script>
 
 
