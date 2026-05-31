@@ -109,7 +109,7 @@ will-change:
 .hero-photo img {
   width: 100%;
   max-height: 52vh;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -257,8 +257,8 @@ transform-origin: center center;
 }
 
 .photo-card.portrait {
-  flex: 0 0 62vw;
-  max-width: 260px;
+  flex: 0 0 60vw;
+  max-width: 240px;
 }
 
 @keyframes cardFloat {
@@ -302,7 +302,7 @@ transform-origin: center center;
 .photo-card img {
 aspect-ratio: 1 / 1;
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 
@@ -523,7 +523,6 @@ aspect-ratio: 1 / 1;
   background: rgba(120,30,50,.22);
   border-radius: 10px;
 }
-
 
 </style>
 </head>
@@ -829,12 +828,12 @@ function makePhotoRibbon(photos, offset = 0) {
 img.onload = () => {
 
   if (img.naturalHeight > img.naturalWidth) {
-
     card.classList.add("portrait");
-
   }
 
 };
+
+
     img.addEventListener("click", () => {
 
 currentImageIndex = globalIndex;
