@@ -583,6 +583,7 @@ transform-origin: center center;
 
 </header>
 
+<!--
 <section class="hero">
 
   <h1 id="coupleName">Our Story</h1>
@@ -598,6 +599,7 @@ transform-origin: center center;
   </div>
 
 </section>
+-->
 
 <main>
   <section class="story-flow" id="storyFlow">
@@ -1219,7 +1221,7 @@ zoomImg.addEventListener("touchmove", e => {
 
     const content = await loadStoryContent();
 
-    // renderMobileStory(content, storyPhotos);
+    renderMobileStory(content, storyPhotos);
 
 const observer =
   new IntersectionObserver(entries => {
