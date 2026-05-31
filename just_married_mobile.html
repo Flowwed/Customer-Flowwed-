@@ -223,16 +223,6 @@ backface-visibility: hidden;
 
 }
 
-.photo-card.portrait {
-  max-width: 260px;
-}
-
-.photo-card.portrait img {
-  width: 100%;
-  height: auto;
-  max-height: none;
-}
-
 .photo-card.floating {
 
   animation:
@@ -953,15 +943,6 @@ galleryImages.push({
       const img = document.createElement("img");
 
       img.src = imageSrc;
-
-img.onload = () => {
-
-  if (img.naturalHeight > img.naturalWidth) {
-    card.classList.add("portrait");
-  }
-
-};
-
 
       img.alt = r.caption || "";
       img.loading = "lazy";
