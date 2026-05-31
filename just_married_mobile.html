@@ -949,6 +949,16 @@ galleryImages.push({
 
       img.src = imageSrc;
 
+img.addEventListener("load", () => {
+
+  if (img.naturalHeight > img.naturalWidth) {
+
+    card.classList.add("portrait");
+
+  }
+
+});
+
       img.alt = r.caption || "";
       img.loading = "lazy";
       img.decoding = "async";
