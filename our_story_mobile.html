@@ -1025,7 +1025,7 @@ for (
 
   visibleCards.forEach((card, i) => {
 
-    // flow.appendChild(card);
+    flow.appendChild(card);
 
     const chunk =
       chunks[i] || [];
@@ -1219,7 +1219,7 @@ zoomImg.addEventListener("touchmove", e => {
 
     const content = await loadStoryContent();
 
-    renderMobileStory(content, storyPhotos);
+    // renderMobileStory(content, storyPhotos);
 
 const observer =
   new IntersectionObserver(entries => {
