@@ -7,20 +7,34 @@
 
 <style>
 
-html {
+html, body {
+
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
 
-  background: #e7c3cb;
-}
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+  background:
 
-  background: #e7c3cb;
+    radial-gradient(
+      circle at top,
+      rgba(255,255,255,.85),
+      transparent 38%
+    ),
+
+    radial-gradient(
+      circle at bottom,
+      rgba(255,220,228,.42),
+      transparent 42%
+    ),
+
+    linear-gradient(
+      180deg,
+      #fff7f8,
+      #efd5db,
+      #e7c3cb
+    );
 
   font-family:
     Inter,
@@ -32,6 +46,8 @@ body {
 
   color: #732323;
 }
+
+
 
 .loading {
   position: fixed;
@@ -92,7 +108,7 @@ will-change:
 
 .hero-photo img {
   width: 100%;
-  height: auto;
+  max-height: 52vh;
   object-fit: contain;
   display: block;
 }
@@ -581,45 +597,6 @@ transform-origin: center center;
 
 }
 
-.story-flow {
-  background: yellow !important;
-}
-
-.hero {
-  background: lime !important;
-}
-
-html {
-  background: blue !important;
-}
-
-body {
-  background: lime !important;
-}
-
-body {
-  min-height: auto !important;
-  height: auto !important;
-}
-
-html {
-  height: auto !important;
-  min-height: 0 !important;
-}
-
-body {
-  height: auto !important;
-  min-height: 0 !important;
-}
-
-html {
-  background: blue !important;
-}
-
-body {
-  background: lime !important;
-}
-
 </style>
 </head>
 
@@ -679,19 +656,13 @@ body {
     <img id="heroImg" />
   </div>
 
-
 </section>
-
-<main>
-
 
   <section class="story-flow" id="storyFlow">
     <div class="empty" id="emptyState" style="display:none;">No story yet.</div>
   </section>
 
 </main>
-
-
 
 <div class="image-lightbox" id="lightbox">
   <div class="lightbox-close" id="closeLightbox">×</div>
@@ -1364,32 +1335,6 @@ window.addEventListener("scroll", () => {
 </script>
 
 <script src="/navbar-mobile.js"></script>
-
-<div style="
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:red;
-color:white;
-z-index:999999;
-padding:10px;
-font-size:12px;
-">
-BODY=<span id="b1"></span><br>
-HTML=<span id="b2"></span>
-</div>
-
-<script>
-setTimeout(() => {
-  document.getElementById("b1").textContent =
-    document.body.scrollHeight;
-
-  document.getElementById("b2").textContent =
-    document.documentElement.scrollHeight;
-}, 2000);
-</script>
-
 
 
 </body>
