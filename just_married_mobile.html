@@ -223,6 +223,11 @@ backface-visibility: hidden;
 
 }
 
+.photo-card.portrait {
+  max-width: 240px;
+}
+
+
 .photo-card.floating {
 
   animation:
@@ -943,6 +948,15 @@ galleryImages.push({
       const img = document.createElement("img");
 
       img.src = imageSrc;
+
+img.onload = () => {
+
+  if (img.naturalHeight > img.naturalWidth) {
+    card.classList.add("portrait");
+  }
+
+};
+
 
       img.alt = r.caption || "";
       img.loading = "lazy";
