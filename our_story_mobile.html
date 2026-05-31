@@ -89,6 +89,8 @@ overflow-x: hidden;
   text-align: center;
 }
 
+
+
 .hero-photo {
   width: 100%;
   max-width: 390px;
@@ -99,15 +101,9 @@ overflow-x: hidden;
   box-shadow:
     0 28px 70px rgba(120,30,50,.22),
     0 10px 24px rgba(0,0,0,.12);
-
-transform:
-  translateZ(0);
-
-will-change:
-  transform;
-
-
 }
+
+
 
 .hero-photo img {
   width: 100%;
@@ -1273,6 +1269,7 @@ zoomImg.addEventListener("touchmove", e => {
 
 </script>
 
+
 <script>
 (async () => {
   try {
@@ -1283,6 +1280,31 @@ zoomImg.addEventListener("touchmove", e => {
     const content = await loadStoryContent();
 
     renderMobileStory(content, storyPhotos);
+
+const observer =
+  new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting) {
+
+        entry.target.classList.add("visible");
+
+      }
+
+    });
+
+  }, {
+    threshold: 0.12
+  });
+
+document
+  .querySelectorAll(
+    ".story-card, .photo-ribbon"
+  )
+  .forEach(el => {
+    observer.observe(el);
+  });
 
   } catch (err) {
     console.error(err);
@@ -1296,23 +1318,7 @@ zoomImg.addEventListener("touchmove", e => {
   }
 })();
 </script>
-<script>
 
-const heroPhoto =
-  document.getElementById("heroPhoto");
-
-window.addEventListener("scroll", () => {
-
-  if (!heroPhoto) return;
-
-  const y =
-    window.scrollY * 0.08;
-
-  heroPhoto.style.transform =
-    `translateY(${y}px)`;
-});
-
-</script>
 
 <script src="/navbar-mobile.js"></script>
 
