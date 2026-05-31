@@ -297,7 +297,7 @@ transform-origin: center center;
 .photo-card img {
 aspect-ratio: 1 / 1;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -517,6 +517,27 @@ aspect-ratio: 1 / 1;
 .story-body::-webkit-scrollbar-thumb {
   background: rgba(120,30,50,.22);
   border-radius: 10px;
+}
+
+.photo-card.portrait {
+  flex: 0 0 62vw;
+  max-width: 260px;
+}
+
+.photo-card.landscape {
+  flex: 0 0 85vw;
+  max-width: 360px;
+}
+
+.photo-card.square {
+  flex: 0 0 78vw;
+  max-width: 330px;
+}
+
+.photo-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 </style>
@@ -819,6 +840,24 @@ function makePhotoRibbon(photos, offset = 0) {
     img.src = p.src;
     img.loading = "lazy";
     img.decoding = "async";
+
+img.onload = () => {
+
+  if (img.naturalHeight > img.naturalWidth) {
+
+    card.classList.add("portrait");
+
+  } else if (img.naturalWidth > img.naturalHeight) {
+
+    card.classList.add("landscape");
+
+  } else {
+
+    card.classList.add("square");
+
+  }
+
+};
 
     img.addEventListener("click", () => {
 
