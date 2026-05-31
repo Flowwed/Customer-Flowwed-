@@ -296,7 +296,6 @@ transform-origin: center center;
 
 .photo-card img {
   width: 100%;
-  aspect-ratio: 1 / 1;
   object-fit: contain;
   display: block;
 }
@@ -722,6 +721,13 @@ async function loadStoryPhotos() {
   );
 
   const rows = await res.json();
+
+rows.sort((a, b) => {
+  const na = parseInt((a.slot || "").replace("img", "")) || 0;
+  const nb = parseInt((b.slot || "").replace("img", "")) || 0;
+  return na - nb;
+});
+
   if (!Array.isArray(rows)) return [];
 
   return rows
