@@ -297,6 +297,10 @@ html,body{
   box-shadow:0 12px 22px rgba(0,0,0,.18);
 }
 
+.ribbon-track img.portrait{
+  height:120px;
+}
+
 /* =========================
    LIGHTBOX (ORIGINAL)
    ========================= */
@@ -1920,6 +1924,14 @@ img.dataset.index = index;
 
   img.loading = "lazy";
   img.decoding = "async";
+
+img.onload = () => {
+
+  if (img.naturalHeight > img.naturalWidth) {
+    img.classList.add("portrait");
+  }
+
+};
 
   ribbon.appendChild(img);
 });
