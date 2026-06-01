@@ -507,7 +507,7 @@ transform-origin: center center;
   color: white;
 
   font-size: 22px;
-  font-weight: 9999;
+  font-weight: 300;
 
   box-shadow:
     0 8px 24px rgba(0,0,0,.18);
@@ -689,6 +689,17 @@ body {
   min-height: 100%;
   background: #e7c3cb !important;
 }
+
+
+body.lightbox-open .mobile-header {
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+}
+
 
 </style>
 </head>
@@ -1263,10 +1274,16 @@ zoomImg.dataset.zoomed = "0";
   }
 
   document.getElementById("lightbox").classList.add("active");
+
+document.body.classList.add("lightbox-open");
+
 }
 
 function closeLightbox() {
   document.getElementById("lightbox").classList.remove("active");
+
+document.body.classList.remove("lightbox-open");
+
   document.getElementById("lightboxImg").src = "";
 }
 
