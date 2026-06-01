@@ -1322,6 +1322,7 @@ img.addEventListener("touchmove", e => {
 
 </script>
 
+
 <script>
 async function loadCoupleName() {
   const token = getToken();
@@ -1341,9 +1342,27 @@ async function loadCoupleName() {
     const rows = await res.json();
 
     if (rows?.[0]?.couple_name) {
-      document.getElementById("pageTitle").textContent = rows[0].couple_name;
-      document.title = rows[0].couple_name;
+
+      document.getElementById("pageTitle").textContent =
+        rows[0].couple_name;
+
+      document.title =
+        rows[0].couple_name;
     }
+
+    if (rows?.[0]?.wedding_date) {
+
+      const d =
+        new Date(rows[0].wedding_date);
+
+      document.getElementById("eventDate").textContent =
+        d.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+    }
+
   } catch (err) {
     console.log("Couple name load error", err);
   }
@@ -1351,6 +1370,7 @@ async function loadCoupleName() {
 
 loadCoupleName();
 </script>
+
 
 <script>
 async function loadBackgroundMusicForPage() {
