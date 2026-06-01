@@ -1072,6 +1072,18 @@ try {
 
       card.appendChild(img);
 
+card.addEventListener("click", async () => {
+
+  currentLightboxIndex = index;
+
+  openLightbox(
+    imageSrc,
+    r.caption || ""
+  );
+
+});
+
+
       if (r.caption && r.caption.trim()) {
 
         const caption =
