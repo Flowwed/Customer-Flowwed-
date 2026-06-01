@@ -745,17 +745,24 @@ body.lightbox-open .mobile-header {
 
 <div id="loading" class="loading">Loading...</div>
 
+
 <header class="mobile-header">
 
   <div class="burger" id="burger">
     ☰
   </div>
 
-<div class="title" id="pageTitle"></div>
+  <div class="title-block">
 
-<button class="music-btn" id="musicBtn">
-  🎵
-</button>
+    <div class="title" id="pageTitle"></div>
+
+    <div class="header-date" id="eventDate"></div>
+
+  </div>
+
+  <button class="music-btn" id="musicBtn">
+    🎵
+  </button>
 
   <div class="hero-steps">
 
@@ -1284,7 +1291,7 @@ async function loadCoupleName() {
 
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/sites?select=couple_name&edit_token=eq.${token}`,
+      `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date&edit_token=eq.${token}`,
       {
         headers: {
           apikey: SUPABASE_KEY,
