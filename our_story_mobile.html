@@ -1038,6 +1038,15 @@ openLightbox(globalIndex);
 
     card.appendChild(img);
 
+card.addEventListener("click", () => {
+
+  currentImageIndex = globalIndex;
+
+  openLightbox(globalIndex);
+
+});
+
+
     if (p.caption.trim()) {
       const cap = document.createElement("div");
       cap.className = "photo-caption";

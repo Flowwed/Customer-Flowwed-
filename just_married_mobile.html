@@ -1074,6 +1074,35 @@ try {
 
 card.addEventListener("click", async () => {
 
+  try {
+
+    if (bgMusic.src) {
+
+      await initAudioSystem();
+
+      if (
+        audioContext &&
+        audioContext.state === "suspended"
+      ) {
+        await audioContext.resume();
+      }
+
+      if (bgMusic.paused) {
+
+        await bgMusic.play();
+
+        musicBtn.textContent = "🎶";
+
+        musicBtn.classList.add("playing");
+      }
+    }
+
+  } catch(err) {
+
+    console.log("Audio play blocked:", err);
+
+  }
+
   currentLightboxIndex = index;
 
   openLightbox(
@@ -1082,7 +1111,6 @@ card.addEventListener("click", async () => {
   );
 
 });
-
 
       if (r.caption && r.caption.trim()) {
 
