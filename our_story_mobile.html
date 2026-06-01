@@ -855,10 +855,22 @@ function cleanHtml(html) {
     .trim();
 }
 
+function isEmptyHtml(html) {
+  const text = (html || "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/<br\s*\/?>/gi, "")
+    .replace(/<[^>]+>/g, "")
+    .trim();
+
+  return text === "";
+}
+
+
 function makeStoryCard(title, html) {
 
+  if (isEmptyHtml(html)) return null;
+
   const cleaned = cleanHtml(html);
-  if (!cleaned) return null;
 
   const card = document.createElement("article");
   card.className = "story-card";
@@ -888,7 +900,6 @@ function makeStoryCard(title, html) {
 
   return card;
 }
-
 
 function makePhotoRibbon(photos, offset = 0) {
   if (!photos.length) return null;
