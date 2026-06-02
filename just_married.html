@@ -2710,52 +2710,92 @@ function noticeGoBack(){
 <script>
 
 async function loadBackgroundMusicForPage() {
-  const token = getToken();
-  if (!token) return;
 
-  const PAGE_KEY = "just_married";
+  try {
 
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/rpc/get_site_page_music`,
-    {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        p_token: token,
-        p_page_key: PAGE_KEY
-      })
+    const token = getToken();
+    if (!token) return;
+
+    const PAGE_KEY = "just_married";
+
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/rpc/get_site_page_music`,
+      {
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          p_token: token,
+          p_page_key: PAGE_KEY
+        })
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(
+        `Music API HTTP ${res.status}`
+      );
     }
-  );
 
-const rows = await res.json();
-if (!rows.length || !rows[0].music_path) return;
+    const rows = await res.json();
 
-const audio = document.getElementById("bgMusic");
+    if (
+      !Array.isArray(rows) ||
+      !rows.length ||
+      !rows[0].music_path
+    ) {
+      return;
+    }
 
-/* 🔑 ОБЯЗАТЕЛЬНО ДО src (для Web Audio API / analyser) */
-audio.crossOrigin = "anonymous";
+    const audio =
+      document.getElementById("bgMusic");
 
-const path = rows[0].music_path.trim();
+    if (!audio) {
+      console.warn(
+        "bgMusic element not found"
+      );
+      return;
+    }
 
-const finalUrl =
-  `${SUPABASE_URL}/storage/v1/object/public/music/${path}`;
+    audio.crossOrigin = "anonymous";
 
-console.log("🎵 MUSIC URL:", finalUrl);
+    const path =
+      rows[0].music_path.trim();
 
-audio.pause();
-audio.src = finalUrl;
-audio.load();
+    const finalUrl =
+      `${SUPABASE_URL}/storage/v1/object/public/music/${path}`;
 
-console.log("🎵 BACKGROUND MUSIC SET:", finalUrl);
+    console.log(
+      "🎵 MUSIC URL:",
+      finalUrl
+    );
+
+    audio.pause();
+    audio.src = finalUrl;
+    audio.load();
+
+    console.log(
+      "🎵 BACKGROUND MUSIC SET:",
+      finalUrl
+    );
+
+  } catch (err) {
+
+    console.error(
+      "Background music load error:",
+      err
+    );
+
+  }
+
 }
 
 loadBackgroundMusicForPage();
-</script>
 
+</script>
 <script>
 /* =========================
    START IN POST-CLICK STATE
