@@ -117,7 +117,7 @@
   position:fixed;
   inset:0;
 
-  z-index:1190;
+  z-index:1990;
 
   background:rgba(0,0,0,.14);
 
@@ -166,7 +166,7 @@
       opacity:0;
       pointer-events:none;
 
-      z-index:1200;
+      z-index:2000;
 
       border-radius:32px;
 
