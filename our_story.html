@@ -1117,7 +1117,7 @@ section p:last-child {
 </div>
 
 
-  <section style="border:5px solid blue;">
+  <section>
 
 
 <div class="story-card">
@@ -1643,6 +1643,11 @@ async function loadStoryContent() {
       "custom"
     ];
 
+const section = document.querySelector("section");
+
+let hasContent = false;
+
+
 fields.forEach(key => {
   const el = document.getElementById(key);
   if (!el) return;
@@ -1658,8 +1663,11 @@ if (card) {
     .replace(/<p>\s*<\/p>/g, "")
     .trim();
 
-  if (cleaned) {
-    el.innerHTML = cleaned;
+if (cleaned) {
+
+  hasContent = true;
+
+  el.innerHTML = cleaned;
 
     if (card) {
       card.style.display = "block";
@@ -1678,6 +1686,11 @@ if (card) {
     if (card) card.style.display = "none";
   }
 });
+
+if (!hasContent && section) {
+  section.style.display = "none";
+}
+
 
   } catch (e) {
     console.error("loadStoryContent error", e);
