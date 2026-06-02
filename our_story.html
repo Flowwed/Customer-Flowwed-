@@ -1641,23 +1641,28 @@ async function loadStoryContent() {
     ];
 
 fields.forEach(key => {
+
   const el = document.getElementById(key);
   if (!el) return;
 
   const card = el.closest(".story-card");
 
-  const cleaned = (row[key] || "")
-    .replace(/<p><br><\/p>/g, "")
-    .replace(/<p>\s*<\/p>/g, "")
-    .trim();
+  const temp = document.createElement("div");
+  temp.innerHTML = row[key] || "";
+
+  // удаляем мусорный курсор Quill
+  temp.querySelectorAll(".ql-cursor").forEach(x => x.remove());
+
+  const cleaned = temp.textContent.trim();
 
   if (cleaned) {
-    el.innerHTML = cleaned;
+
+    // показываем исходный HTML
+    el.innerHTML = row[key];
 
     if (card) {
       card.style.display = "block";
 
-      // 🔥 плавное появление БЕЗ вспышки
       card.style.opacity = "0";
 
       requestAnimationFrame(() => {
@@ -1668,9 +1673,15 @@ fields.forEach(key => {
     }
 
   } else {
-    if (card) card.style.display = "none";
+
+    if (card) {
+      card.style.display = "none";
+    }
+
   }
+
 });
+
 
   } catch (e) {
     console.error("loadStoryContent error", e);
