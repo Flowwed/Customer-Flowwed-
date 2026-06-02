@@ -229,7 +229,6 @@ section p:last-child {
 }
 
 .story-card {
-
   opacity: 0;
   transform: translateY(10px);
 }
@@ -1124,8 +1123,6 @@ section p:last-child {
   <div id="how_we_met"></div>
 </div>
 
-
-
 <div class="story-card">
   <div id="growing_together"></div>
 </div>
@@ -1643,31 +1640,19 @@ async function loadStoryContent() {
       "custom"
     ];
 
-const section = document.querySelector("section");
-
-let hasContent = false;
-
-
 fields.forEach(key => {
   const el = document.getElementById(key);
   if (!el) return;
 
   const card = el.closest(".story-card");
 
-if (card) {
-  card.style.display = "none";
-}
-
   const cleaned = (row[key] || "")
     .replace(/<p><br><\/p>/g, "")
     .replace(/<p>\s*<\/p>/g, "")
     .trim();
 
-if (cleaned) {
-
-  hasContent = true;
-
-  el.innerHTML = cleaned;
+  if (cleaned) {
+    el.innerHTML = cleaned;
 
     if (card) {
       card.style.display = "block";
@@ -1686,11 +1671,6 @@ if (cleaned) {
     if (card) card.style.display = "none";
   }
 });
-
-if (!hasContent && section) {
-  section.style.display = "none";
-}
-
 
   } catch (e) {
     console.error("loadStoryContent error", e);
