@@ -1119,9 +1119,11 @@ section p:last-child {
 
   <section>
 
-<div class="story-card" style="border:5px solid red;">
+
+<div class="story-card">
   <div id="how_we_met"></div>
 </div>
+
 
 
 <div class="story-card">
@@ -1646,6 +1648,10 @@ fields.forEach(key => {
   if (!el) return;
 
   const card = el.closest(".story-card");
+
+if (card) {
+  card.style.display = "none";
+}
 
   const cleaned = (row[key] || "")
     .replace(/<p><br><\/p>/g, "")
