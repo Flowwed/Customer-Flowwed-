@@ -699,13 +699,6 @@ if (siteData) {
   }
 }
 
-await typingPromise;
-
-if (coupleName) {
-  text += "\n" + coupleName;
-  render();
-}
-
 
 
 const videoBox = document.getElementById("video");
@@ -763,7 +756,12 @@ videoBox.appendChild(video);
 
 }
 
+await typingPromise;
 
+if (coupleName) {
+  text += "\n" + coupleName;
+  render();
+}
 
 
 
