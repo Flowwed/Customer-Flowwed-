@@ -763,22 +763,18 @@ if (coupleName) {
   render();
 }
 
-
 if (window.innerWidth > 768) {
 
   setTimeout(() => {
 
-    document
-      .getElementById("video")
-      .scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
+    slowScrollTo(
+      document.getElementById("video"),
+      3500
+    );
 
-  }, 800);
+  }, 700);
 
 }
-
 if (window.innerWidth <= 768) {
 
   setTimeout(() => {
