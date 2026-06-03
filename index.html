@@ -636,8 +636,43 @@ const reserveRes = await fetch(
 
 (async()=>{
 const couplePromise = loadSiteData();
+
+FULL = [
+  "Dear friends,",
+  "",
+  "Welcome to our small corner of the world.",
+  "",
+  "This place is made for those who mean the most to us, and we are so happy that you are here.",
+  "",
+  "Join us as we take our first steps into forever after.",
+  "",
+  "With love,"
+].join("\n");
+
+const cutIndex = Math.floor(FULL.length * 0.70);
+
+text = FULL.slice(0, cutIndex);
+render();
+
+setTimeout(() => {
+  video.classList.add("show");
+}, 1400);
+
+const typingPromise =
+  type(FULL.slice(cutIndex), true);
+
+
+
 await wait(40);
 const siteData = await couplePromise; // дождались результата
+
+await typingPromise;
+
+if (coupleName) {
+  text += "\n" + coupleName;
+  render();
+}
+
 
 console.log("TOKEN:", getToken());
 console.log("SITE DATA:", siteData);
@@ -731,60 +766,8 @@ videoBox.appendChild(video);
 }
 
 
-let FULL = "";
 
-if (siteData) {
-  if (siteData.couple_name) {
-    coupleName = siteData.couple_name;
 
-    const nameEl = document.getElementById("coupleName");
-    nameEl.textContent = siteData.couple_name;
-
-    setTimeout(() => {
-      nameEl.classList.add("show");
-    }, 200);
-  }
-
-  if (siteData.wedding_date) {
-    const d = new Date(siteData.wedding_date);
-
-    const formatted = d.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    });
-
-    const dateEl = document.getElementById("eventDate");
-    if (dateEl) {
-      dateEl.textContent = formatted;
-    }
-  }
-
-  // 👇 ВАЖНО: FULL ВНУТРИ ТОГО ЖЕ БЛОКА
-  FULL = [
-    "Dear friends,",
-    "",
-    "Welcome to our small corner of the world.",
-    "",
-    "This place is made for those who mean the most to us, and we are so happy that you are here.",
-    "",
-    "Join us as we take our first steps into forever after.",
-    "",
-    "With love,",
-    coupleName || "Your Names"
-  ].join("\n");
-}
-
-const cutIndex = Math.floor(FULL.length * 0.70);
-
-text = FULL.slice(0, cutIndex);
-render();
-
-setTimeout(() => {
-  video.classList.add("show");
-}, 1400);
-
-await type(FULL.slice(cutIndex), true);
 
 if (window.innerWidth <= 768) {
 
