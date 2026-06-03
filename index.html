@@ -664,15 +664,7 @@ const typingPromise =
 
 
 await wait(40);
-const siteData = await couplePromise; // дождались результата
-
-await typingPromise;
-
-if (coupleName) {
-  text += "\n" + coupleName;
-  render();
-}
-
+const siteData = await couplePromise;
 
 console.log("TOKEN:", getToken());
 console.log("SITE DATA:", siteData);
@@ -688,8 +680,6 @@ if (siteData) {
 
     setTimeout(() => {
       nameEl.classList.add("show");
-      // const steps = document.querySelector(".hero-steps");
-      // if (steps) steps.classList.add("show");
     }, 200);
   }
 
@@ -707,8 +697,16 @@ if (siteData) {
       dateEl.textContent = formatted;
     }
   }
-
 }
+
+await typingPromise;
+
+if (coupleName) {
+  text += "\n" + coupleName;
+  render();
+}
+
+
 
 const videoBox = document.getElementById("video");
 
@@ -725,7 +723,7 @@ const videoSrc = siteData ? (
 ) : null;
 
 
-console.log("VIDEO PATH:", siteData.video_path); // ← ВОТ СЮДА
+console.log("VIDEO PATH:", siteData?.video_path); // ← ВОТ СЮДА
 
 if (!videoSrc) {
   console.log("No video");
