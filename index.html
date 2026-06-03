@@ -767,12 +767,9 @@ if (window.innerWidth > 768) {
 
   setTimeout(() => {
 
-    slowScrollTo(
-      document.getElementById("video"),
-      3500
-    );
+    smoothScrollToVideo(3500);
 
-  }, 700);
+  }, 800);
 
 }
 if (window.innerWidth <= 768) {
@@ -786,6 +783,47 @@ if (window.innerWidth <= 768) {
 })();
 
 // ВОТ ЗДЕСЬ, В ТОМ ЖЕ <script>
+
+
+function smoothScrollToVideo(duration = 3500) {
+
+  const el = document.getElementById("video");
+
+  const start = window.scrollY;
+
+  const target =
+    start +
+    el.getBoundingClientRect().top -
+    (window.innerHeight - el.offsetHeight) / 2;
+
+  const distance = target - start;
+
+  const startTime = performance.now();
+
+  function step(now) {
+
+    const t = Math.min(
+      1,
+      (now - startTime) / duration
+    );
+
+    const ease =
+      t * t * (3 - 2 * t);
+
+    window.scrollTo(
+      0,
+      start + distance * ease
+    );
+
+    if (t < 1)
+      requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+
+
 function slowScrollTo(el, duration = 1500) {
   const start = window.scrollY;
 
