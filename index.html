@@ -774,7 +774,14 @@ if (siteData) {
   ].join("\n");
 }
 
-await type(FULL, true);
+const cutIndex = Math.floor(FULL.length * 0.75);
+
+text = FULL.slice(0, cutIndex);
+render();
+
+await type(FULL.slice(cutIndex), true);
+
+
 
 
 if (window.innerWidth <= 768) {
