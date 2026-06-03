@@ -786,12 +786,13 @@ setTimeout(() => {
 
 await type(FULL.slice(cutIndex), true);
 
-
 if (window.innerWidth <= 768) {
-  smoothMobileScrollTo(video);
+
+  setTimeout(() => {
+    smoothMobileScrollTo(video);
+  }, 3000);
+
 }
-
-
 
 })();
 
