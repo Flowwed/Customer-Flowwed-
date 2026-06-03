@@ -659,8 +659,9 @@ setTimeout(() => {
 }, 1400);
 
 const typingPromise =
-  type(FULL.slice(cutIndex), true);
-
+  wait(1500).then(() =>
+    type(FULL.slice(cutIndex), true)
+  );
 
 
 await wait(40);
