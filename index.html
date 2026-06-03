@@ -766,13 +766,14 @@ if (coupleName) {
 
 if (window.innerWidth > 768) {
 
-  setTimeout(() => {
+setTimeout(() => {
 
-    smoothScrollToVideo(3500);
+  console.log("SCROLL START");
 
-  }, 100);
+  smoothScrollToVideo(3500);
 
-}
+}, 5000);
+
 if (window.innerWidth <= 768) {
 
   setTimeout(() => {
