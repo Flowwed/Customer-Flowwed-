@@ -757,23 +757,22 @@ videoBox.appendChild(video);
 
 }
 
-await typingPromise;
-
-if (coupleName) {
-  text += "\n" + coupleName;
-  render();
-}
-
 if (window.innerWidth > 768) {
 
   setTimeout(() => {
 
     smoothScrollToVideo(3500);
 
-  }, 0);
+  }, 500);
 
 }
 
+await typingPromise;
+
+if (coupleName) {
+  text += "\n" + coupleName;
+  render();
+}
 
 if (window.innerWidth <= 768) {
 
@@ -784,6 +783,7 @@ if (window.innerWidth <= 768) {
 }
 
 })();
+
 
 // ВОТ ЗДЕСЬ, В ТОМ ЖЕ <script>
 
