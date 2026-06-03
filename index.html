@@ -768,12 +768,16 @@ if (window.innerWidth > 768) {
 
   setTimeout(() => {
 
-    slowScrollTo(video, 2500);
+    document
+      .getElementById("video")
+      .scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
 
   }, 800);
 
 }
-
 
 if (window.innerWidth <= 768) {
 
