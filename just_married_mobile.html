@@ -966,18 +966,47 @@ const ribbonClone = null;
   }
 
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_site_gallery`, {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`,
-        "Content-Type": "application/json",
-        "x-edit-token": token
-      },
-      body: JSON.stringify({ p_token: token })
-    });
 
-    let rows = await res.json();
+let rows;
+
+for (let attempt = 1; attempt <= 3; attempt++) {
+
+  try {
+
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/rpc/get_site_gallery`,
+      {
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+          "Content-Type": "application/json",
+          "x-edit-token": token
+        },
+        body: JSON.stringify({
+          p_token: token
+        })
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    rows = await res.json();
+
+    break;
+
+  } catch (err) {
+
+    if (attempt === 3) throw err;
+
+    await new Promise(r =>
+      setTimeout(r, 1000)
+    );
+  }
+}
+
 
     rows = rows
       .filter(r => r.path && !r.is_deleted)
