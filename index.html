@@ -781,18 +781,15 @@ render();
 
 await type(FULL.slice(cutIndex), true);
 
-
+setTimeout(() => {
+  video.classList.add("show");
+}, 1400);
 
 
 if (window.innerWidth <= 768) {
   smoothMobileScrollTo(video);
 }
 
-
-setTimeout(() => {
-  video.classList.add("show");
-   // slowScrollTo(video, 1800);
-}, 1400);
 
 
 })();
