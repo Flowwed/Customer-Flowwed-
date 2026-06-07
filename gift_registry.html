@@ -1331,6 +1331,11 @@ window.copyPayPal = function (e) {
 };
 
 
+window.addEventListener("pageshow", async () => {
+
+  await loadGifts();
+
+});
 
 
 </script>
