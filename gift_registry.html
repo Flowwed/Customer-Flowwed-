@@ -712,14 +712,22 @@ if (weddingDate) {
 
 
 /* ===== LOAD + RENDER ===== */
+
 async function loadGifts() {
+
   const { data } = await supabase
     .from("gift_registry_items")
-    .select("*")
+    .select(`
+      *,
+      gift_reservations (
+        qty_reserved
+      )
+    `)
     .eq("edit_token", token)
     .order("created_at");
 
   renderGifts(data || []);
+
 }
 
 function renderGifts(gifts) {
