@@ -723,6 +723,9 @@ async function loadGifts() {
 }
 
 function renderGifts(gifts) {
+
+window.currentGifts = gifts;
+
   const container = document.getElementById("giftContainer");
   const tabs = document.getElementById("categoryTabs");
 
@@ -1079,17 +1082,50 @@ let pendingBuyUrl = null;
 
 const modal = document.getElementById("reserveModal");
 const nameInput = document.getElementById("reserveName");
+
+const qtyInput = document.getElementById("reserveQty");
+
 const confirmBtn = document.getElementById("confirmReserve");
 const cancelBtn = document.getElementById("cancelReserve");
 
+
+
 document.addEventListener("click", e => {
+
   const btn = e.target.closest(".reserve-btn");
   if (!btn) return;
 
   currentGiftId = btn.dataset.id;
+
+  const gift = window.currentGifts.find(
+    g => g.id === currentGiftId
+  );
+
+  const available = Math.max(
+    1,
+    (gift.quantity || 0) -
+    (gift.reserved_count || 0)
+  );
+
+  qtyInput.innerHTML = "";
+
+  for (let i = 1; i <= available; i++) {
+
+    qtyInput.innerHTML += `
+      <option value="${i}">
+        ${i}
+      </option>
+    `;
+  }
+
   nameInput.value = "";
+
   modal.style.display = "flex";
+
 });
+
+
+
 
 // ===== BUY REMINDER OPEN =====
 document.addEventListener("click", e => {
@@ -1163,7 +1199,8 @@ confirmBtn.onclick = async () => {
   const reservedNow = Number(gift.reserved_count || 0);
   const qty = Number(gift.quantity || 0);
 
-const qtyToReserve = 1;
+const qtyToReserve =
+  Number(qtyInput.value || 1);
 
 if (reservedNow + qtyToReserve > qty) {
   alert("Sorry, not enough quantity available.");
