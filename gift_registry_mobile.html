@@ -1271,6 +1271,18 @@ cancelBtn.onclick = () => {
   currentGiftId = null;
 };
 
+modal.onclick = e => {
+
+  if (e.target === modal) {
+
+    modal.style.display = "none";
+    currentGiftId = null;
+
+  }
+
+};
+
+
 // ===== BUY REMINDER CLOSE =====
 const buyReminderModal = document.getElementById("buyReminderModal");
 const buyReminderOk = document.getElementById("buyReminderOk");
@@ -1602,7 +1614,18 @@ function isMobile() {
 
 
     <div style="margin-top:12px">
-      <button id="cancelReserve" style="background:none;border:none;color:#999;cursor:pointer">
+
+<button
+  id="cancelReserve"
+  style="
+    background:none;
+    border:none;
+    color:#a52126;
+    font-weight:600;
+    cursor:pointer;
+  "
+>
+
         Cancel
       </button>
     </div>
