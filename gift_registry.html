@@ -1089,16 +1089,38 @@ const confirmBtn = document.getElementById("confirmReserve");
 const cancelBtn = document.getElementById("cancelReserve");
 
 
-
 document.addEventListener("click", e => {
+
   const btn = e.target.closest(".reserve-btn");
   if (!btn) return;
 
   currentGiftId = btn.dataset.id;
-  nameInput.value = "";
-  modal.style.display = "flex";
-});
 
+  const gift = window.currentGifts.find(
+    g => g.id === currentGiftId
+  );
+
+  qtyInput.innerHTML = "";
+
+  const available =
+    Math.max(
+      1,
+      (gift.quantity || 0) -
+      (gift.reserved_count || 0)
+    );
+
+  for (let i = 1; i <= available; i++) {
+
+    qtyInput.innerHTML +=
+      `<option value="${i}">${i}</option>`;
+
+  }
+
+  nameInput.value = "";
+
+  modal.style.display = "flex";
+
+});
 
 
 // ===== BUY REMINDER OPEN =====
