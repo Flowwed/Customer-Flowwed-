@@ -1331,12 +1331,37 @@ window.copyPayPal = function (e) {
 };
 
 
-window.addEventListener("pageshow", async () => {
+// ===== REALTIME =====
 
-  await loadGifts();
+supabase
+  .channel("gift-items-live")
+  .on(
+    "postgres_changes",
+    {
+      event: "*",
+      schema: "public",
+      table: "gift_registry_items"
+    },
+    async () => {
+      await loadGifts();
+    }
+  )
+  .subscribe();
 
-});
-
+supabase
+  .channel("gift-reservations-live")
+  .on(
+    "postgres_changes",
+    {
+      event: "*",
+      schema: "public",
+      table: "gift_reservations"
+    },
+    async () => {
+      await loadGifts();
+    }
+  )
+  .subscribe();
 
 </script>
 
