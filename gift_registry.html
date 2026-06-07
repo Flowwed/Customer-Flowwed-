@@ -948,9 +948,16 @@ if (honeymoonFund?.venmo) {
       const row = section.querySelector(".category-row");
 
       items.forEach(g => {
-        const reserved = Number(g.reserved_count || 0);
-        const qty = Number(g.quantity || 0);
-        const available = qty - reserved;
+
+const reserved =
+  (g.gift_reservations || []).reduce(
+    (sum, r) => sum + Number(r.qty_reserved || 0),
+    0
+  );
+
+const qty = Number(g.quantity || 0);
+const available = qty - reserved;
+
 
         const card = document.createElement("article");
         card.className = "gift-card";
