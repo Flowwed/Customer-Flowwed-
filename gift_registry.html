@@ -1184,6 +1184,20 @@ confirmBtn.onclick = async () => {
     .eq("edit_token", token)
     .eq("reserved_count", reservedNow);
 
+if (!updErr) {
+
+  await supabase
+    .from("gift_reservations")
+    .insert({
+      gift_id: currentGiftId,
+      edit_token: token,
+      guest_name: name,
+      qty_reserved: 1
+    });
+
+}
+
+
   modal.style.display = "none";
   currentGiftId = null;
 
