@@ -1167,6 +1167,26 @@ confirmBtn.onclick = async () => {
     .eq("edit_token", token)
     .eq("reserved_count", reservedNow);
 
+
+if (!updErr) {
+
+  const { data, error } = await supabase
+    .from("gift_reservations")
+    .insert({
+      gift_id: currentGiftId,
+      edit_token: token,
+      guest_name: name,
+      qty_reserved: 1
+    })
+    .select();
+
+  console.log("INSERT RESULT:", data);
+  console.log("INSERT ERROR:", error);
+
+}
+
+
+
   modal.style.display = "none";
   currentGiftId = null;
 
