@@ -1163,8 +1163,11 @@ confirmBtn.onclick = async () => {
   const reservedNow = Number(gift.reserved_count || 0);
   const qty = Number(gift.quantity || 0);
 
-  if (reservedNow >= qty) {
-    alert("Sorry, this gift is already fully reserved.");
+const qtyToReserve = 1;
+
+if (reservedNow + qtyToReserve > qty) {
+  alert("Sorry, not enough quantity available.");
+
     modal.style.display = "none";
     currentGiftId = null;
     confirmBtn.disabled = false;
@@ -1176,7 +1179,7 @@ confirmBtn.onclick = async () => {
   const { error: updErr } = await supabase
     .from("gift_registry_items")
     .update({
-      reserved_count: reservedNow + 1,
+      reserved_count: reservedNow + qtyToReserve,
       reserved_by: name,
       reserved_at: new Date().toISOString()
     })
@@ -1192,7 +1195,7 @@ if (!updErr) {
       gift_id: currentGiftId,
       edit_token: token,
       guest_name: name,
-      qty_reserved: 1
+      qty_reserved: qtyToReserve
     })
     .select();
 
