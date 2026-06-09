@@ -598,6 +598,8 @@ async function loadSiteData() {
 
     // 1️⃣ ищем в sites
 
+console.time("SUPABASE_FETCH");
+
 const siteRes = await fetch(
   `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date,video_url,video_path,stdvideo_url,fallback_url&edit_token=eq.${encodeURIComponent(tk)}`,
   {
@@ -607,6 +609,8 @@ const siteRes = await fetch(
     }
   }
 );
+
+console.timeEnd("SUPABASE_FETCH");
 
 const siteData = await siteRes.json();
 if (siteData.length) return siteData[0];
