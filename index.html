@@ -588,6 +588,29 @@ async function type(s, isFull = false){
 
   }
 }
+
+
+async function fetchWithRetry(url, options, retries = 3) {
+
+  for (let i = 1; i <= retries; i++) {
+
+    try {
+
+      return await fetch(url, options);
+
+    } catch (err) {
+
+      console.warn(`FETCH FAILED ${i}/${retries}`);
+
+      if (i === retries) throw err;
+
+      await new Promise(r => setTimeout(r, 500));
+    }
+  }
+}
+
+
+
 async function loadSiteData() {
   try {
     const tk = getToken();
@@ -600,7 +623,7 @@ async function loadSiteData() {
 
 console.time("SUPABASE_FETCH");
 
-const siteRes = await fetch(
+const siteRes = await fetchWithRetry(
   `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date,video_url,video_path,stdvideo_url,fallback_url&edit_token=eq.${encodeURIComponent(tk)}`,
   {
     headers: {
@@ -974,6 +997,7 @@ window.addEventListener("pageshow", (e) => {
 });
 </script>
 
+<script src="/navbar.js"></script>
 
 <script src="/navbar-mobile.js"></script>
 
