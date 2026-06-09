@@ -1,140 +1,166 @@
 async function loadStoryToggle() {
 
-  const params = new URLSearchParams(location.search);
+  console.time("NAVBAR_TOTAL");
 
-  const token =
-    params.get("t") ||
-    params.get("token") ||
-    sessionStorage.getItem("rsvpToken") ||
-    "";
+  try {
 
-  if (!token) return;
+    const params = new URLSearchParams(location.search);
 
-  const SUPABASE_URL =
-    "https://octwwpatppbenqwkcqaw.supabase.co";
+    const token =
+      params.get("t") ||
+      params.get("token") ||
+      sessionStorage.getItem("rsvpToken") ||
+      "";
 
-  const SUPABASE_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdHd3cGF0cHBiZW5xd2tjcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NjYxMjYsImV4cCI6MjA3NDU0MjEyNn0.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI";
-
-  // ===== OUR STORY TOGGLE =====
-
-  const storyRes = await fetch(
-    `${SUPABASE_URL}/rest/v1/our_story_page?select=story_enabled&edit_token=eq.${token}`,
-    {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`
-      }
+    if (!token) {
+      console.warn("NO TOKEN");
+      return;
     }
-  );
 
-  const storyRows = await storyRes.json();
+    const SUPABASE_URL =
+      "https://octwwpatppbenqwkcqaw.supabase.co";
 
-  const storyEnabled =
-    storyRows?.[0]?.story_enabled === true ||
-    storyRows?.[0]?.story_enabled === "true";
+    const SUPABASE_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzZWYiLCJyZWYiOiJvY3R3d3BhdHBwYmVucXd rY3FhdyIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzU4OTY2MTI2LCJleHAiOjIwNzQ1NDIxMjZ9.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI";
 
-  // ===== GLOBAL PAGE TOGGLES =====
+    // ===== OUR STORY TOGGLE =====
 
-  const siteRes = await fetch(
-    `${SUPABASE_URL}/rest/v1/sites?edit_token=eq.${token}&select=page_toggles`,
-    {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`
+    console.time("STORY_FETCH");
+
+    const storyRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/our_story_page?select=story_enabled&edit_token=eq.${token}`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
+        }
       }
+    );
+
+    console.timeEnd("STORY_FETCH");
+
+    const storyRows = await storyRes.json();
+
+    const storyEnabled =
+      storyRows?.[0]?.story_enabled === true ||
+      storyRows?.[0]?.story_enabled === "true";
+
+    // ===== GLOBAL PAGE TOGGLES =====
+
+    console.time("TOGGLES_FETCH");
+
+    const siteRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/sites?edit_token=eq.${token}&select=page_toggles`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+    console.timeEnd("TOGGLES_FETCH");
+
+    const siteRows = await siteRes.json();
+
+    const toggles =
+      siteRows?.[0]?.page_toggles || {};
+
+    console.log("TOGGLES:", toggles);
+
+    // ===== HIDE OUR STORY =====
+
+    if (!storyEnabled) {
+
+      document
+        .querySelectorAll(
+          '[data-page="our_story.html"], [data-path="/our_story"]'
+        )
+        .forEach(el => {
+          el.remove();
+        });
+
     }
-  );
 
-  const siteRows = await siteRes.json();
+    // ===== HIDE PHOTO GALLERY =====
 
-  const toggles =
-    siteRows?.[0]?.page_toggles || {};
+    if (toggles.gallery === false) {
 
-  // ===== HIDE OUR STORY =====
+      document
+        .querySelectorAll(
+          '[data-page="photo_gallery.html"], [data-path="/photo_gallery"]'
+        )
+        .forEach(el => {
+          el.remove();
+        });
 
-  if (!storyEnabled) {
+    }
+
+    if (toggles.travel === false) {
+
+      document
+        .querySelectorAll(
+          '[data-page="venue_map.html"], [data-path="/venue_map"]'
+        )
+        .forEach(el => {
+          el.remove();
+        });
+
+    }
+
+    if (toggles.justMarried === false) {
+
+      document
+        .querySelectorAll(
+          '[data-page="just_married.html"], [data-path="/just_married"]'
+        )
+        .forEach(el => {
+          el.remove();
+        });
+
+    }
+
+    if (toggles.gift_registry === false) {
+
+      document
+        .querySelectorAll(
+          '[data-page="gift_registry.html"], [data-path="/gift_registry"]'
+        )
+        .forEach(el => {
+          el.remove();
+        });
+
+    }
+
+    if (toggles.updates === false) {
+
+      document
+        .querySelectorAll(
+          '[data-page="web-updates.html"], [data-path="/web-updates"]'
+        )
+        .forEach(el => {
+          el.remove();
+        });
+
+    }
+
+    // ===== SHOW NAVBAR AFTER FILTER =====
 
     document
-      .querySelectorAll(
-        '[data-page="our_story.html"], [data-path="/our_story"]'
-      )
+      .querySelectorAll('.hero-steps, .nav-center')
       .forEach(el => {
-        el.remove();
+        el.style.visibility = 'visible';
       });
 
-  }
+  } catch (e) {
 
-  // ===== HIDE PHOTO GALLERY =====
+    console.error("NAVBAR ERROR:", e);
 
-  if (toggles.gallery === false) {
+  } finally {
 
-    document
-      .querySelectorAll(
-        '[data-page="photo_gallery.html"], [data-path="/photo_gallery"]'
-      )
-      .forEach(el => {
-        el.remove();
-      });
+    console.timeEnd("NAVBAR_TOTAL");
 
   }
-
-if (toggles.travel === false) {
-
-  document
-    .querySelectorAll(
-      '[data-page="venue_map.html"], [data-path="/venue_map"]'
-    )
-    .forEach(el => {
-      el.remove();
-    });
-
-}
-
-if (toggles.justMarried === false) {
-
-  document
-    .querySelectorAll(
-      '[data-page="just_married.html"], [data-path="/just_married"]'
-    )
-    .forEach(el => {
-      el.remove();
-    });
-
-}
-
-
-if (toggles.gift_registry === false) {
-
-  document
-    .querySelectorAll(
-      '[data-page="gift_registry.html"], [data-path="/gift_registry"]'
-    )
-    .forEach(el => {
-      el.remove();
-    });
-
-}
-
-if (toggles.updates === false) {
-
-  document
-    .querySelectorAll(
-      '[data-page="web-updates.html"], [data-path="/web-updates"]'
-    )
-    .forEach(el => {
-      el.remove();
-    });
-
-}
-
-  // ===== SHOW NAVBAR AFTER FILTER =====
-
-  document
-    .querySelectorAll('.hero-steps, .nav-center')
-    .forEach(el => {
-      el.style.visibility = 'visible';
-    });
 
 }
 
