@@ -613,6 +613,16 @@ const siteRes = await fetch(
 console.timeEnd("SUPABASE_FETCH");
 
 const siteData = await siteRes.json();
+
+const txt = JSON.stringify(siteData);
+
+console.log(
+  "RESPONSE SIZE:",
+  txt.length,
+  "bytes"
+);
+
+
 if (siteData.length) return siteData[0];
 
 // 2️⃣ если не нашли — ищем в reserves
