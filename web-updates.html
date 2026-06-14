@@ -885,6 +885,11 @@ html += `
 
 console.log("RENDERING SAVED CONTENT");
 
+window.parent.postMessage(
+  { type: "updatesReady" },
+  "*"
+);
+
 window.savedUpdatesHtml = html;
 
 if (!window.previewActive) {
