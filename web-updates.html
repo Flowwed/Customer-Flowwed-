@@ -742,21 +742,6 @@ if (weddingDate) {
   }
 }
 
-const params = new URLSearchParams(location.search);
-const token =
-  params.get("t") ||
-  params.get("token") ||
-  sessionStorage.getItem("rsvpToken") ||
-  "";
-
-(async () => {
-
-  if (token) {
-    sessionStorage.setItem("rsvpToken", token);
-
-    await loadCoupleName(token);
-    await loadStoryContent();
-
 window.addEventListener("message", (e) => {
 
 console.log("PREVIEW MESSAGE:", e.data);
@@ -789,6 +774,24 @@ console.log("PREVIEW MESSAGE:", e.data);
   );
 
 });
+
+
+
+const params = new URLSearchParams(location.search);
+const token =
+  params.get("t") ||
+  params.get("token") ||
+  sessionStorage.getItem("rsvpToken") ||
+  "";
+
+(async () => {
+
+  if (token) {
+    sessionStorage.setItem("rsvpToken", token);
+
+    await loadCoupleName(token);
+    await loadStoryContent();
+
 
   }
 
