@@ -763,6 +763,8 @@ console.log("PREVIEW MESSAGE:", e.data);
     }
   );
 
+console.log("ADDING PREVIEW");
+
   el.insertAdjacentHTML(
     "afterbegin",
     `
@@ -869,6 +871,8 @@ html += `
 `;  
 
 });
+
+console.log("RENDERING SAVED CONTENT");
 
   el.innerHTML = html;
 }
