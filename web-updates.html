@@ -759,6 +759,8 @@ const token =
 
 window.addEventListener("message", (e) => {
 
+console.log("PREVIEW MESSAGE:", e.data);
+
   if (e.data?.type !== "previewUpdate")
     return;
 
