@@ -756,7 +756,41 @@ const token =
 
     await loadCoupleName(token);
     await loadStoryContent();
+
+window.addEventListener("message", (e) => {
+
+  if (e.data?.type !== "previewUpdate")
+    return;
+
+  const el =
+    document.getElementById("how_we_met");
+
+  if (!el) return;
+
+  const date = new Date().toLocaleDateString(
+    "en-US",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    }
+  );
+
+  el.insertAdjacentHTML(
+    "afterbegin",
+    `
+      <div style="margin-bottom:20px;">
+        <p><strong>${date}</strong></p>
+        ${e.data.content}
+      </div>
+    `
+  );
+
+});
+
   }
+
+
 
   const overlay = document.getElementById("loadingOverlay");
 
