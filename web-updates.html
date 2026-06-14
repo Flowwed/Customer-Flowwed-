@@ -765,6 +765,8 @@ console.log("PREVIEW MESSAGE:", e.data);
 
 console.log("ADDING PREVIEW");
 
+window.previewActive = true;
+
 if (window.savedUpdatesHtml) {
   el.innerHTML = window.savedUpdatesHtml;
 }
@@ -878,10 +880,11 @@ html += `
 
 console.log("RENDERING SAVED CONTENT");
 
-  window.savedUpdatesHtml = html;
+window.savedUpdatesHtml = html;
 
-el.innerHTML = html;
-
+if (!window.previewActive) {
+  el.innerHTML = html;
+}
 
 }
 
