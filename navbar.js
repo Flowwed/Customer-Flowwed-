@@ -14,6 +14,13 @@ async function loadStoryToggle() {
 
     if (!token) {
       console.warn("NO TOKEN");
+
+      document
+        .querySelectorAll('.hero-steps, .nav-center')
+        .forEach(el => {
+          el.style.visibility = 'visible';
+        });
+
       return;
     }
 
@@ -21,9 +28,7 @@ async function loadStoryToggle() {
       "https://octwwpatppbenqwkcqaw.supabase.co";
 
     const SUPABASE_KEY =
-
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdHd3cGF0cHBiZW5xd2tjcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NjYxMjYsImV4cCI6MjA3NDU0MjEyNn0.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI";
-
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jdHd3cGF0cHBiZW5xd2tjcWF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5NjYxMjYsImV4cCI6MjA3NDU0MjEyNn0.kYX1yCkx3Zl2J_qLHZYcknLnx_aXl26zB--__MzkknI";
 
     // ===== OUR STORY TOGGLE =====
 
@@ -84,25 +89,30 @@ async function loadStoryToggle() {
 
     }
 
-    // ===== HIDE PHOTO GALLERY =====
+    // ===== HIDE GALLERY =====
 
-    if (toggles.gallery === false) {
+    if (
+      toggles.gallery === false ||
+      toggles.justMarried === false
+    ) {
 
       document
         .querySelectorAll(
-          '[data-page="photo_gallery.html"], [data-path="/photo_gallery"]'
+          '[data-page="just_married.html"], [data-path="/just_married"], [data-path="just_married_mobile.html"]'
         )
         .forEach(el => {
           el.remove();
         });
 
     }
+
+    // ===== HIDE TRAVEL =====
 
     if (toggles.travel === false) {
 
       document
         .querySelectorAll(
-          '[data-page="venue_map.html"], [data-path="/venue_map"]'
+          '[data-page="venue_map.html"], [data-path="/venue_map"], [data-path="travelevent_mobile.html"]'
         )
         .forEach(el => {
           el.remove();
@@ -110,23 +120,13 @@ async function loadStoryToggle() {
 
     }
 
-    if (toggles.justMarried === false) {
-
-      document
-        .querySelectorAll(
-          '[data-page="just_married.html"], [data-path="/just_married"]'
-        )
-        .forEach(el => {
-          el.remove();
-        });
-
-    }
+    // ===== HIDE GIFT REGISTRY =====
 
     if (toggles.gift_registry === false) {
 
       document
         .querySelectorAll(
-          '[data-page="gift_registry.html"], [data-path="/gift_registry"]'
+          '[data-page="gift_registry.html"], [data-path="/gift_registry"], [data-path="gift_registry_mobile.html"]'
         )
         .forEach(el => {
           el.remove();
@@ -134,11 +134,13 @@ async function loadStoryToggle() {
 
     }
 
+    // ===== HIDE UPDATES =====
+
     if (toggles.updates === false) {
 
       document
         .querySelectorAll(
-          '[data-page="web-updates.html"], [data-path="/web-updates"]'
+          '[data-page="web-updates.html"], [data-path="/web-updates"], [data-path="web_updates_mobile.html"]'
         )
         .forEach(el => {
           el.remove();
@@ -157,6 +159,12 @@ async function loadStoryToggle() {
   } catch (e) {
 
     console.error("NAVBAR ERROR:", e);
+
+    document
+      .querySelectorAll('.hero-steps, .nav-center')
+      .forEach(el => {
+        el.style.visibility = 'visible';
+      });
 
   } finally {
 
