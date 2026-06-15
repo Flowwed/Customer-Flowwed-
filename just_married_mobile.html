@@ -1422,7 +1422,7 @@ async function loadCoupleName() {
 
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date&edit_token=eq.${token}`,
+      `${SUPABASE_URL}/rest/v1/sites?select=couple_name,wedding_date,page_toggles&edit_token=eq.${token}`,
       {
         headers: {
           apikey: SUPABASE_KEY,
@@ -1432,6 +1432,21 @@ async function loadCoupleName() {
     );
 
     const rows = await res.json();
+
+const toggles = rows?.[0]?.page_toggles || {};
+
+const ourStoryBtn =
+  document.getElementById("ourStoryBtn");
+
+if (
+  ourStoryBtn &&
+  toggles.our_story === false
+) {
+  ourStoryBtn.remove();
+}
+
+document.querySelector(".hero-steps").style.visibility = "visible";
+
 
     if (rows?.[0]?.couple_name) {
 
