@@ -76,7 +76,7 @@ async function loadStoryToggle() {
 
       document
         .querySelectorAll(
-          '[data-page="our_story.html"], [data-path="/our_story"]'
+          '[data-page="our_story.html"], [data-path="/our_story"], [data-path="our_story_mobile.html"]'
         )
         .forEach(el => {
           el.remove();
