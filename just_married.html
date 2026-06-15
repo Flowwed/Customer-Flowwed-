@@ -1572,6 +1572,27 @@ ribbon.addEventListener("pointerleave", () => {
   }
 });
 
+ribbon.addEventListener("wheel", (e) => {
+
+  e.preventDefault();
+
+  y -= e.deltaY * 0.8;
+
+
+const singleHeight = ribbon.scrollHeight / 2;
+
+if (y <= -singleHeight) {
+  y += singleHeight;
+}
+
+if (y > 0) {
+  y -= singleHeight;
+}
+
+
+}, { passive:false });
+
+
 ribbon.addEventListener("pointerdown", () => {
   ribbonPaused = true;
 });
