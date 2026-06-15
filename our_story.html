@@ -1507,6 +1507,27 @@ let y = 0;
 
 const marquee = track.closest(".story-marquee");
 
+marquee.addEventListener("mouseenter", () => {
+  isDragging = true;
+});
+
+marquee.addEventListener("mouseleave", () => {
+  isDragging = false;
+});
+
+
+marquee.addEventListener("wheel", (e) => {
+
+  e.preventDefault();
+
+  y -= e.deltaY * 0.8;
+
+  track.style.transform =
+    `translate3d(0, ${y}px, 0)`;
+
+}, { passive:false });
+
+
 let isDragging = false;
 let startY = 0;
 let currentY = 0;
@@ -1543,30 +1564,6 @@ if (document.hidden) {
 
   animate();
 
-/* ===== MANUAL SCROLL ===== */
-
-marquee.addEventListener("mousedown", e => {
-  isDragging = true;
-  startY = e.clientY;
-});
-
-window.addEventListener("mousemove", e => {
-
-  if (!isDragging) return;
-
-  const delta = e.clientY - startY;
-
-  startY = e.clientY;
-
-  y += delta;
-
-  track.style.transform =
-    `translate3d(0, ${y}px, 0)`;
-});
-
-window.addEventListener("mouseup", () => {
-  isDragging = false;
-});
 
 /* TOUCH */
 
