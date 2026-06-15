@@ -1522,6 +1522,17 @@ marquee.addEventListener("wheel", (e) => {
 
   y -= e.deltaY * 0.8;
 
+const h = getSingleHeight();
+
+if (y <= -h) {
+  y += h;
+}
+
+if (y > 0) {
+  y -= h;
+}
+
+
   track.style.transform =
     `translate3d(0, ${y}px, 0)`;
 
