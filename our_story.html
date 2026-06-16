@@ -1039,6 +1039,11 @@ section p:last-child {
 
 }
 
+#storyEmptyState .story-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
   </style>
 </head>
 
@@ -1746,19 +1751,6 @@ async function loadStoryContent() {
           : "none";
 
     }
-
-const emptyCard =
-  document.querySelector(
-    "#storyEmptyState .story-card"
-  );
-
-if (emptyCard) {
-
-  emptyCard.style.opacity = "1";
-  emptyCard.style.transform =
-    "translateY(0)";
-
-}
 
 
   } catch (e) {
