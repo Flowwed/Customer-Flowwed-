@@ -831,9 +831,10 @@ body.lightbox-open .mobile-header {
       HOME
     </span>
 
-<span id="ourStoryBtn" data-path="our_story_mobile.html">
-  Our Story
-</span>
+    <span data-path="our_story_mobile.html">
+      Our Story
+    </span>
+
 
     <span data-path="just_married_mobile.html">
       Gallery
@@ -1435,15 +1436,6 @@ async function loadCoupleName() {
 
 const toggles = rows?.[0]?.page_toggles || {};
 
-const ourStoryBtn =
-  document.getElementById("ourStoryBtn");
-
-if (
-  ourStoryBtn &&
-  toggles.our_story === false
-) {
-  ourStoryBtn.remove();
-}
 
 document.querySelector(".hero-steps").style.visibility = "visible";
 
