@@ -1181,11 +1181,12 @@ const fields = [
     .map(([title, html]) => makeStoryCard(title, html))
     .filter(Boolean);
 
-  if (!visibleCards.length && !photos.length) {
-    empty.style.display = "block";
-    flow.appendChild(empty);
-    return;
-  }
+if (!visibleCards.length) {
+  empty.style.display = "block";
+  flow.appendChild(empty);
+  return;
+}
+
 
   if (photos[0]) {
     document.getElementById("heroImg").src = photos[0].src;
