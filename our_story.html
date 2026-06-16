@@ -1747,6 +1747,20 @@ async function loadStoryContent() {
 
     }
 
+const emptyCard =
+  document.querySelector(
+    "#storyEmptyState .story-card"
+  );
+
+if (emptyCard) {
+
+  emptyCard.style.opacity = "1";
+  emptyCard.style.transform =
+    "translateY(0)";
+
+}
+
+
   } catch (e) {
     console.error(
       "loadStoryContent error",
