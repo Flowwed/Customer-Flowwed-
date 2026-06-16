@@ -859,7 +859,29 @@ const el = document.getElementById("how_we_met");
 const card = document.querySelector(".story-card");
 
 if (!row.wed_updates || row.wed_updates.length === 0) {
-  if (card) card.style.display = "none";
+
+  el.innerHTML = `
+    <div style="
+      text-align:center;
+      padding:40px 20px;
+      color:#6f2a2a;
+      line-height:1.7;
+    ">
+      <div style="
+        font-size:24px;
+        font-weight:600;
+        margin-bottom:12px;
+        color:#a52126;
+      ">
+        No updates have been posted yet.
+      </div>
+
+      <div style="font-size:17px;">
+        Any news, schedule changes, travel information, or reminders shared by the couple will appear here.
+      </div>
+    </div>
+  `;
+
   return;
 }
 
