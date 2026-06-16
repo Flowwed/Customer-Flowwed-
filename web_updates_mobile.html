@@ -624,6 +624,22 @@ if (!data || !data.length) return;
 const row = data[0];
 const el = document.getElementById("how_we_met");
 
+if (!row.wed_updates || row.wed_updates.length === 0) {
+
+  el.innerHTML = `
+    <p style="text-align:center;">
+      No updates have been posted yet.
+    </p>
+
+    <p style="text-align:center;">
+      Any news, schedule changes, travel information, or reminders shared by the couple will appear here.
+    </p>
+  `;
+
+  return;
+}
+
+
 if (el && Array.isArray(row.wed_updates)) {
   let html = "";
 
