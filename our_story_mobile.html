@@ -1181,10 +1181,36 @@ const fields = [
     .map(([title, html]) => makeStoryCard(title, html))
     .filter(Boolean);
 
-if (!visibleCards.length) {
-  empty.style.display = "block";
-  flow.appendChild(empty);
-  return;
+const hasStoryContent =
+  visibleCards.length > 0;
+
+
+  if (!visibleCards.length && !photos.length) {
+    empty.style.display = "block";
+    flow.appendChild(empty);
+    return;
+  }
+
+
+if (!hasStoryContent) {
+
+  const card = document.createElement("article");
+
+  card.className = "story-card visible";
+
+  card.innerHTML = `
+    <div class="story-body">
+      <p>
+        No story has been shared yet.
+      </p>
+
+      <p>
+        The couple's story and special moments will appear here once they are published.
+      </p>
+    </div>
+  `;
+
+  flow.appendChild(card);
 }
 
 
