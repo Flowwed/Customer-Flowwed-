@@ -1118,6 +1118,17 @@ section p:last-child {
 
   <section>
 
+<div id="storyEmptyState" style="display:none;">
+  <div class="story-card">
+    <h2>Our Story Is Still Being Written ❤️</h2>
+
+    <p>
+      We're working on this page and can't wait to share our journey with you.
+      Please check back again soon.
+    </p>
+  </div>
+</div>
+
 
 <div class="story-card">
   <div id="how_we_met"></div>
@@ -1640,7 +1651,7 @@ async function loadStoryContent() {
 
     const row = data[0];
 
-console.log(row);
+    console.log(row);
 
     const fields = [
       "how_we_met",
@@ -1650,62 +1661,86 @@ console.log(row);
       "custom"
     ];
 
-fields.forEach(key => {
+    let visibleCount = 0;
 
-  const el = document.getElementById(key);
-  if (!el) return;
+    fields.forEach(key => {
 
-  const card = el.closest(".story-card");
+      const el = document.getElementById(key);
+      if (!el) return;
 
-  const temp = document.createElement("div");
-  temp.innerHTML = row[key] || "";
+      const card = el.closest(".story-card");
 
-  // удаляем мусорный курсор Quill
-  temp.querySelectorAll(".ql-cursor").forEach(x => x.remove());
+      const temp = document.createElement("div");
+      temp.innerHTML = row[key] || "";
 
-  const cleaned = temp.textContent.trim();
+      temp.querySelectorAll(".ql-cursor")
+        .forEach(x => x.remove());
 
-console.log(
-  key,
-  cleaned,
-  card
-);
+      const cleaned =
+        temp.textContent.trim();
 
-  if (cleaned) {
+      console.log(
+        key,
+        cleaned,
+        card
+      );
 
-    // показываем исходный HTML
-    el.innerHTML = row[key];
+      if (cleaned) {
 
-    if (card) {
-      card.style.display = "block";
+        visibleCount++;
 
-      card.style.opacity = "0";
+        el.innerHTML = row[key];
 
-      requestAnimationFrame(() => {
-        card.style.transition = "all 0.4s ease";
-        card.style.opacity = "1";
-        card.style.transform = "translateY(0)";
-      });
+        if (card) {
+
+          card.style.display = "block";
+          card.style.opacity = "0";
+
+          requestAnimationFrame(() => {
+
+            card.style.transition =
+              "all 0.4s ease";
+
+            card.style.opacity = "1";
+            card.style.transform =
+              "translateY(0)";
+
+          });
+
+        }
+
+      } else {
+
+        if (card) {
+          card.style.display = "none";
+        }
+
+      }
+
+    });
+
+    const emptyState =
+      document.getElementById(
+        "storyEmptyState"
+      );
+
+    if (emptyState) {
+
+      emptyState.style.display =
+        visibleCount === 0
+          ? "block"
+          : "none";
+
     }
-
-  } else {
-
-    if (card) {
-      card.style.display = "none";
-    }
-
-  }
-
-});
-
 
   } catch (e) {
-    console.error("loadStoryContent error", e);
+    console.error(
+      "loadStoryContent error",
+      e
+    );
   }
 }
-
 </script>
-
 
 <script>
 
