@@ -753,10 +753,9 @@ const CATEGORIES = {
 
   let savedScrollLeft = 0;
 
-  let activeCategoryKey =
+let activeCategoryKey =
   sessionStorage.getItem("activeCategoryKey") ||
-  Object.keys(CATEGORIES)[0];
-
+  "cash";
 
 /* ===== UTIL ===== */
 const cap = s => s ? s[0].toUpperCase() + s.slice(1) : "";
@@ -893,7 +892,7 @@ if (catKey === "cash") {
   if (!honeymoonFund) {
     section.innerHTML = `
       <div class="empty-state" style="width:260px;">
-        <p>Honeymoon fund coming soon 💖</p>
+        <p>Honeymoon fund section coming soon 💖</p>
       </div>
     `;
     container.appendChild(section);
