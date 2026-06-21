@@ -1144,8 +1144,9 @@ const available =
 });
 
 
-// ===== BUY REMINDER OPEN =====
+// ===== BUY -> OPEN RESERVE MODAL =====
 document.addEventListener("click", e => {
+
   const buyBtn = e.target.closest(".buy-btn");
   if (!buyBtn) return;
 
@@ -1153,13 +1154,44 @@ document.addEventListener("click", e => {
 
   pendingBuyUrl = buyBtn.dataset.buyUrl;
 
-currentGiftId =
-  buyBtn.closest(".gift-card")
-    ?.querySelector(".reserve-btn")
-    ?.dataset.id || null;
+  currentGiftId =
+    buyBtn.closest(".gift-card")
+      ?.querySelector(".reserve-btn")
+      ?.dataset.id || null;
 
-  document.getElementById("buyReminderModal").style.display = "flex";
+  const gift = window.currentGifts.find(
+    g => g.id == currentGiftId
+  );
+
+  if (!gift) return;
+
+  qtyInput.innerHTML = "";
+
+  const reserved =
+    (gift.gift_reservations || []).reduce(
+      (sum, r) => sum + Number(r.qty_reserved || 0),
+      0
+    );
+
+  const available =
+    Math.max(
+      1,
+      (gift.quantity || 0) - reserved
+    );
+
+  for (let i = 1; i <= available; i++) {
+
+    qtyInput.innerHTML +=
+      `<option value="${i}">${i}</option>`;
+
+  }
+
+  nameInput.value = "";
+
+  modal.style.display = "flex";
+
 });
+
 
 
 cancelBtn.onclick = () => {
@@ -1182,18 +1214,6 @@ modal.onclick = e => {
 // ===== BUY REMINDER CLOSE =====
 const buyReminderModal = document.getElementById("buyReminderModal");
 const buyReminderOk = document.getElementById("buyReminderOk");
-
-buyReminderOk.onclick = () => {
-
-  buyReminderModal.style.display = "none";
-
-  console.log(
-    "BUY GIFT ID:",
-    currentGiftId
-  );
-
-};
-
 
 
 buyReminderModal.onclick = e => {
@@ -1278,6 +1298,19 @@ if (!updErr) {
   console.log("INSERT ERROR:", error);
 
 }
+
+if (!updErr && pendingBuyUrl) {
+
+  window.open(
+    pendingBuyUrl,
+    "_blank",
+    "noopener"
+  );
+
+  pendingBuyUrl = null;
+
+}
+
 
   modal.style.display = "none";
   currentGiftId = null;
