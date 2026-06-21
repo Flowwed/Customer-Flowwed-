@@ -1216,19 +1216,6 @@ const buyReminderModal = document.getElementById("buyReminderModal");
 const buyReminderOk = document.getElementById("buyReminderOk");
 
 
-buyReminderModal.onclick = e => {
-  if (e.target === buyReminderModal) {
-    buyReminderModal.style.display = "none";
-
-    if (pendingBuyUrl) {
-      window.open(pendingBuyUrl, "_blank", "noopener");
-    }
-
-    pendingBuyUrl = null;
-  }
-};
-
-
 confirmBtn.onclick = async () => {
   confirmBtn.disabled = true;
   confirmBtn.textContent = "Reserving...";
@@ -1563,47 +1550,6 @@ function isMobile() {
   </div>
 </div>
 
-<div
-  id="buyReminderModal"
-  style="
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.45);
-    align-items:center;
-    justify-content:center;
-    z-index:1000;
-  "
->
-  <div
-    style="
-      background:#fff;
-      padding:24px;
-      border-radius:16px;
-      max-width:400px;
-      width:100%;
-      text-align:center;
-    "
-  >
-    <h3 style="margin-top:0">
-      Friendly reminder 💝
-    </h3>
-
-    <p style="color:#555;font-size:15px;line-height:1.4">
-      If you decide to purchase this gift, please remember to return and mark it
-      as <strong>Reserved</strong> to help avoid duplicate gifts.
-    </p>
-
-    <button
-      id="buyReminderOk"
-      type="button"
-      class="btn"
-      style="margin-top:16px;width:100%"
-    >
-      Got it!
-    </button>
-  </div>
-</div>
 
 <!-- MOBILE MENU BUTTON -->
 <div class="vertical-menu-btn" id="verticalMenuBtn">
