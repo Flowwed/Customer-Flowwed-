@@ -1218,6 +1218,18 @@ document.addEventListener("click", e => {
   const btn = e.target.closest(".reserve-btn");
   if (!btn) return;
 
+document.getElementById(
+  "reserveModalTitle"
+).textContent = "Reserve Gift";
+
+document.getElementById(
+  "reserveModalSubtitle"
+).textContent =
+  "Reserve this gift to avoid duplicate purchases.";
+
+confirmBtn.textContent =
+  "Confirm Reservation";
+
   currentGiftId = btn.dataset.id;
 
   const gift = window.currentGifts.find(
@@ -1258,6 +1270,19 @@ document.addEventListener("click", e => {
 
   const buyBtn = e.target.closest(".buy-btn");
   if (!buyBtn) return;
+
+document.getElementById(
+  "reserveModalTitle"
+).textContent = "Buy Gift";
+
+document.getElementById(
+  "reserveModalSubtitle"
+).textContent =
+  "Enter your name and quantity";
+
+confirmBtn.textContent =
+  "Continue to Purchase";
+
 
   e.preventDefault();
 
@@ -1601,7 +1626,22 @@ function isMobile() {
     width:100%;
     text-align:center;
   ">
-    <h3 style="margin-top:0">Reserve this gift</h3>
+    <h3
+  id="reserveModalTitle"
+  style="margin-top:0"
+>
+  Reserve Gift
+</h3>
+
+
+<div
+  id="reserveModalSubtitle"
+  style="
+    margin-bottom:12px;
+    color:#666;
+    font-size:14px;
+  "
+></div>
 
     <input
       id="reserveName"
