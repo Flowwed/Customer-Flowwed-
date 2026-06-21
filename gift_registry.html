@@ -965,6 +965,21 @@ const available = qty - reserved;
         card.innerHTML = `
           <h3>${g.title}</h3>
 
+${g.buy_url ? `
+  <a
+    href="${g.buy_url}"
+    target="_blank"
+    style="
+      color:#2563eb;
+      font-size:13px;
+      text-decoration:underline;
+      word-break:break-all;
+    "
+  >
+    View Gift
+  </a>
+` : ""}
+
           <p class="gift-meta">
             Gifted: ${reserved} / ${qty}
           </p>
