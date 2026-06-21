@@ -1152,6 +1152,12 @@ document.addEventListener("click", e => {
   e.preventDefault();
 
   pendingBuyUrl = buyBtn.dataset.buyUrl;
+
+currentGiftId =
+  buyBtn.closest(".gift-card")
+    ?.querySelector(".reserve-btn")
+    ?.dataset.id || null;
+
   document.getElementById("buyReminderModal").style.display = "flex";
 });
 
@@ -1178,14 +1184,17 @@ const buyReminderModal = document.getElementById("buyReminderModal");
 const buyReminderOk = document.getElementById("buyReminderOk");
 
 buyReminderOk.onclick = () => {
+
   buyReminderModal.style.display = "none";
 
-  if (pendingBuyUrl) {
-    window.open(pendingBuyUrl, "_blank", "noopener");
-  }
+  console.log(
+    "BUY GIFT ID:",
+    currentGiftId
+  );
 
-  pendingBuyUrl = null;
 };
+
+
 
 buyReminderModal.onclick = e => {
   if (e.target === buyReminderModal) {
