@@ -1476,6 +1476,20 @@ async function loadBackgroundMusicForPage() {
   const token = getToken();
   if (!token) return;
 
+ // СПЕЦИАЛЬНЫЙ ТОКЕН
+  if (token === "6VYW75N5KM") {
+
+    const audio =
+      document.getElementById("bgMusic");
+
+    audio.src = "music/testimonials.mp3";
+
+    audio.load();
+
+    return;
+  }
+
+
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_site_page_music`, {
       method: "POST",
@@ -1930,8 +1944,6 @@ document.addEventListener(
 </script>
 
 <script src="/navbar.js"></script>
-
-
 
 <script src="/navbar-mobile.js"></script> 
 
