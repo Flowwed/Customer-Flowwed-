@@ -62,7 +62,11 @@ const images = [
   "https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/dimado/0008.jpg",
   "https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/dimado/0009.jpg",
   "https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/dimado/0010.jpg",
-  "https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/dimado/0011.jpg"
+  "https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/dimado/0011.jpg",
+  "https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/dimado/0012.jpg",
+  "https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/dimado/0013.jpg",
+  "https://octwwpatppbenqwkcqaw.supabase.co/storage/v1/object/public/dimado/0014.jpg"
+
 ];
 
 
@@ -124,6 +128,7 @@ const bgMusic =
 
 let musicStarted = false;
 
+
 document.addEventListener("pointerdown", () => {
 
   if (musicStarted) return;
@@ -135,6 +140,8 @@ document.addEventListener("pointerdown", () => {
   bgMusic.play().catch(() => {});
 
 }, { once:true });
+
+
 
 createPhotos();
 animate();
