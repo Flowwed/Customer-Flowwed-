@@ -36,6 +36,33 @@ html, body {
   object-fit: cover;
   display: block;
 }
+
+#playMusicBtn{
+  position:fixed;
+
+  right:20px;
+  bottom:20px;
+
+  width:58px;
+  height:58px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:24px;
+
+  background:rgba(255,255,255,.9);
+
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+  cursor:pointer;
+
+  z-index:9999;
+}
+
 </style>
 </head>
 
@@ -46,6 +73,9 @@ html, body {
 <audio id="bgMusic" loop>
   <source src="music/testimonials.mp3" type="audio/mpeg">
 </audio>
+
+
+<div id="playMusicBtn">▶</div>
 
 <script>
 const screen = document.getElementById("screen");
@@ -125,7 +155,7 @@ const bgMusic =
 
 let musicStarted = false;
 
-
+/*
 document.addEventListener("pointerdown", () => {
 
   if (musicStarted) return;
@@ -138,7 +168,17 @@ document.addEventListener("pointerdown", () => {
 
 }, { once:true });
 
+*/
 
+document
+  .getElementById("playMusicBtn")
+  .addEventListener("click", () => {
+
+    bgMusic.volume = 0.6;
+
+    bgMusic.play().catch(() => {});
+
+  });
 
 createPhotos();
 animate();
