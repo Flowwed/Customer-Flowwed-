@@ -170,15 +170,30 @@ document.addEventListener("pointerdown", () => {
 
 */
 
-document
-  .getElementById("playMusicBtn")
-  .addEventListener("click", () => {
+
+const playBtn =
+  document.getElementById("playMusicBtn");
+
+playBtn.addEventListener("click", () => {
+
+  if (bgMusic.paused) {
 
     bgMusic.volume = 0.6;
 
     bgMusic.play().catch(() => {});
 
-  });
+    playBtn.textContent = "🔊";
+
+  } else {
+
+    bgMusic.pause();
+
+    playBtn.textContent = "♪";
+
+  }
+
+});
+
 
 createPhotos();
 animate();
