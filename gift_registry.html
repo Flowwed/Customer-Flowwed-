@@ -1175,12 +1175,13 @@ if (items.length === 0) {
             Buy
           </a>
 
-          <button
-            class="btn reserve-btn"
-            disabled
-          >
-            Reserve
-          </button>
+<button
+  class="btn reserve-btn trial-reserve-btn"
+  type="button"
+>
+  Reserve
+</button>
+
         </div>
       `;
 
@@ -1373,6 +1374,19 @@ rightBtn.onclick = () => {
   }
 
 })();
+
+document.addEventListener("click", e => {
+
+  const btn =
+    e.target.closest(".trial-reserve-btn");
+
+  if (!btn) return;
+
+  alert(
+    "Trial Mode\n\nThese sample gifts are displayed for demonstration purposes only.\n\nUse your private control panel to create your own gift registry and start accepting reservations from your guests."
+  );
+
+});
 
 /* ===== RESERVE MODAL LOGIC (FIX) ===== */
 let currentGiftId = null;
