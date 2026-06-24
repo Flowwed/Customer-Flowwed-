@@ -652,6 +652,190 @@ const CATEGORIES = {
 };
 
 
+const TRIAL_GIFTS = {
+
+  home: [
+    {
+      title: "Luxury Bedding Set",
+      price: 180,
+      qty: 2,
+      reserved: 1,
+      buy_url: "https://www.amazon.com/s?k=luxury+bedding+set"
+    },
+    {
+      title: "Decorative Floor Lamp",
+      price: 120,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=decorative+floor+lamp"
+    },
+    {
+      title: "Coffee Table Book Collection",
+      price: 65,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=coffee+table+books"
+    },
+    {
+      title: "Cozy Throw Blanket",
+      price: 45,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=cozy+throw+blanket"
+    }
+  ],
+
+  kitchen: [
+    {
+      title: "Espresso Machine",
+      price: 249,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=espresso+machine"
+    },
+    {
+      title: "Professional Knife Set",
+      price: 140,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=professional+knife+set"
+    },
+    {
+      title: "Air Fryer",
+      price: 129,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=air+fryer"
+    },
+    {
+      title: "Stand Mixer",
+      price: 299,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=stand+mixer"
+    }
+  ],
+
+  tech: [
+    {
+      title: "Wireless Speaker",
+      price: 99,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=wireless+speaker"
+    },
+    {
+      title: "Noise Cancelling Headphones",
+      price: 249,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=noise+cancelling+headphones"
+    },
+    {
+      title: "Smart Home Hub",
+      price: 89,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=smart+home+hub"
+    },
+    {
+      title: "Portable Projector",
+      price: 199,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=portable+projector"
+    }
+  ],
+
+  experiences: [
+    {
+      title: "Date Night Dinner",
+      price: 100,
+      qty: 3,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=restaurant+gift+card"
+    },
+    {
+      title: "Spa Day Experience",
+      price: 150,
+      qty: 2,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=spa+gift+card"
+    },
+    {
+      title: "Wine Tasting Experience",
+      price: 120,
+      qty: 2,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=wine+gift+basket"
+    },
+    {
+      title: "Couples Cooking Class",
+      price: 140,
+      qty: 2,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=cooking+class+gift+card"
+    }
+  ],
+
+  travel: [
+    {
+      title: "Premium Luggage Set",
+      price: 280,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=luggage+set"
+    },
+    {
+      title: "Travel Backpack",
+      price: 95,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=travel+backpack"
+    },
+    {
+      title: "Airport Lounge Passes",
+      price: 80,
+      qty: 2,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=travel+gift+card"
+    },
+    {
+      title: "Hotel Stay Contribution",
+      price: 200,
+      qty: 5,
+      reserved: 1,
+      buy_url: "https://www.amazon.com/s?k=hotel+gift+card"
+    }
+  ],
+
+  personalized: [
+    {
+      title: "Personalized Wedding Artwork",
+      price: 90,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=personalized+wedding+art"
+    },
+    {
+      title: "Custom Family Portrait",
+      price: 150,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=custom+family+portrait"
+    },
+    {
+      title: "Memory Keepsake Box",
+      price: 75,
+      qty: 1,
+      reserved: 0,
+      buy_url: "https://www.amazon.com/s?k=memory+keepsake+box"
+    }
+  ]
+
+};
+
+
   let savedScrollLeft = 0;
 
   let activeCategoryKey =
@@ -932,13 +1116,77 @@ if (items.length === 0) {
 
   if (isTrial) {
 
+    const demoItems =
+      TRIAL_GIFTS[catKey] || [];
+
     section.innerHTML = `
-      <div class="empty-state" style="width:260px;">
-        <p>
-          TRIAL GIFTS HERE
-        </p>
+      <div class="category-row-wrapper">
+        <div class="category-row" id="trialRow"></div>
       </div>
     `;
+
+    const row =
+      section.querySelector("#trialRow");
+
+    demoItems.forEach(g => {
+
+      const card =
+        document.createElement("article");
+
+      card.className = "gift-card";
+
+      card.innerHTML = `
+        <h3>${g.title}</h3>
+
+        <a
+          href="${g.buy_url}"
+          target="_blank"
+          style="
+            color:#2563eb;
+            font-size:13px;
+            text-decoration:underline;
+            word-break:break-all;
+          "
+        >
+          View Gift
+        </a>
+
+        <p class="gift-meta">
+          Gifted: ${g.reserved} / ${g.qty}
+        </p>
+
+        <progress
+          value="${g.reserved}"
+          max="${g.qty}">
+        </progress>
+
+        <p>$${g.price}</p>
+
+        <div style="
+          display:flex;
+          gap:10px;
+          margin-top:auto;
+        ">
+          <a
+            href="${g.buy_url}"
+            target="_blank"
+            class="btn buy-btn"
+          >
+            Buy
+          </a>
+
+          <button
+            class="btn reserve-btn"
+            disabled
+          >
+            Reserve
+          </button>
+        </div>
+      `;
+
+      row.appendChild(card);
+
+    });
 
     container.appendChild(section);
     return;
@@ -977,7 +1225,6 @@ if (items.length === 0) {
         (sum, r) => sum + Number(r.qty_reserved || 0),
         0
       );
-
     const qty = Number(g.quantity || 0);
     const available = qty - reserved;
         const card = document.createElement("article");
