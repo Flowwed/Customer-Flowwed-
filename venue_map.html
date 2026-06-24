@@ -392,6 +392,34 @@
 
 <div class="accordion">
 
+<div id="travelEmptyState" style="display:none; margin-bottom:12px;">
+
+  <div class="acc-item active">
+
+    <div class="acc-title">
+      ✨ Travel & Event Details Coming Soon
+    </div>
+
+    <div class="acc-content" style="max-height:300px;padding:16px;">
+
+      <p>
+        We're currently finalizing the wedding travel and event details.
+      </p>
+
+      <p>
+        Please check back soon for venue information, schedule updates, accommodation recommendations, and other important details.
+      </p>
+
+      <p>
+        We can't wait to celebrate with you ❤️
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
 <div class="acc-item active">
   <div class="acc-title">⏰ Events</div>
   <div class="acc-content" id="schedule"></div>
@@ -480,7 +508,31 @@ const { data: siteData } = await sb
   .eq("edit_token", token)
   .maybeSingle();
 
-  if(!data) return;
+if(!data){
+
+  const emptyState =
+    document.getElementById("travelEmptyState");
+
+  if(emptyState){
+    emptyState.style.display = "block";
+  }
+
+  const overlay =
+    document.getElementById("loadingOverlay");
+
+  if(overlay){
+
+    overlay.classList.add("hide");
+
+    setTimeout(()=>{
+      overlay.remove();
+    },350);
+
+  }
+
+  return;
+}
+
 
 document.getElementById("coupleName").innerText =
   siteData?.couple_name || "Wedding";
