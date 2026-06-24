@@ -1389,6 +1389,15 @@ document.addEventListener("click", e => {
 
 });
 
+document
+  .getElementById("trialModalClose")
+  .addEventListener("click", () => {
+
+    document.getElementById(
+      "trialModal"
+    ).style.display = "none";
+
+});
 
 /* ===== RESERVE MODAL LOGIC (FIX) ===== */
 let currentGiftId = null;
