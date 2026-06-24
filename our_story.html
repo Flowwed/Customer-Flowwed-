@@ -1665,8 +1665,19 @@ async function loadStoryContent() {
       }
     );
 
-    const data = await res.json();
-    if (!data || !data.length) return;
+const data = await res.json();
+
+if (!data || !data.length) {
+
+  const emptyState =
+    document.getElementById("storyEmptyState");
+
+  if (emptyState) {
+    emptyState.style.display = "block";
+  }
+
+  return;
+}
 
     const row = data[0];
 
