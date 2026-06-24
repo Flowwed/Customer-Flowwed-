@@ -621,6 +621,9 @@ function getToken() {
 
 const token = getToken();
 
+const isTrial =
+  token.toUpperCase().startsWith("TRIAL");
+
 let honeymoonFund = null;
 
 async function loadFund() {
@@ -926,6 +929,22 @@ if (honeymoonFund?.venmo) {
 
 
     if (items.length === 0) {
+
+if (isTrial) {
+
+    section.innerHTML = `
+      <div class="empty-state" style="width:260px;">
+        <p>
+          TRIAL GIFTS HERE
+        </p>
+      </div>
+    `;
+
+    container.appendChild(section);
+    return;
+  }
+  else {
+
       section.innerHTML = `
   <div class="empty-state" style="width:260px;">
     <p>
