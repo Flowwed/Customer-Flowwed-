@@ -49,6 +49,7 @@ async function loadStoryToggle() {
     const storyRows = await storyRes.json();
 
     const storyEnabled =
+      !storyRows?.length ||
       storyRows?.[0]?.story_enabled === true ||
       storyRows?.[0]?.story_enabled === "true";
 
