@@ -1086,11 +1086,41 @@ if (items.length === 0) {
     const demoItems =
       TRIAL_GIFTS[catKey] || [];
 
-    console.log(
-      "TRIAL",
-      catKey,
-      demoItems.length
-    );
+    section.innerHTML = `
+      <div class="category-row-wrapper">
+        <div class="category-row"></div>
+      </div>
+    `;
+
+    const row =
+      section.querySelector(".category-row");
+
+    demoItems.forEach(g => {
+
+      const card =
+        document.createElement("article");
+
+      card.className = "gift-card";
+
+      card.innerHTML = `
+        <h3>${g.title}</h3>
+
+        <a
+          href="${g.buy_url}"
+          target="_blank"
+          class="btn buy-btn"
+        >
+          View Gift
+        </a>
+
+        <p class="gift-meta">
+          $${g.price}
+        </p>
+      `;
+
+      row.appendChild(card);
+
+    });
 
   } else {
 
@@ -1107,16 +1137,18 @@ if (items.length === 0) {
 
   }
 
-    } else {
-      section.innerHTML = `
-        <div class="category-row-wrapper">
-          <button class="scroll-btn left">‹</button>
-          <div class="category-row"></div>
-          <button class="scroll-btn right">›</button>
-        </div>
-      `;
+} else {
 
-      const row = section.querySelector(".category-row");
+  section.innerHTML = `
+    <div class="category-row-wrapper">
+      <button class="scroll-btn left">‹</button>
+      <div class="category-row"></div>
+      <button class="scroll-btn right">›</button>
+    </div>
+  `;
+
+  const row = section.querySelector(".category-row");
+
 
       items.forEach(g => {
 
