@@ -1640,6 +1640,16 @@ window.copyPayPal = function (e) {
   }, 1500);
 };
 
+document.addEventListener("click", e => {
+
+  const btn =
+    e.target.closest(".trial-reserve-btn");
+
+  if (!btn) return;
+
+  alert("TRIAL MODE");
+
+});
 
 // ===== REALTIME =====
 
