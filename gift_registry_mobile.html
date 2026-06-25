@@ -722,6 +722,9 @@ function getToken() {
 
 const token = getToken();
 
+const isTrial =
+  token.toUpperCase().startsWith("TRIAL");
+
 let honeymoonFund = null;
 
 async function loadFund() {
@@ -751,6 +754,49 @@ const CATEGORIES = {
 
 };
 
+
+const TRIAL_GIFTS = {
+  home: [
+    { title:"Luxury Bedding Set", price:180, qty:2, reserved:1, buy_url:"https://www.amazon.com/s?k=luxury+bedding+set" },
+    { title:"Decorative Floor Lamp", price:120, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=decorative+floor+lamp" },
+    { title:"Coffee Table Book Collection", price:65, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=coffee+table+books" },
+    { title:"Cozy Throw Blanket", price:45, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=cozy+throw+blanket" }
+  ],
+
+  kitchen: [
+    { title:"Espresso Machine", price:249, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=espresso+machine" },
+    { title:"Professional Knife Set", price:140, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=professional+knife+set" },
+    { title:"Air Fryer", price:129, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=air+fryer" },
+    { title:"Stand Mixer", price:299, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=stand+mixer" }
+  ],
+
+  tech: [
+    { title:"Wireless Speaker", price:99, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=wireless+speaker" },
+    { title:"Noise Cancelling Headphones", price:249, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=noise+cancelling+headphones" },
+    { title:"Smart Home Hub", price:89, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=smart+home+hub" },
+    { title:"Portable Projector", price:199, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=portable+projector" }
+  ],
+
+  experiences: [
+    { title:"Date Night Dinner", price:100, qty:3, reserved:0, buy_url:"https://www.amazon.com/s?k=restaurant+gift+card" },
+    { title:"Spa Day Experience", price:150, qty:2, reserved:0, buy_url:"https://www.amazon.com/s?k=spa+gift+card" },
+    { title:"Wine Tasting Experience", price:120, qty:2, reserved:0, buy_url:"https://www.amazon.com/s?k=wine+gift+basket" },
+    { title:"Couples Cooking Class", price:140, qty:2, reserved:0, buy_url:"https://www.amazon.com/s?k=cooking+class+gift+card" }
+  ],
+
+  travel: [
+    { title:"Premium Luggage Set", price:280, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=luggage+set" },
+    { title:"Travel Backpack", price:95, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=travel+backpack" },
+    { title:"Airport Lounge Passes", price:80, qty:2, reserved:0, buy_url:"https://www.amazon.com/s?k=travel+gift+card" },
+    { title:"Hotel Stay Contribution", price:200, qty:5, reserved:1, buy_url:"https://www.amazon.com/s?k=hotel+gift+card" }
+  ],
+
+  personalized: [
+    { title:"Personalized Wedding Artwork", price:90, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=personalized+wedding+art" },
+    { title:"Custom Family Portrait", price:150, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=custom+family+portrait" },
+    { title:"Memory Keepsake Box", price:75, qty:1, reserved:0, buy_url:"https://www.amazon.com/s?k=memory+keepsake+box" }
+  ]
+};
 
   let savedScrollLeft = 0;
 
@@ -1034,6 +1080,23 @@ if (honeymoonFund?.venmo) {
 
 
     if (items.length === 0) {
+
+if (isTrial) {
+
+
+const demoItems =
+  TRIAL_GIFTS[catKey] || [];
+
+console.log(
+  "TRIAL",
+  catKey,
+  demoItems.length
+);
+
+
+}
+else {
+
       section.innerHTML = `
   <div class="empty-state" style="width:260px;">
     <p>
