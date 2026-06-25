@@ -1079,25 +1079,37 @@ if (honeymoonFund?.venmo) {
 }
 
 
-    if (items.length === 0) {
+if (items.length === 0) {
 
-if (isTrial) {
+  if (isTrial) {
 
+    const demoItems =
+      TRIAL_GIFTS[catKey] || [];
 
-const demoItems =
-  TRIAL_GIFTS[catKey] || [];
+    console.log(
+      "TRIAL",
+      catKey,
+      demoItems.length
+    );
 
-console.log(
-  "TRIAL",
-  catKey,
-  demoItems.length
-);
+  } else {
 
-}
-}
-else {
+    section.innerHTML = `
+      <div class="empty-state" style="width:260px;">
+        <p>
+          List coming soon.
 
-      section.innerHTML = `
+          <br>
+          Thank you for being part of our journey 🤍
+        </p>
+      </div>
+    `;
+
+  }
+
+} else {
+
+  section.innerHTML = `
   <div class="empty-state" style="width:260px;">
     <p>
       List coming soon.
