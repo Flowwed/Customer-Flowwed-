@@ -980,7 +980,7 @@ section.innerHTML = `
       <div style="font-weight:600;margin-bottom:10px;">📱 Venmo</div>
 
 <button
-  class="btn trial-reserve-btn"
+  class="btn trial-reserve-btn trial-fund-btn"
   type="button"
   style="
     display:block;
@@ -1001,7 +1001,7 @@ section.innerHTML = `
 
   <a
     href="#"
-    class="trial-reserve-btn"
+    class="trial-reserve-btn trial-fund-btn"
     style="cursor:pointer;"
   >
     $50
@@ -1009,7 +1009,7 @@ section.innerHTML = `
 
   <a
     href="#"
-    class="trial-reserve-btn"
+    class="trial-reserve-btn trial-fund-btn"
     style="cursor:pointer;"
   >
     $100
@@ -1017,7 +1017,7 @@ section.innerHTML = `
 
   <a
     href="#"
-    class="trial-reserve-btn"
+    class="trial-reserve-btn trial-fund-btn"
     style="cursor:pointer;"
   >
     $200
@@ -1025,7 +1025,7 @@ section.innerHTML = `
 
   <a
     href="#"
-    class="trial-reserve-btn"
+    class="trial-reserve-btn trial-fund-btn"
     style="cursor:pointer;"
   >
     Other
@@ -1056,7 +1056,7 @@ section.innerHTML = `
   >
 
   <button
-    class="btn trial-reserve-btn"
+    class="btn trial-reserve-btn trial-fund-btn"
     type="button"
     style="
       padding:8px 12px;
@@ -1490,6 +1490,27 @@ document.addEventListener("click", e => {
     e.target.closest(".trial-reserve-btn");
 
   if (!btn) return;
+
+  const textEl =
+    document.querySelector("#trialModal p");
+
+  if (btn.classList.contains("trial-fund-btn")) {
+
+    textEl.innerHTML = `
+      These sample payment options are included to demonstrate how your honeymoon fund can look.
+      <br><br>
+      Use your private control panel to add your own Venmo, PayPal, and Zelle details for your guests.
+    `;
+
+  } else {
+
+    textEl.innerHTML = `
+      These sample gifts are included to demonstrate how your wedding registry can look.
+      <br><br>
+      Use your private control panel to add your own gifts, links, and honeymoon fund options for your guests.
+    `;
+
+  }
 
   document.getElementById(
     "trialModal"
