@@ -1108,19 +1108,56 @@ if (items.length === 0) {
         <a
           href="${g.buy_url}"
           target="_blank"
-          class="btn buy-btn"
+          style="
+            color:#2563eb;
+            font-size:13px;
+            text-decoration:underline;
+            word-break:break-all;
+          "
         >
           View Gift
         </a>
 
         <p class="gift-meta">
-          $${g.price}
+          Gifted: ${g.reserved} / ${g.qty}
         </p>
+
+        <progress
+          value="${g.reserved}"
+          max="${g.qty}">
+        </progress>
+
+        <p>$${g.price}</p>
+
+        <div style="
+          display:flex;
+          gap:10px;
+          margin-top:auto;
+        ">
+
+          <button
+            class="btn buy-btn trial-reserve-btn"
+            type="button"
+          >
+            Buy
+          </button>
+
+          <button
+            class="btn reserve-btn trial-reserve-btn"
+            type="button"
+          >
+            Reserve
+          </button>
+
+        </div>
       `;
 
       row.appendChild(card);
 
     });
+
+    container.appendChild(section);
+    return;
 
   } else {
 
@@ -1148,7 +1185,6 @@ if (items.length === 0) {
   `;
 
   const row = section.querySelector(".category-row");
-
 
       items.forEach(g => {
 
