@@ -800,7 +800,10 @@ const TRIAL_GIFTS = {
 
   let savedScrollLeft = 0;
 
-let activeCategoryKey = "cash";
+let activeCategoryKey =
+  sessionStorage.getItem("activeCategoryKey") ||
+  "cash";
+
 
 
 /* ===== UTIL ===== */

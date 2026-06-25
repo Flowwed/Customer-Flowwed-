@@ -624,7 +624,26 @@ if (!data || !data.length) return;
 const row = data[0];
 const el = document.getElementById("how_we_met");
 
+const isTrial =
+  token.toUpperCase().startsWith("TRIAL");
+
 if (!row.wed_updates || row.wed_updates.length === 0) {
+
+if (isTrial) {
+
+  el.innerHTML = `
+    <div style="margin-bottom:20px;">
+      <p><strong>June 25, 2026</strong></p>
+
+      <p>
+        We are currently putting the finishing touches on our wedding plans and will be sharing updates with our guests soon.
+      </p>
+    </div>
+  `;
+
+  return;
+}
+
 
   el.innerHTML = `
     <p style="text-align:center;">

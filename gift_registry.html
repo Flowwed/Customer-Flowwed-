@@ -1528,6 +1528,20 @@ document
 
 });
 
+document
+  .getElementById("trialModal")
+  .addEventListener("click", (e) => {
+
+    if (e.target.id === "trialModal") {
+
+      document.getElementById(
+        "trialModal"
+      ).style.display = "none";
+
+    }
+
+});
+
 /* ===== RESERVE MODAL LOGIC (FIX) ===== */
 let currentGiftId = null;
 let pendingBuyUrl = null;
