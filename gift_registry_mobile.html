@@ -800,9 +800,8 @@ const TRIAL_GIFTS = {
 
   let savedScrollLeft = 0;
 
-let activeCategoryKey =
-  sessionStorage.getItem("activeCategoryKey") ||
-  "cash";
+let activeCategoryKey = "cash";
+
 
 /* ===== UTIL ===== */
 const cap = s => s ? s[0].toUpperCase() + s.slice(1) : "";
@@ -1745,6 +1744,7 @@ window.copyPayPal = function (e) {
   }, 1500);
 };
 
+
 document.addEventListener("click", e => {
 
   const btn =
@@ -1752,7 +1752,30 @@ document.addEventListener("click", e => {
 
   if (!btn) return;
 
-  document.getElementById("trialModal").style.display = "flex";
+  const textEl =
+    document.getElementById("trialModalText");
+
+  if (btn.classList.contains("trial-fund-btn")) {
+
+    textEl.innerHTML = `
+      These sample payment options are included to demonstrate how your honeymoon fund can look.
+      <br><br>
+      Use your private control panel to add your own Venmo, PayPal, and Zelle details for your guests.
+    `;
+
+  } else {
+
+    textEl.innerHTML = `
+      These sample gifts are included to demonstrate how your wedding registry can look.
+      <br><br>
+      Use your private control panel to add your own gifts, links, and honeymoon fund options for your guests.
+    `;
+
+  }
+
+  document.getElementById(
+    "trialModal"
+  ).style.display = "flex";
 
 });
 
