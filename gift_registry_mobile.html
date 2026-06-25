@@ -937,6 +937,111 @@ if (catKey === "cash") {
 if (catKey === "cash") {
 
   if (!honeymoonFund) {
+
+if (isTrial) {
+
+section.innerHTML = `
+  <div class="fund-grid">
+
+    <div class="empty-state" style="width:260px;">
+      <div style="font-weight:600;margin-bottom:10px;">📱 Venmo</div>
+
+      <button
+        class="btn trial-reserve-btn trial-fund-btn"
+        type="button"
+        style="
+          display:block;
+          margin:0 auto;
+          max-width:240px;
+          width:100%;
+        "
+      >
+        @yourvenmoid
+      </button>
+    </div>
+
+    <div class="empty-state" style="width:260px;">
+      <div style="font-weight:600;margin-bottom:10px;">💳 PayPal</div>
+
+      <div class="paypal-links">
+
+        <a
+          href="#"
+          class="trial-reserve-btn trial-fund-btn"
+          style="cursor:pointer;"
+        >
+          $50
+        </a>
+
+        <a
+          href="#"
+          class="trial-reserve-btn trial-fund-btn"
+          style="cursor:pointer;"
+        >
+          $100
+        </a>
+
+        <a
+          href="#"
+          class="trial-reserve-btn trial-fund-btn"
+          style="cursor:pointer;"
+        >
+          $200
+        </a>
+
+        <a
+          href="#"
+          class="trial-reserve-btn trial-fund-btn"
+          style="cursor:pointer;"
+        >
+          Other
+        </a>
+
+      </div>
+    </div>
+
+    <div class="empty-state" style="width:260px;">
+      <div style="font-weight:600;margin-bottom:10px;">🏦 Zelle</div>
+
+      <div style="
+        display:flex;
+        gap:8px;
+        justify-content:center;
+      ">
+        <input
+          value="youremail@domain.com"
+          readonly
+          style="
+            padding:8px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            width:180px;
+            text-align:center;
+          "
+        >
+
+        <button
+          class="btn trial-reserve-btn trial-fund-btn"
+          type="button"
+          style="
+            padding:8px 12px;
+            margin-top:0;
+          "
+        >
+          Copy
+        </button>
+      </div>
+    </div>
+
+  </div>
+`;
+
+container.appendChild(section);
+return;
+
+
+}
+
     section.innerHTML = `
       <div class="empty-state" style="width:260px;">
         <p>Honeymoon contribution options will be available soon💖</p>
