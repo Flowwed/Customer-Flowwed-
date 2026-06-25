@@ -970,6 +970,45 @@ window.currentGifts = gifts;
 if (catKey === "cash") {
 
   if (!honeymoonFund) {
+
+if (isTrial) {
+
+section.innerHTML = `
+  <div class="fund-grid">
+
+    <div class="empty-state" style="width:260px;">
+      <div style="font-weight:600;margin-bottom:10px;">📱 Venmo</div>
+
+      <button class="btn trial-reserve-btn" type="button">
+        View Venmo
+      </button>
+    </div>
+
+    <div class="empty-state" style="width:260px;">
+      <div style="font-weight:600;margin-bottom:10px;">💳 PayPal</div>
+
+      <button class="btn trial-reserve-btn" type="button">
+        View PayPal
+      </button>
+    </div>
+
+    <div class="empty-state" style="width:260px;">
+      <div style="font-weight:600;margin-bottom:10px;">🏦 Zelle</div>
+
+      <button class="btn trial-reserve-btn" type="button">
+        View Zelle
+      </button>
+    </div>
+
+  </div>
+`;
+
+container.appendChild(section);
+return;
+
+
+}
+
     section.innerHTML = `
       <div class="empty-state" style="width:260px;">
         <p>Honeymoon contribution options will be available soon 💖</p>
